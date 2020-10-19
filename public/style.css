@@ -1,3 +1,51 @@
+:root {
+    --background-color: black;
+    --titlebar-height: 2.5em;
+    --playlist-column-margin: 1em;
+    --playlist-column-width: 17em;
+    --sidebar-width: 7em;
+    --playback-height: 7em;
+}
+
 body {
     margin: 0px;
+}
+
+#titlebar {
+    width: 100%;
+    height: var(--titlebar-height);
+    background-color: var(--background-color);
+}
+
+#graph_window {
+    width: 100%;
+    height: calc(100% - var(--titlebar-height));
+}
+
+#playlist_column {
+    width: var(--playlist-column-width);
+    height: calc(100% - var(--titlebar-height));
+    position: absolute;
+}
+
+#sidebar_column {
+    width: var(--sidebar-width);
+    height: calc(100% - var(--titlebar-height));
+    background-color: var(--background-color);
+    position: absolute;
+    right: 0;
+}
+
+#playlist_editor {
+    width: calc(100% - 2 * var(--playlist-column-padding));
+    height: max(21em, calc(100% - var(--playback-height) - 3 * var(--playlist-column-margin)));
+    background-color: var(--background-color);
+    margin: var(--playlist-column-margin);
+}
+
+#playback {
+    width: calc(100% - 2 * var(--playlist-column-margin));
+    height: var(--playback-height);
+    background-color: var(--background-color);
+    margin: var(--playlist-column-margin);
 }

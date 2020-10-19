@@ -1,7 +1,6 @@
 import React from "react";
 import * as d3 from "d3";
 
-const bound = 5;
 const cartesianToPixel = 20;
 
 class GraphWindow extends React.Component {
@@ -67,8 +66,8 @@ class GraphWindow extends React.Component {
 
     pixelToCart(u, v) {
         return {
-            x: (u - this.transform.x) / this.transform.k,
-            y: (v - this.transform.y) / this.transform.k,
+            x: (u - this.canvas.parentElement.offsetLeft - this.transform.x) / this.transform.k,
+            y: (v - this.canvas.parentElement.offsetTop - this.transform.y) / this.transform.k,
         }
     }
 
@@ -139,7 +138,6 @@ class GraphWindow extends React.Component {
 
         this.nodes.forEach((node) => {
             this.drawHex(ctx, node, "black", true);
-            console.log(node);
         });
 
         // Highlight the tile under the cursor
@@ -149,7 +147,7 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
-        const selection = d3.select("#graph_window");
+        const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
         this.transform = d3.zoomIdentity.translate(this.canvas.offsetWidth / 2, this.canvas.offsetHeight / 2);
         selection.call(
@@ -170,6 +168,7 @@ class GraphWindow extends React.Component {
         this.draw();
 
         // Redraw if the window size changes
+        // TODO: replace this with a mutation observer
         window.onresize = () => this.draw();
 
         // Highlight the tile under the cursor
@@ -180,7 +179,6 @@ class GraphWindow extends React.Component {
 
         this.canvas.onmousedown = (e) => {
             this.nodes.push(this.pixelToAxial(e.clientX, e.clientY));
-            console.log(this.nodes);
             this.draw();
         }
 
@@ -191,7 +189,14 @@ class GraphWindow extends React.Component {
 
     render() {
         return (
-            <canvas id="graph_window" style={ { width: "100%", height: "100%" } }></canvas>
+            <div id="graph_window">
+                <div id="playlist_column">
+                    <div id="playlist_editor" />
+                    <div id="playback" />
+                </div>
+                <div id="sidebar_column" />
+                <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
+            </div>
         );
     }
 }
