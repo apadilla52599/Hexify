@@ -1,18 +1,30 @@
 import React from "react";
 import * as d3 from "d3";
+import Artists from "./data/artists.json";
 
 const cartesianToPixel = 20;
+const selectedColor = "#7ae15e";
+const hexRadius = cartesianToPixel;
+const imageRadius = cartesianToPixel * .6;
 
 class GraphWindow extends React.Component {
 
     constructor() {
         super();
+        let randomArtist = Artists.artists[Math.floor(Artists.artists.length * Math.random())];
         this.nodes = [
-            { q: 0, r: 0}
+            {
+                ...randomArtist,
+                coords: { q: 0, r: 0},
+                image: null
+            }
         ];
         this.transform = null;
         this.canvas = null;
+        this.ctx = null;
         this.mouseCoord = null;
+        this.selectedNode = null;
+        this.adjacentRecommendedArtists = [];
     }
 
     axialToCart(coord) {
@@ -75,53 +87,90 @@ class GraphWindow extends React.Component {
         return this.cartToAxial(this.pixelToCart(u, v));
     }
 
-    drawHex(ctx, axialCoord, color, corona) {
-        // Draw Hexagon
-        var radius = cartesianToPixel;
-        if (color === undefined || color === "black") {
-            ctx.strokeStyle = "black";
-            ctx.lineWidth = 1;
-        }
-        else {
-            ctx.strokeStyle = color;
-            ctx.lineWidth = 5;
-            radius -= Math.ceil(ctx.lineWidth / 2);
-        }
-        ctx.beginPath();
+    drawCursor() {
+        this.ctx.strokeStyle = selectedColor;
+        this.ctx.lineWidth = 5;
+        const radius = hexRadius - Math.ceil(this.ctx.lineWidth / 2);
+        // Draw hexagon
+        this.ctx.beginPath();
         const omega = Math.PI / 3;
         const phi = Math.PI / 6;
-        const {x, y} = this.axialToCart(axialCoord);
-        ctx.moveTo(x + radius * Math.cos(phi), y + radius * Math.sin(phi));
+        const {x, y} = this.axialToCart(this.mouseCoord);
+        this.ctx.moveTo(x + radius * Math.cos(phi), y + radius * Math.sin(phi));
         // The end condition is 6 to avoid a janky corner
         for (let i = 0; i <= 6; i++) {
-            ctx.lineTo(x + radius * Math.cos(omega * (i + 1) + phi), y + radius * Math.sin(omega * (i + 1) + phi));
+            this.ctx.lineTo(x + radius * Math.cos(omega * (i + 1) + phi), y + radius * Math.sin(omega * (i + 1) + phi));
         }
-        ctx.stroke();
+        this.ctx.stroke();
+    }
 
-        if (corona === true) {
-            for (let i = 0; i < 6; i++) {
-                const startX = x + radius * Math.cos(omega * (i + 1) + phi);
-                const endX = x + 2 * radius * Math.cos(omega * (i + 1) + phi);
-                const startY = y + radius * Math.sin(omega * (i + 1) + phi);
-                const endY = y + 2 * radius * Math.sin(omega * (i + 1) + phi);
+    drawHex(node, backgroundColor) {
+        this.ctx.strokeStyle = "black";
+        this.ctx.lineWidth = 1;
 
-                ctx.beginPath();
+        // Draw hexagon
+        this.ctx.beginPath();
+        const omega = Math.PI / 3;
+        const phi = Math.PI / 6;
+        const {x, y} = this.axialToCart(node.coords);
+        this.ctx.moveTo(x + hexRadius * Math.cos(phi), y + hexRadius * Math.sin(phi));
+        // The end condition is 6 to avoid a janky corner
+        for (let i = 0; i <= 6; i++) {
+            this.ctx.lineTo(x + hexRadius * Math.cos(omega * (i + 1) + phi), y + hexRadius * Math.sin(omega * (i + 1) + phi));
+        }
 
-                const grd = ctx.createLinearGradient(
-                    startX,
-                    startY,
-                    endX,
-                    endY
-                );
-                grd.addColorStop(0, color);
-                grd.addColorStop(1, "transparent");
-                ctx.strokeStyle = grd;
+        this.ctx.fillStyle = backgroundColor;
+        this.ctx.fill();
+        this.ctx.stroke();
 
-                ctx.moveTo(startX, startY);
-                ctx.lineTo(endX, endY);
+        // Draw artist image
+        this.drawNodeImage(node);
 
-                ctx.stroke();
-            }
+        for (let i = 0; i < 6; i++) {
+            const startX = x + hexRadius * Math.cos(omega * (i + 1) + phi);
+            const endX = x + 2 * hexRadius * Math.cos(omega * (i + 1) + phi);
+            const startY = y + hexRadius * Math.sin(omega * (i + 1) + phi);
+            const endY = y + 2 * hexRadius * Math.sin(omega * (i + 1) + phi);
+
+            this.ctx.beginPath();
+
+            const grd = this.ctx.createLinearGradient(
+                startX,
+                startY,
+                endX,
+                endY
+            );
+            grd.addColorStop(0, "black");
+            grd.addColorStop(1, "transparent");
+            this.ctx.strokeStyle = grd;
+
+            this.ctx.moveTo(startX, startY);
+            this.ctx.lineTo(endX, endY);
+
+            this.ctx.stroke();
+        }
+    }
+
+    drawNodeImage(node) {
+        const {x, y} = this.axialToCart(node.coords);
+        const drawLoadedImage = () => {
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
+            this.ctx.clip();
+            this.ctx.drawImage(node.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
+            this.ctx.restore();
+        }
+        if (node.image == null) {
+            var img = new Image();
+            img.addEventListener('load', () => {
+                node.image = img;
+                drawLoadedImage();
+            }, true);
+            img.src = node.images[node.images.length - 1].url;
+        }
+        else {
+            drawLoadedImage();
         }
     }
 
@@ -130,25 +179,89 @@ class GraphWindow extends React.Component {
         this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
 
-        const ctx = this.canvas.getContext("2d");
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.transform.x, this.transform.y);
+        this.ctx.scale(this.transform.k, this.transform.k);
 
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        ctx.translate(this.transform.x, this.transform.y);
-        ctx.scale(this.transform.k, this.transform.k);
+        var selectedNeighbors = [];
+        if (this.selectedNode != null) {
+            if (this.adjacentRecommendedArtists.length === 0) {
+                selectedNeighbors = [
+                    {
+                        q: this.selectedNode.coords.q + 1,
+                        r: this.selectedNode.coords.r
+                    },
+                    {
+                        q: this.selectedNode.coords.q + 1,
+                        r: this.selectedNode.coords.r - 1
+                    },
+                    {
+                        q: this.selectedNode.coords.q,
+                        r: this.selectedNode.coords.r + 1
+                    },
+                    {
+                        q: this.selectedNode.coords.q - 1,
+                        r: this.selectedNode.coords.r
+                    },
+                    {
+                        q: this.selectedNode.coords.q - 1,
+                        r: this.selectedNode.coords.r + 1
+                    },
+                    {
+                        q: this.selectedNode.coords.q,
+                        r: this.selectedNode.coords.r - 1
+                    }
+                ];
+            }
+            else {
+                this.adjacentRecommendedArtists.forEach((artistNode) => {
+                    this.drawNodeImage(artistNode);
+                });
+            }
+        }
 
         this.nodes.forEach((node) => {
-            this.drawHex(ctx, node, "black", true);
+            if (this.selectedNode != null &&
+                this.selectedNode.coords.q === node.coords.q &&
+                this.selectedNode.coords.r === node.coords.r)
+                this.drawHex(node, selectedColor);
+            else
+                this.drawHex(node, "#d0d0d0");
+            if (selectedNeighbors.length > 0) {
+                var removed = 0;
+                for (let i = 0; i < selectedNeighbors.length; i++) {
+                    let index = Math.round(i - removed);
+                    if (selectedNeighbors[index].q === node.coords.q &&
+                        selectedNeighbors[index].r === node.coords.r) {
+                        selectedNeighbors.splice(index, 1);
+                        removed += 1;
+                    }
+                }
+            }
         });
 
-        // Highlight the tile under the cursor
+        if (this.adjacentRecommendedArtists.length === 0) {
+            // Draw the recommended artists
+            selectedNeighbors.forEach((neighborCoords) => {
+                let randomArtist = Artists.artists[Math.floor(Artists.artists.length * Math.random())];
+                const length = this.adjacentRecommendedArtists.push({
+                    ...randomArtist,
+                    coords: neighborCoords,
+                    image: null
+                });
+                this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
+            });
+        }
+
         if (this.mouseCoord != null) {
-            this.drawHex(ctx, this.mouseCoord, "#7ae15e");
+            this.drawCursor();
         }
     }
 
     componentDidMount() {
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
+        this.ctx = this.canvas.getContext("2d");
         this.transform = d3.zoomIdentity.translate(this.canvas.offsetWidth / 2, this.canvas.offsetHeight / 2);
         selection.call(
             d3.zoom()
@@ -162,7 +275,6 @@ class GraphWindow extends React.Component {
                 this.draw();
             })
         );
-        
 
         // Draw the graph for the first time
         this.draw();
@@ -177,9 +289,37 @@ class GraphWindow extends React.Component {
             this.draw();
         };
 
-        this.canvas.onmousedown = (e) => {
-            this.nodes.push(this.pixelToAxial(e.clientX, e.clientY));
+        this.canvas.onmouseleave = (e) => {
+            this.mouseCoord = null;
             this.draw();
+        }
+
+        this.canvas.onclick = (e) => {
+            const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
+            var flag = false;
+            this.adjacentRecommendedArtists.forEach((node) => {
+                if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
+                    this.nodes.push(node);
+                    this.selectedNode = node;
+                    this.adjacentRecommendedArtists = [];
+                    this.draw();
+                    flag = true;
+                }
+            });
+            if (flag === false) {
+                this.nodes.forEach((node) => {
+                    if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
+                        this.selectedNode = node;
+                        this.adjacentRecommendedArtists = [];
+                        this.draw();
+                        flag = true;
+                    }
+                });
+            }
+            if (flag === false) {
+                this.selectedNode = null;
+                this.adjacentRecommendedArtists = [];
+            }
         }
 
         this.canvas.oncontextmenu = (e) => {
