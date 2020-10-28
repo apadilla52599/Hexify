@@ -3,7 +3,8 @@
     --titlebar-height: 2.5em;
     --playlist-column-margin: 1em;
     --playlist-column-width: 17em;
-    --sidebar-width: 7em;
+    --sidebar-width: 3em;
+    --sidebar-margin: .5em;
     --playback-height: 7em;
 }
 
@@ -26,14 +27,16 @@ body {
     width: var(--playlist-column-width);
     height: calc(100% - var(--titlebar-height));
     position: absolute;
+    pointer-events: none;
 }
 
 #sidebar_column {
     width: var(--sidebar-width);
-    height: calc(100% - var(--titlebar-height));
-    background-color: var(--background-color);
+    height: 100%;
+    top: 0;
     position: absolute;
-    right: 0;
+    pointer-events: none;
+    right: var(--sidebar-margin);
 }
 
 #playlist_editor {
@@ -41,6 +44,7 @@ body {
     height: max(21em, calc(100% - var(--playback-height) - 3 * var(--playlist-column-margin)));
     background-color: var(--background-color);
     margin: var(--playlist-column-margin);
+    pointer-events: all;
 }
 
 #playback {

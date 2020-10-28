@@ -6,6 +6,7 @@ const cartesianToPixel = 20;
 const selectedColor = "#7ae15e";
 const hexRadius = cartesianToPixel;
 const imageRadius = cartesianToPixel * .6;
+const nodeBackground = "#d0d0d0";
 
 class GraphWindow extends React.Component {
 
@@ -25,6 +26,7 @@ class GraphWindow extends React.Component {
         this.mouseCoord = null;
         this.selectedNode = null;
         this.adjacentRecommendedArtists = [];
+        this.topRecommendedArtists = Artists.artists.slice(0, 6);
     }
 
     axialToCart(coord) {
@@ -226,7 +228,7 @@ class GraphWindow extends React.Component {
                 this.selectedNode.coords.r === node.coords.r)
                 this.drawHex(node, selectedColor);
             else
-                this.drawHex(node, "#d0d0d0");
+                this.drawHex(node, nodeBackground);
             if (selectedNeighbors.length > 0) {
                 var removed = 0;
                 for (let i = 0; i < selectedNeighbors.length; i++) {
@@ -319,6 +321,7 @@ class GraphWindow extends React.Component {
             if (flag === false) {
                 this.selectedNode = null;
                 this.adjacentRecommendedArtists = [];
+                this.draw();
             }
         }
 
@@ -327,14 +330,61 @@ class GraphWindow extends React.Component {
         }
     }
 
+    quickAddStyle(index, image) {
+        console.log(image);
+        const style = {
+            width: "var(--sidebar-width)",
+            height: "var(--sidebar-width)",
+            position: "absolute",
+            borderRadius: "50%",
+            top: "calc(max(50%, 3 * (var(--sidebar-width) + var(--sidebar-margin)) + var(--titlebar-height)) + " + (index - 3) + " * (var(--sidebar-width) + var(--sidebar-margin)))",
+            marginTop: "var(--sidebar-margin)",
+            right: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            pointerEvents: "all"
+        }
+        if (image !== undefined)
+            return {
+                ...style, 
+                backgroundImage: "url(" + image + ")",
+                backgroundSize: "contain",
+            };
+        else
+            return {
+                ...style,
+                backgroundColor: nodeBackground
+            };
+    }
+
     render() {
+        var index = 0;
         return (
             <div id="graph_window">
                 <div id="playlist_column">
                     <div id="playlist_editor" />
                     <div id="playback" />
                 </div>
-                <div id="sidebar_column" />
+                <div id="sidebar_column">
+                    <div
+                        key={ index }
+                        style={ this.quickAddStyle(index) }
+                    >
+                        <i class="fas fa-search" style={ { fontSize: "1.6em" } }></i>
+                    </div>
+                {
+                    this.topRecommendedArtists.map((artist) => {
+                        index += 1;
+                        return (
+                            <div
+                                key={ index }
+                                style={ this.quickAddStyle(index, Artists.artists[index - 1].images[0].url) }
+                            />
+                        );
+                    })
+                }
+                </div>
                 <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
             </div>
         );
