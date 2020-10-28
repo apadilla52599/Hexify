@@ -2,9 +2,9 @@
     --background-color: black;
     --titlebar-height: 2.5em;
     --playlist-column-margin: 1em;
-    --playlist-column-width: 17em;
+    --playlist-column-width: 25em;
     --sidebar-width: 7em;
-    --playback-height: 7em;
+    --playback-height: 3em;
 }
 
 body {
@@ -37,15 +37,27 @@ body {
 }
 
 #playlist_editor {
-    width: calc(100% - 2 * var(--playlist-column-padding));
+    width: calc(100% - 3 * var(--playlist-column-padding));
     height: max(21em, calc(100% - var(--playback-height) - 3 * var(--playlist-column-margin)));
+    background-color: rgb(196, 196, 196);
+    border-color: black;
+    border-width: 1;
+    border-style: solid;
+    border-radius: 2%;
+    margin: var(--playlist-column-margin);
+    align-items: center;
+}
+
+#playback {
+    width: calc(100%);
+    height: var(--playback-height);
     background-color: var(--background-color);
     margin: var(--playlist-column-margin);
 }
 
-#playback {
-    width: calc(100% - 2 * var(--playlist-column-margin));
-    height: var(--playback-height);
-    background-color: var(--background-color);
-    margin: var(--playlist-column-margin);
+#scroll_list {
+    margin: 0 auto;
+    height: 300px;
+    width: 300px;
+    overflow: auto;
 }

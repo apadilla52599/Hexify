@@ -1,5 +1,10 @@
 import React from "react";
+import Playlist_editor from './Playlist_editor.js';
+import Artist_editor from './Artist_editor.js';
 import * as d3 from "d3";
+import SpotifyPlayer from 'react-spotify-web-playback';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const cartesianToPixel = 20;
 
@@ -7,6 +12,8 @@ class GraphWindow extends React.Component {
 
     constructor() {
         super();
+        this.state = {displayed: "Artist_editor"};
+        console.log(this.state.displayed)
         this.nodes = [
             { q: 0, r: 0}
         ];
@@ -187,18 +194,45 @@ class GraphWindow extends React.Component {
         }
     }
 
+    handleClick = () => {
+        var displayed = this.state.displayed;
+        if(displayed == null){
+            this.setState({displayed: "Artist_editor"});
+        }else{
+        var newDisplayed = displayed === 'Playlist_editor' ? 'Artist_editor' : 'Playlist_editor';
+        this.setState({
+            displayed: newDisplayed
+        }
+        );
+        }
+    };
+    
     render() {
         return (
             <div id="graph_window">
                 <div id="playlist_column">
-                    <div id="playlist_editor" />
-                    <div id="playback" />
-                </div>
+                    <IconButton edge="end" onClick = {this.handleClick} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
+                            <ArrowBackIosIcon />
+                    </IconButton>
+                    <div>
+                        {this.state.displayed === 'Playlist_editor' ? (
+                            <Playlist_editor />
+                        ) : this.state.displayed  === 'Artist_editor' ? (
+                            <Artist_editor />
+                        ) : null}
+                    </div>
+                    <div id="playback">
+                    <SpotifyPlayer
+                        token="BQD-oy8TLNVI9NEO6g2gTnq0RCeUW0XiqIRMRYqLB0qONzHL8amxHSHPOQqNiloPde6i7nDjYVmH_OussSp2Xcy2_ot6p7pixJzyrvscdJKV4dq0uCfXtwCr_thXcpbz6JbJBXkmmr8zEAfrY7HPE51p65it8xXdz__0WT60DlBMq52sSwDjYCSQJnE"
+                        uris={['spotify:playlist:37i9dQZF1DXcBWIGoYBM5M']}
+                        />
+                     </div>
+                     </div>
                 <div id="sidebar_column" />
-                <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
+                <canvas id="graph_canvas" style={{width: "100%", height: "100%" }}></canvas>
+            
             </div>
         );
     }
 }
-
 export default GraphWindow;
