@@ -2,9 +2,11 @@
     --background-color: black;
     --titlebar-height: 2.5em;
     --playlist-column-margin: 1em;
-    --playlist-column-width: 17em;
+    --playlist-column-width: 30em;
     --sidebar-width: 7em;
-    --playback-height: 7em;
+    --playback-height: 3em;
+    /* --playlist-column-margin: 1em; */
+    --sidebar-margin: .5em;
 }
 
 body {
@@ -30,21 +32,27 @@ body {
 
 #sidebar_column {
     width: var(--sidebar-width);
-    height: calc(100% - var(--titlebar-height));
-    background-color: var(--background-color);
+    height: 100%;
+    top: 0;
     position: absolute;
-    right: 0;
+    pointer-events: none;
+    right: var(--sidebar-margin);
 }
 
 #playlist_editor {
-    width: calc(100% - 2 * var(--playlist-column-padding));
+    width: calc(100% - 3 * var(--playlist-column-padding));
     height: max(21em, calc(100% - var(--playback-height) - 3 * var(--playlist-column-margin)));
-    background-color: var(--background-color);
+    background-color: rgb(196, 196, 196);
+    border-color: black;
+    border-width: 1;
+    border-style: solid;
+    border-radius: 2%;
     margin: var(--playlist-column-margin);
+    align-items: center;
 }
 
 #playback {
-    width: calc(100% - 2 * var(--playlist-column-margin));
+    width: calc(100%);
     height: var(--playback-height);
     background-color: var(--background-color);
     margin: var(--playlist-column-margin);
@@ -76,4 +84,11 @@ table tr:hover td{
 
 table{
     border-collapse: collapse;
+}
+    
+#scroll_list {
+    margin: 0 auto;
+    height: 300px;
+    width: 300px;
+    overflow: auto;
 }
