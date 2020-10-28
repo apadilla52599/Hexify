@@ -6,9 +6,11 @@ class Titlebar extends React.Component {
         if (menu !== undefined) {
             if (menu.style.width === "0%") {
                 menu.style.width = "20%";
+                menu.style.visibility = "visible";
             }
             else {
                 menu.style.width = "0%";
+                menu.style.visibility = "hidden";
             }
             // TODO: replace this with a mutation observer in the graph window
             window.dispatchEvent(new Event('resize'));

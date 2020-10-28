@@ -49,3 +49,31 @@ body {
     background-color: var(--background-color);
     margin: var(--playlist-column-margin);
 }
+
+img.thumb{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+td{
+    height: 65px;
+}
+
+td.imgSpace{
+    width: 10%;
+}
+
+td.titleSpace{
+    color: white;
+    width: 40%;
+}
+
+table tr:hover td{
+    background-color: grey;
+}
+
+table{
+    border-collapse: collapse;
+}
