@@ -66,8 +66,8 @@ const songs = [
         duration:"373373"
     },
     {
-        album: "Wiped Out!",
-        song: "Ferrari",
+        album: "LAST!",
+        song: "FINAL",
         image: "https://i.scdn.co/image/ab67616d000048513066581d697fbdee4303d685",
         duration:"184173"
     },

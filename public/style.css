@@ -1,12 +1,12 @@
 :root {
     --background-color: black;
-    --titlebar-height: 2.5em;
-    --playlist-column-margin: 1em;
-    --playlist-column-width: 30em;
-    --sidebar-width: 7em;
-    --playback-height: 3em;
+    --titlebar-height: 2rem;
+    --playlist-column-margin: 1rem;
+    --playlist-column-width: 30rem;
+    --sidebar-width: 3rem;
+    --playback-height: 3rem;
     /* --playlist-column-margin: 1em; */
-    --sidebar-margin: .5em;
+    --sidebar-margin: .5rem;
 }
 
 body {
@@ -41,12 +41,13 @@ body {
 
 #playlist_editor {
     width: calc(100% - 3 * var(--playlist-column-padding));
-    height: max(21em, calc(100% - var(--playback-height) - 3 * var(--playlist-column-margin)));
+    height: max(34em, calc(100% - var(--playback-height) - var(--playlist-column-margin)));
     background-color: rgb(196, 196, 196);
     border-color: black;
     border-width: 1;
     border-style: solid;
     border-radius: 2%;
+    overflow: hidden;
     margin: var(--playlist-column-margin);
     align-items: center;
 }
