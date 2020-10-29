@@ -41,12 +41,13 @@ body {
 
 #playlist_editor {
     width: calc(100% - 3 * var(--playlist-column-padding));
-    height: max(21em, calc(100% - var(--playback-height) - 3 * var(--playlist-column-margin)));
+    height: max(34em, calc(100% - var(--playback-height) - var(--playlist-column-margin)));
     background-color: rgb(196, 196, 196);
     border-color: black;
     border-width: 1;
     border-style: solid;
     border-radius: 2%;
+    overflow: hidden;
     margin: var(--playlist-column-margin);
     align-items: center;
 }

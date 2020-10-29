@@ -32,13 +32,14 @@ export default function ArtistSongList() {
   };
   var index =-1;
   return (
-  <div style = {{overflow: 'hidden', height: "45em", position: "relative"}}>
-    <List style = {{overflowY: "scroll", width:"100%", height: "100%",paddingLeft: "10px",paddingRight: "15px", boxSizing: "content-box"}}>
+    <div style = {{padding:20}}>
+  <div style = {{overflow: 'hidden', height: "50%", position: "relative"}}>
+    <List style = {{overflowY: "scroll", width:"200%", height: "100%", paddingRight: "3vw", boxSizing: "content-box"}}>
       {songs.map(({album, song, image, duration}) => {
         index ++;
         const labelId = `checkbox-list-secondary-label-${index}`;
         return (
-          <ListItem style = {{margin: 0, padding: 5}} key={index} button>
+          <ListItem key={index} button>
             <div>
               <img alt="Album Cover" style = {{height: 40, width: 40, marginRight: 20}} src={image}/>
             </div>
@@ -57,6 +58,7 @@ export default function ArtistSongList() {
         );
       })}
     </List>
+    </div>
     </div>
   );
 }

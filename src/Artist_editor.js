@@ -20,10 +20,7 @@ class Artist_editor extends React.Component {
 					</div>
 				</div>
 				<div style = {{display: "flex", justifyContent: "center", flexGrow: 1, marginTop: 10}}>
-					<button type="button" class="btn btn-success btn-sm" style = {{padding: 5}}>
-                        Highlight Similar
-                    </button>
-					<button type="button" class="btn btn-danger btn-sm"style = {{padding: 5}}>
+					<button type="button" style = {{backgroundColor: "ff726f", padding: 5}}>
                         Remove Artist
                     </button>
 				</div>
