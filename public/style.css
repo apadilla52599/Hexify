@@ -1,18 +1,10 @@
 :root {
-    /* --background-color: black;
-    --titlebar-height: 50;
-    --playlist-column-margin: 1em;
-    --playlist-column-width: 25em;
-    --sidebar-width: 7vh;
-    --playback-height: 30;
-    --sidebar-margin: 2vh; */
     --background-color: black;
     --titlebar-height: 2rem;
     --playlist-column-margin: 1rem;
     --playlist-column-width: 25rem;
     --sidebar-width: 3rem;
     --playback-height: 3rem;
-    /* --playlist-column-margin: 1em; */
     --sidebar-margin: .5rem;
 }
 
@@ -67,14 +59,14 @@ body {
 }
 
 img.thumb{
-    height: 100%;
-    width: 100%;
+    height: 7vh;
+    width: 7vh;
     border-radius: 50%;
     overflow: hidden;
 }
 
 td{
-    height: 65px;
+    height: 8vh;
 }
 
 td.imgSpace{
@@ -99,4 +91,36 @@ table{
     height: 300px;
     width: 300px;
     overflow: auto;
+}
+
+/* div.gallery{
+    height: 100%;
+    width: 100%;
+} */ 
+
+/* img.gallery{
+    max-width: 25%;
+    max-height: 25%;
+} */
+
+div.gallery {
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 150px;
+    height: 200px;
+}
+  
+div.gallery:hover {
+    border: 1px solid #777;
+}
+  
+div.gallery img {
+    max-width: 150px;
+    max-height: 150px;
+}
+  
+div.desc {
+    padding: 15px;
+    text-align: center;
 }
