@@ -406,7 +406,7 @@ class GraphWindow extends React.Component {
                         key={ index }
                         style={ this.quickAddStyle(index) }
                     >
-                        <i class="fas fa-search" style={ { fontSize: "3vh" } }></i>
+                        <i class="fas fa-search" style={ { fontSize: "1.5em" } }></i>
                     </div>
                 {
                     this.topRecommendedArtists.map((artist) => {
