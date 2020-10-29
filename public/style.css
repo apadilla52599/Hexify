@@ -1,12 +1,12 @@
 :root {
     --background-color: black;
-    --titlebar-height: 2.5em;
+    --titlebar-height: 5vh;
     --playlist-column-margin: 1em;
     --playlist-column-width: 30em;
-    --sidebar-width: 7em;
-    --playback-height: 3em;
+    --sidebar-width: 7vh;
+    --playback-height: 6vh;
     /* --playlist-column-margin: 1em; */
-    --sidebar-margin: .5em;
+    --sidebar-margin: 2vh;
 }
 
 body {
