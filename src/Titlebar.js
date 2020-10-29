@@ -1,4 +1,7 @@
 import React from 'react';
+import PublicIcon from '@material-ui/icons/Public';
+import IconButton from '@material-ui/core/IconButton';
+import Input from '@material-ui/core/Input';
 
 class Titlebar extends React.Component {
     handleClick = () => {
@@ -18,14 +21,31 @@ class Titlebar extends React.Component {
     }
 
     render() {
+        var a = (window.location.pathname === "/browse");
+        if(a){
+            a = "hidden";
+        }else{
+            a = "visible";
+        }
         return (
-            <div id="titlebar" style={{ ...this.props.style, display: "flex", alignItems: "center" }}>
-                <div style={{ display: "flex" }}>
-                    <p onClick={this.handleClick} style={{ cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.5em", paddingLeft: "10px" }}><i className="fas fa-bars"></i></p>
+            <div id="titlebar" style={{ ...this.props.style,minHeight: "5vh", display: "flex", alignItems: "center" }}>
+                <div>
+                    <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.5vh", paddingLeft: "2vw" }}><i className="fas fa-bars"></i></p>
                 </div>
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "1.5em" }}>Hexify</p>
+                <Input placeholder="Untitled Graph" style = {{marginLeft: "3vw", marginRight:"1vw", color: "white", fontSize: "1.5vh",visibility:a}} />
+                <p style={{ color: "gray", cursor: "default", fontFamily: "monospace", fontSize: "1.5vh",width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
+                
+                <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
+                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "3vh" }}>Hexify</p>
                 </div>
+                
+                <IconButton href="/browse" style = {{color: "white", visibility:a, paddingLeft: "25vw"}}>
+                    <PublicIcon style={{width:"2vh", height:"2vh"}}/>
+                </IconButton>
+
+                <button alt ="explore icon" style = {{fontSize: "1.5vh",borderWidth: 0, backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
+                    Login
+                </button>
             </div>
         );
     }

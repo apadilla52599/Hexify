@@ -13,7 +13,7 @@ import songs from "./Songs.js";
 export default function Playlist() {
   return (
           <div className="scroller">
-            <List style = {{margin: 0, paddingLeft: "2vw",paddingRight: "2vw", overflow: 'auto'}}>
+            <List style = {{margin: 0, paddingLeft: "1vw",paddingRight: "1vw", overflow: 'auto'}}>
             {songs.map(({artist, song, image }) => {
               return (
                   <ListItem style = {{margin: 0, padding: 5}}>

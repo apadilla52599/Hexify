@@ -277,8 +277,7 @@ class GraphWindow extends React.Component {
             d3.zoom()
             .scaleExtent([1, 8])
             .wheelDelta((event) => {
-              return -event.deltaY * (event.deltaMode === 1 ? 0.05: // Mouse scroll
-                  (event.deltaMode ? 1 : 0.05)); // Trackpad scroll
+              return -event.deltaY * (event.deltaMode ? 120 : 1) / 500;
             })
             .clickDistance(4)
             .on("zoom", ({transform}) => {
@@ -400,13 +399,13 @@ class GraphWindow extends React.Component {
                         uris={['spotify:playlist:37i9dQZF1DXcBWIGoYBM5M']}
                         />
                      </div>
-                     </div>
+                </div>
                 <div id="sidebar_column">
                     <div
                         key={ index }
                         style={ this.quickAddStyle(index) }
                     >
-                        <i class="fas fa-search" style={ { fontSize: "3vh" } }></i>
+                        <i className="fas fa-search" style={ { fontSize: "3vh" } }></i>
                     </div>
                 {
                     this.topRecommendedArtists.map((artist) => {

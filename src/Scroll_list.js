@@ -34,7 +34,7 @@ export default function ArtistSongList() {
   return (
     <div style = {{padding:20}}>
   <div style = {{overflow: 'hidden', height: "50%", position: "relative"}}>
-    <List style = {{overflowY: "scroll", width:"200%", height: "100%", paddingRight: "3vw", boxSizing: "content-box"}}>
+    <List style = {{overflowY: "scroll", width:"100%", height: "100%", paddingRight: "3vw", boxSizing: "content-box"}}>
       {songs.map(({album, song, image, duration}) => {
         index ++;
         const labelId = `checkbox-list-secondary-label-${index}`;
