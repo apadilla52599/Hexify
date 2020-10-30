@@ -60,8 +60,8 @@ body {
 }
 
 img.thumb{
-    height: 7vh;
-    width: 7vh;
+    height: 50px;
+    width: 50px;
     border-radius: 50%;
     overflow: hidden;
 }
