@@ -33,7 +33,7 @@ class Titlebar extends React.Component {
         return (
             <div id="titlebar" style={{ ...this.props.style,minHeight: "5vh", display: "flex", alignItems: "center" }}>
                 <div>
-                    <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.5vh", paddingLeft: "2vw" }}><i className="fas fa-bars"></i></p>
+                    <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "2.5vh", paddingLeft: "1vw" }}><i className="fas fa-bars"></i></p>
                 </div>
                 <Input placeholder="Untitled Graph" style = {{marginTop: ".25vh", marginLeft: "3vw", marginRight:"1vw", color: "white", fontSize: "1.5vh",visibility:a}} />
                 <p style={{ color: "gray", cursor: "default", fontFamily: "monospace", fontSize: "1.5vh",width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
