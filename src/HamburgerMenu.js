@@ -33,8 +33,8 @@ class HamburgerMenu extends React.Component {
             <div id="hamburger_menu" style={{ display: "flex", width: "0%", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
                 <table>
                     <tbody>
-                    {this.state.graphList.map(graph => (
-                        <tr key={graph.name}>
+                    {this.state.graphList.map((graph,index) => (
+                        <tr key={index}>
                             <td className="imgSpace">
                                 <img className="thumb" alt="graphThumbnail" src={graph.thumbnail}></img>
                             </td>
