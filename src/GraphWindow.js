@@ -5,7 +5,7 @@ import * as d3 from "d3";
 import SpotifyPlayer from 'react-spotify-web-playback';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Artists from "./data/artists.json";
+import DummyData from "./DummyData/DummyArtists.json";
 
 
 const cartesianToPixel = 20;
@@ -20,7 +20,7 @@ class GraphWindow extends React.Component {
         super();
         this.state = {displayed: "Artist_editor"};
         console.log(this.state.displayed)
-        let randomArtist = Artists.artists[Math.floor(Artists.artists.length * Math.random())];
+        let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
         this.nodes = [
             {
                 ...randomArtist,
@@ -34,7 +34,7 @@ class GraphWindow extends React.Component {
         this.mouseCoord = null;
         this.selectedNode = null;
         this.adjacentRecommendedArtists = [];
-        this.topRecommendedArtists = Artists.artists.slice(0, 6);
+        this.topRecommendedArtists = DummyData.artists.slice(0, 6);
     }
 
     axialToCart(coord) {
@@ -253,7 +253,7 @@ class GraphWindow extends React.Component {
         if (this.adjacentRecommendedArtists.length === 0) {
             // Draw the recommended artists
             selectedNeighbors.forEach((neighborCoords) => {
-                let randomArtist = Artists.artists[Math.floor(Artists.artists.length * Math.random())];
+                let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
                 const length = this.adjacentRecommendedArtists.push({
                     ...randomArtist,
                     coords: neighborCoords,
@@ -413,7 +413,7 @@ class GraphWindow extends React.Component {
                         return (
                             <div
                                 key={ index }
-                                style={ this.quickAddStyle(index, Artists.artists[index - 1].images[0].url) }
+                                style={ this.quickAddStyle(index, DummyData.artists[index - 1].images[0].url) }
                             />
                         );
                     })
