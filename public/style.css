@@ -58,34 +58,6 @@ body {
     background-color: var(--background-color);
     margin: var(--playlist-column-margin);
 }
-
-img.thumb{
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-td{
-    height: 8vh;
-}
-
-td.imgSpace{
-    width: 10%;
-}
-
-td.titleSpace{
-    color: white;
-    width: 40%;
-}
-
-table tr:hover td{
-    background-color: grey;
-}
-
-table{
-    border-collapse: collapse;
-}
     
 #scroll_list {
     margin: 0 auto;
