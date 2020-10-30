@@ -43,10 +43,10 @@ class Browse extends React.Component {
                 <Container maxWidth="lg">
                     <Typography component="div" style={{ backgroundColor: 'white', height: '95vh'}}>
                         <div style={{flexGrow: 1}}>
-                            <Grid container spacing = {1} >
+                            <Grid container spacing = {0} >
                                 <Grid item xs = {12}>
-                                    <Paper style = {{textAlign: 'left'}}>
-                                        <Typography variant='h2' gutterbottom>
+                                    <Paper style = {{textAlign: 'left', color:"white"}}>
+                                        <Typography variant='h2' gutterbottom style={{backgroundColor: "black"}}>
                                             Browse
                                         </Typography>
                                         <div  style = {{display: "flex", justifyContent: "left", flexGrow: 1, marginTop: 10}}>
