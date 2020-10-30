@@ -3,10 +3,14 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid, Paper, GridList, GridListTile, GridListTileBar } from "@material-ui/core";
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-// import tileData from './tileData';
+import img1 from "./DummyData/p1.JPG";
+import img2 from "./DummyData/p2.JPG";
+import img3 from "./DummyData/p3.JPG";
+import img4 from "./DummyData/p4.JPG";
+import img5 from "./DummyData/p5.JPG";
+import img6 from "./DummyData/p6.JPG";
+import img7 from "./DummyData/p7.JPG";
+import img8 from "./DummyData/p8.JPG";
 
 
 
@@ -15,6 +19,7 @@ class Browse extends React.Component {
         super(props);
         this.state = {
             photos : [
+                {name: null, id: null, src: null}
             ]
         };
     }
@@ -22,7 +27,11 @@ class Browse extends React.Component {
 
     componentDidMount(){
         var json = require('./DummyData/DummyArtists.json');
-        var graphList = json.graphicalPlaylists.map((thumbnails, index) => ({name: thumbnails.name, id: index, src: thumbnails.graphThumbnail}));
+        var graphList = json.graphicalPlaylists.map((thumbnails, index) => ({name: thumbnails.name, id: index}));
+        var otherList = [img1,img2,img3,img4,img5,img6,img7,img8];
+        for(let i = 0; i < 8;i++){
+            graphList[i].src = otherList[i];
+        }
         console.log(graphList);
         this.setState({photos: graphList});
     }
@@ -33,7 +42,6 @@ class Browse extends React.Component {
                 <CssBaseline />
                 <Container maxWidth="lg">
                     <Typography component="div" style={{ backgroundColor: 'white', height: '95vh'}}>
-                        {/*this is where i will put the header*/}
                         <div style={{flexGrow: 1}}>
                             <Grid container spacing = {1} >
                                 <Grid item xs = {12}>
@@ -48,10 +56,10 @@ class Browse extends React.Component {
                                 </Grid>
                                 <Grid item xs = {12}>
                                     <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'space-around', overflow:'hidden', }}>
-                                        <GridList cellHeight={"150px"} style={{transform: "translateZ(0)"}} cols={4}>
+                                        <GridList cellHeight={"auto"} cols={4}>
                                             {this.state.photos.map((photos) => (
                                                 <GridListTile key={photos.src} cols={1}>
-                                                    <img src={photos.src} style={{width: "100%", maxHeight:"auto"}} alt={photos.name} />
+                                                    <img src={photos.src} style={{width: "100%", height:"auto"}} alt={photos.name} />
                                                     <GridListTileBar
                                                     title={photos.name}
                                                     titlePosition="bottom"
@@ -70,15 +78,6 @@ class Browse extends React.Component {
         );
     }
 }
-{/* <div>
-<div style={{position: "relative"}}>
-{this.state.photos.map(img => (
-<div className="gallery">
-    <img src={img.src}/> 
-    <div classname="desc"> {img.name}</div>
-</div>))}
-</div>
-</div> */}
 
 
 
