@@ -384,7 +384,7 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     <IconButton edge="end" onClick = {this.handleClick} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
-                            <ArrowBackIosIcon />
+                            <ArrowBackIosIcon style = {{width: "1.5vw", height: "1.5vw" }}></ArrowBackIosIcon>
                     </IconButton>
                     <div>
                         {this.state.displayed === 'Playlist_editor' ? (
