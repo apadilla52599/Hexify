@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 
-import songs from "./Songs.js";
+import songs from "./DummyData/Songs.js";
 
 export default function Playlist() {
   return (

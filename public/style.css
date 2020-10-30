@@ -51,6 +51,7 @@ body {
     align-items: center;
 }
 
+
 #playback {
     width: calc(100%);
     height: var(--playback-height);

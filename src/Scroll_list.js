@@ -7,7 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
-import songs from "./Neighbourhood.js";
+import songs from "./DummyData/Neighbourhood.js";
 
 // function convertTime (ms) {
 //   ms = parseInt(ms);
