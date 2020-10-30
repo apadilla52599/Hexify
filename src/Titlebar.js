@@ -32,18 +32,20 @@ class Titlebar extends React.Component {
                 <div>
                     <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.5vh", paddingLeft: "2vw" }}><i className="fas fa-bars"></i></p>
                 </div>
-                <Input placeholder="Untitled Graph" style = {{marginLeft: "3vw", marginRight:"1vw", color: "white", fontSize: "1.5vh",visibility:a}} />
+                <Input placeholder="Untitled Graph" style = {{marginTop: ".25vh", marginLeft: "3vw", marginRight:"1vw", color: "white", fontSize: "1.5vh",visibility:a}} />
                 <p style={{ color: "gray", cursor: "default", fontFamily: "monospace", fontSize: "1.5vh",width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
                 
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "3vh" }}>Hexify</p>
+                    <a href="/" style = {{textDecoration: "none"}}>
+                        <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "3vh" }}>Hexify</p>
+                    </a>
                 </div>
                 
-                <IconButton href="/browse" style = {{color: "white", visibility:a, paddingLeft: "25vw"}}>
-                    <PublicIcon style={{width:"2vh", height:"2vh"}}/>
+                <IconButton href="/browse" style = {{color: "white", visibility:a, paddingLeft: "22vw"}}>
+                    <PublicIcon style={{width:"2.5vh", height:"2.5vh"}}/>
                 </IconButton>
 
-                <button alt ="explore icon" style = {{fontSize: "1.5vh",borderWidth: 0, backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
+                <button style = {{fontSize: "1.5vh", borderColor:"B19CD9", backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
                     Login
                 </button>
             </div>

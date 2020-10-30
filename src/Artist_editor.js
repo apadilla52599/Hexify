@@ -7,7 +7,7 @@ class Artist_editor extends React.Component {
             <div id="playlist_editor" style = {{align: "center"}}>
                 <div style={{display: "flex", alignItems: "center" }}>
                     <div  style={{paddingTop: 20, display: "flex", justifyContent: "center", flexGrow: 1}}>
-					    <img style = {{height: 100, width: 100, borderRadius: "50%"}} src="https://i.scdn.co/image/a09144d21029bd159d1e3777cb9bea17ba73464a" className="img-responsive" alt=""/>
+					    <img style = {{height: 100, width: 100, borderRadius: "50%"}} src="https://i.scdn.co/image/a09144d21029bd159d1e3777cb9bea17ba73464a" class="img-responsive" alt=""/>
 				    </div>
                 </div>     
 				

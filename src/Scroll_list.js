@@ -39,7 +39,7 @@ export default function ArtistSongList() {
         index ++;
         const labelId = `checkbox-list-secondary-label-${index}`;
         return (
-          <ListItem key={index} button>
+          <ListItem key={index} button >
             <div>
               <img alt="Album Cover" style = {{height: 40, width: 40, marginRight: 20}} src={image}/>
             </div>
