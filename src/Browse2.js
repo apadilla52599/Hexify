@@ -12,7 +12,6 @@ import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
 import img9 from "./DummyData/p9.JPG";
 
-
 class Browse2 extends React.Component {
     constructor(props){
         super(props);

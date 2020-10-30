@@ -290,8 +290,8 @@
         },
         {
             "_id": "5099803df3f4948bd2f98391",
-            "name": "artists that inspire me to be uninspired",
-            "tags": [{"value": "Screamo", "title": "Screamo"}],
+            "name": "Long Boy",
+            "tags": [{"value": "long", "title": "long"}],
             "dateModified": "Jun 23, 1912",
             "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
             "spotifyPlaylistIds": [

@@ -1,5 +1,5 @@
 :root {
-    --background-color: black;
+    --background-color: rgb(56,56,56);
     --titlebar-height: 2rem;
     --playlist-column-margin: 1rem;
     --playlist-column-width: max(22em, 20vw);
@@ -20,12 +20,12 @@ body {
 
 #graph_window {
     width: 100%;
-    height: calc(100% - var(--titlebar-height));
+    height: calc(96% - var(--titlebar-height));
 }
 
 #playlist_column {
     width: var(--playlist-column-width);
-    height: calc(100% - var(--titlebar-height));
+    height: calc(90% - var(--titlebar-height));
     position: absolute;
 }
 
@@ -41,7 +41,7 @@ body {
 #playlist_editor {
     width: calc(100% - 3 * var(--playlist-column-padding));
     height: max(34em, calc(80vh - var(--playlist-column-margin)));
-    background-color: rgb(196, 196, 196);
+    background-color: var(--background-color);
     border-color: black;
     border-width: 1;
     border-style: solid;

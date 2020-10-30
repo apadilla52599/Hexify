@@ -25,10 +25,10 @@ class Titlebar extends React.Component {
         var b;
         if(a){
             a = "hidden";
-            b = "inline";
+            // b = "inline";
         }else{
             a = "visible";
-            b = "none";
+            // b = "none";
         }
         return (
             <div id="titlebar" style={{ ...this.props.style,minHeight: "5vh", display: "flex", alignItems: "center" }}>
@@ -36,7 +36,7 @@ class Titlebar extends React.Component {
                     <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "2.5vh", paddingLeft: "1vw" }}><i className="fas fa-bars"></i></p>
                 </div>
                 <Input placeholder="Untitled Graph" style = {{marginTop: ".25vh", marginLeft: "3vw", marginRight:"1vw", color: "white", fontSize: "1.5vh",visibility:a}} />
-                <p style={{ color: "gray", cursor: "default", fontFamily: "monospace", fontSize: "1.5vh",width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
+                <p style={{ color: "gray", cursor: "default", fontFamily: "monospace", fontSize: ".75vw",width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
                 
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <a href="/" style = {{textDecoration: "none"}}>
@@ -44,12 +44,12 @@ class Titlebar extends React.Component {
                     </a>
                 </div>
 
-                <IconButton href="/browse" style = {{color: "white", visibility:a, paddingLeft: "22vw"}}>
+                <IconButton href="/browse" style = {{color: "white", visibility:a, marginLeft: "22vw"}}>
                     <PublicIcon style={{width:"2.5vh", height:"2.5vh"}}/>
                 </IconButton>
-                <a href="/browse2" style = {{textDecoration: "none"}}>
+                {/* <a href="/browse2" style = {{textDecoration: "none"}}>
                         <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "1vh", display: b }}>Second Browse</p>
-                </a>
+                </a> */}
                 <button style = {{fontSize: "1.5vh", borderColor:"B19CD9", backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
                     Login
                 </button>
