@@ -6,7 +6,8 @@
             "name": "My favorite graph",
             "tags": [{"value": "Rock", "title": "Rock"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public", 
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -38,7 +39,8 @@
             "name": "My second favorite graph",
             "tags": [{"value": "Pop", "title": "Pop"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -70,7 +72,8 @@
             "name": "human music",
             "tags": [{"value": "2000's", "title": "2000's"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -102,7 +105,8 @@
             "name": "road trip playlist",
             "tags": [{"value": "indie", "title": "indie"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -134,7 +138,8 @@
             "name": "gaming playlist",
             "tags": [{"value": "Lofi", "title": "Lofi"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -166,7 +171,8 @@
             "name": "playlist to provoke deep thought in the shower",
             "tags": [{"value": "Pop  Rock  Indie", "title": "Pop  Rock  Indie"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -198,7 +204,8 @@
             "name": "artists I hate",
             "tags": [{"value": "Trash", "title": "Trash"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -230,7 +237,8 @@
             "name": "artists that inspire me to be uninspired",
             "tags": [{"value": "Screamo", "title": "Screamo"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -261,7 +269,8 @@
             "name": "Long Boy",
             "tags": [{"value": "Long", "title": "Long"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
@@ -293,7 +302,8 @@
             "name": "artists that inspire me to be uninspired",
             "tags": [{"value": "Screamo", "title": "Screamo"}],
             "dateModified": "Jun 23, 1912",
-            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg", 
+            "graphThumbnail": "https://f4.bcbits.com/img/a4079823910_10.jpg",
+            "visibility": "public",  
             "spotifyPlaylistIds": [
                 "59ZbFPES4DQwEjBpWHzrtC",
                 "J0sBjDrqHyg8sBjDrqHygGUX"
