@@ -1,40 +1,49 @@
 import React from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
-
-import songs from "./DummyData/Songs.js";
+import Typography from '@material-ui/core/Typography'
 
 export default function Playlist() {
+  var json = require('./DummyData/DummyArtists.json');
+  var artists = json.graphicalPlaylists[0].artistNodes;
+  console.log(artists)
   return (
-          <div className="scroller">
-            <List style = {{margin: 0, paddingLeft: "1vw",paddingRight: "1vw", overflow: 'auto'}}>
-            {songs.map(({artist, song, image }) => {
+          <div style = {{overflow: 'hidden', height: "75%", position: "relative",marginLeft: 0}}>
+          <List style = {{overflowY: "scroll", width:"100%", height: "100%", paddingRight: "3vw", boxSizing: "content-box"}}>
+            {artists.map((artistNode) => {
               return (
-                  <ListItem style = {{margin: 0, padding: 5}}>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <img alt="Artist" src={image}/>
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary= {song}
-                      secondary={artist}
-                    />
+              artistNode.tracks.map(({name, album}) => {
+              return (
+                <ListItem button style={{margin:0, paddingTop: ".5vh", paddingBottom: ".5vh"}} >
+                  <div>
+                    <img alt="Album Cover" style = {{height: "2vw", width: "2vw", marginRight: ".5vw"}} src={artistNode.imageURL}/>
+                  </div>
+                  <ListItemText 
+                  disableTypography
+                  primary={<div>
+                    <Typography style={{display:"inline-block", color: '#FFFFFF', fontSize: "70%" }}>{name +"--"}</Typography>
+                    <Typography style={{display:"inline-block", color: '#EABFB9', fontSize: "50%" }}>{artistNode.name}</Typography>
+                  </div>}
+                  secondary={<div>
+                        <i class="fas fa-record-vinyl" style={{display:"inline-block", color: 'purple', fontSize: ".6vw"}}></i>
+                        <Typography style={{display:"inline-block", color: 'gray', fontSize: ".6vw"}}>{album}</Typography>
+                  </div>}>
+                    
+                  </ListItemText>
+                
                     <ListItemSecondaryAction>
-                      <IconButton edge="end" aria-label="delete">
-                        <DeleteIcon />
+                       <IconButton edge="end" aria-label="delete" style = {{padding:"1vh"}}>
+                          <DeleteIcon style = {{width: "1.5vw", height: "1.5vw" }}/>
                       </IconButton>
                     </ListItemSecondaryAction>
-                  </ListItem>  
+                </ListItem>
               );
-            })}
-            </List>
+              }));})}
+          </List>
           </div>
   );
 }

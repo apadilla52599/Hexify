@@ -16,13 +16,218 @@
                 {
                     "q": 0,
                     "r": 0,
-                    "spotifyArtistId": "0OdUWJ0sBjDrqHygGUXeCF",
-                    "name": "Johann Sebastian Bach",
-	                "imageURL": "https://i.scdn.co/image/2f91c3cace3c5a6a48f3d0e2fd21364d4911b332",
+                    "spotifyArtistId": "43ZHCT0cAZBISjO8DG9PnE",
+                    "name": "Elvis Presley",
+                    "imageURL": "https://i.scdn.co/image/11386c4abb5bdf71a86862cdb1a5390f37a7d8a5",
+                    "genres":["rock-and-roll","rockabilly"],
 	                "tracks": [
                         {
                             "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
-                            "name": "Can't Help Falling in Love"
+                            "name": "Can't Help Falling in Love",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        },{
+                            "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
+                            "name": "Can't Help Falling in Love 2",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        },{
+                            "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
+                            "name": "Can't Help Falling in Love 3",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        },{
+                            "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
+                            "name": "Can't Help Falling in Love 4",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        },{
+                            "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
+                            "name": "Can't Help Falling in Love 5",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        },{
+                            "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
+                            "name": "Can't Help Falling in Love 6",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        },{
+                            "spotifyTrackId": "44AyOl4qVkzS48vBsbNXaC",
+                            "name": "Can't Help Falling in Love 7",
+                            "image": "https://i.scdn.co/image/ab67616d00004851f96cefb0197694ad440c3314",
+                            "album": "Blue Hawaii"
+                        }
+                    ]
+                },{
+                    "q": 0,
+                    "r": 0,
+                    "spotifyArtistId": "10exVja0key0uqUkk6LJRT",
+                    "name": "Vance Joy",
+                    "imageURL": "https://i.scdn.co/image/6c125db9f5fb806775a1babff78a2fde23bdc367",
+                    "genres":[
+                        "folk-pop",
+                        "modern rock",
+                        "pop",
+                        "pop rock"
+                      ],
+	                "tracks": [
+                        {
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        },{
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        },{
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        },{
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        },{
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        },{
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        },{
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Riptide",
+                            "image": "https://i.scdn.co/image/ab67616d00004851a9929deb093a6617d2493b03",
+                            "album": "Dream Your Life Away (Special Edition)"
+                        }
+                    ]
+                },{
+                    "q": 0,
+                    "r": 0,
+                    "spotifyArtistId": "77SW9BnxLY8rJ0RciFqkHh",
+                    "name": "The Neighbourhood",
+                    "imageURL": "https://i.scdn.co/image/a09144d21029bd159d1e3777cb9bea17ba73464a",
+                    "genres":[
+                        "modern alternative rock",
+                        "modern rock",
+                        "pop",
+                        "rock"
+                      ],
+	                "tracks": [
+                        {
+                            "spotifyTrackId": "3JvrhDOgAt6p7K8mDyZwRd",
+                            "name": "Sweater Weather",
+                            "image": "https://i.scdn.co/image/ab67616d0000485178f71c0d2fe34592a3c18f80",
+                            "album": "I Love You."
+                        },{
+                            "spotifyTrackId": "7brQHA2CgQpcMBiOlfiXYb",
+                            "name": "Afraid",
+                            "image": "https://i.scdn.co/image/ab67616d0000485178f71c0d2fe34592a3c18f80",
+                            "album": "I Love You."
+                        },{
+                            "spotifyTrackId": "2Kt1XplPBQBsDKQDa6TssB",
+                            "name": "Flawless",
+                            "image": "https://i.scdn.co/image/ab67616d0000485178f71c0d2fe34592a3c18f80",
+                            "album": "I Love You."
+                        },{
+                            "spotifyTrackId": "6mAuw7R6u4vlNneuBgnC8K",
+                            "name": "How",
+                            "image": "https://i.scdn.co/image/ab67616d0000485178f71c0d2fe34592a3c18f80",
+                            "album": "I Love You."
+                        },{
+                            "spotifyTrackId": "4V37tyDu9CtqYshvrgLke4",
+                            "name": "Alleyways",
+                            "image": "https://i.scdn.co/image/ab67616d0000485178f71c0d2fe34592a3c18f80",
+                            "album": "I Love You."
+                        },{
+                            "spotifyTrackId": "26SzctPrO5Km59OHWst3rb",
+                            "name": "U&I",
+                            "image": "https://i.scdn.co/image/ab67616d0000485199b792d6de97e6752f5233e8",
+                            "album": "#000000 & #FFFFFF"
+                        },{
+                            "spotifyTrackId": "24GW45u8aZYiFhLmnOma9u",
+                            "name": "Silver",
+                            "image": "https://i.scdn.co/image/ab67616d0000485199b792d6de97e6752f5233e8",
+                            "album": "#000000 & #FFFFFF"
+                        }        
+                    ]
+                },{
+                    "q": 0,
+                    "r": 0,
+                    "spotifyArtistId": "26T3LtbuGT1Fu9m0eRq5X3",
+                    "name": "Cage The Elephant",
+                    "imageURL": "https://i.scdn.co/image/916f93764f7eb0844265843df1c7632d25df4c41",
+                    "genres":[
+                        "indie pop",
+                        "indie rock",
+                        "modern alternative rock",
+                        "modern rock",
+                        "punk blues",
+                        "rock"
+                      ],
+	                "tracks": [
+                        {
+                            "spotifyTrackId": "3Pzh926pXggbMe2ZpXyMV7",
+                            "name": "Ain't No Rest for the Wicked",
+                            "image": "https://i.scdn.co/image/ab67616d00004851e4800c920780ac18d4ab6730",
+                            "album": "Cage The Elephant (Expanded Edition)"
+                        },{
+                            "spotifyTrackId": "60AGFQbS6ViLy1dcnL9427",
+                            "name": "Back Stabbin' Betty",
+                            "image": "https://i.scdn.co/image/ab67616d00004851e4800c920780ac18d4ab6730",
+                            "album": "Cage The Elephant (Expanded Edition)"
+                        },{
+                            "spotifyTrackId": "1OcFl0uwvpICbrONsmsqN7",
+                            "name": "Cover Me Again",
+                            "image": "https://i.scdn.co/image/ab67616d00004851e4800c920780ac18d4ab6730",
+                            "album": "Cage The Elephant (Expanded Edition)"
+                        },{
+                            "spotifyTrackId": "2VRJIIzbhhOGaxAhwCMfZX",
+                            "name": "In One Ear",
+                            "image": "https://i.scdn.co/image/ab67616d00004851e4800c920780ac18d4ab6730",
+                            "album": "Cage The Elephant (Expanded Edition)"
+                        },{
+                            "spotifyTrackId": "2Tv7qvpjiI3xnHdvBtGLoZ",
+                            "name": "Drones In The Valley",
+                            "image": "https://i.scdn.co/image/ab67616d00004851e4800c920780ac18d4ab6730",
+                            "album": "Cage The Elephant (Expanded Edition)"
+                        },{
+                            "spotifyTrackId": "2tznHmp70DxMyr2XhWLOW0",
+                            "name": "Cigarette Daydreams",
+                            "image": "https://i.scdn.co/image/ab67616d00004851c707823ed5683c77b37b121d",
+                            "album": "Melophobia"
+                        },{
+                            "spotifyTrackId": "43O3Iu8mDJy10i6k8SVRXX",
+                            "name": "Take It or Leave It",
+                            "image": "https://i.scdn.co/image/ab67616d00004851c707823ed5683c77b37b121d",
+                            "album": "Melophobia"
+                        },{
+                            "spotifyTrackId": "5r5Lj2MkgwQJz6TaBdL865",
+                            "name": "Spiderhead",
+                            "image": "https://i.scdn.co/image/ab67616d00004851c707823ed5683c77b37b121d",
+                            "album": "Melophobia"
+                        },{
+                            "spotifyTrackId": "3POYMPJ0HJGtBc7aO2H7QV",
+                            "name": "Tokyo Smoke",
+                            "image": "https://i.scdn.co/image/ab67616d0000485188883701231713b18429f80b",
+                            "album": "Social Cues"
+                        },{
+                            "spotifyTrackId": "4Y6GIje3GErVRIq1Ff5BJq",
+                            "name": "Black Madonna",
+                            "image": "https://i.scdn.co/image/ab67616d0000485188883701231713b18429f80b",
+                            "album": "Social Cues"
+                        },{
+                            "spotifyTrackId": "3iLk4Ii9EzNo4CIKpmAkB1",
+                            "name": "House Of Glass",
+                            "image": "https://i.scdn.co/image/ab67616d0000485188883701231713b18429f80b",
+                            "album": "Social Cues"
                         }
                     ]
                 }
