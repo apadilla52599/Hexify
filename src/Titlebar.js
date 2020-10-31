@@ -2,6 +2,7 @@ import React from 'react';
 import PublicIcon from '@material-ui/icons/Public';
 import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 
 class Titlebar extends React.Component {
     handleClick = () => {
@@ -47,12 +48,9 @@ class Titlebar extends React.Component {
                 <IconButton href="/browse" style = {{color: "white", visibility:a, marginLeft: "22vw"}}>
                     <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
                 </IconButton>
-                {/* <a href="/browse2" style = {{textDecoration: "none"}}>
-                        <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "1vh", display: b }}>Second Browse</p>
-                </a> */}
-                <button style = {{fontSize: ".8rem", borderColor:"B19CD9", backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
-                    Login
-                </button>
+                <Button variant="contained" color="default" style = {{backgroundColor: "#B19CD9", marginRight: "1vw", marginLeft: "1vw", height: "2rem", fontSize: ".75rem"}}>
+                    Log In
+                </Button>
             </div>
         );
     }
