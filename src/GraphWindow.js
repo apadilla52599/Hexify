@@ -394,7 +394,7 @@ class GraphWindow extends React.Component {
                     ) : null}
                     <div id="playback">
                     <SpotifyPlayer
-                        token="BQD-oy8TLNVI9NEO6g2gTnq0RCeUW0XiqIRMRYqLB0qONzHL8amxHSHPOQqNiloPde6i7nDjYVmH_OussSp2Xcy2_ot6p7pixJzyrvscdJKV4dq0uCfXtwCr_thXcpbz6JbJBXkmmr8zEAfrY7HPE51p65it8xXdz__0WT60DlBMq52sSwDjYCSQJnE"
+                        token="BQAOP1_rHvOwVYs4uVlqywfYA3JFHIS2vrDG2ppAvjE3HSA_vUx_9y8VkL5B2AWg9jvUWXLiF1W3UL3UEmiqckVUBZIvDi4cOfTFNdkDRUS-ZdYTdCQcicy27rG11DiXt-zkYWEMTpvSO_xX2SXak_rSpDadfCkP0RF4LTXwt_MLzmSnIm3oZy02oZs"
                         uris={['spotify:playlist:37i9dQZF1DXcBWIGoYBM5M']}
                         />
                      </div>
