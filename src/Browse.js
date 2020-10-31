@@ -13,7 +13,6 @@ import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
 
 
-
 class Browse extends React.Component {
     constructor(props){
         super(props);
