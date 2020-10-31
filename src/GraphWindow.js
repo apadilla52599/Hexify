@@ -177,7 +177,7 @@ class GraphWindow extends React.Component {
                 node.image = img;
                 drawLoadedImage();
             }, true);
-            img.src = node.images[node.images.length - 1].url;
+            img.src = node.images[0].url;
         }
         else {
             drawLoadedImage();
