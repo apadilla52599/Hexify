@@ -5,7 +5,7 @@ import * as d3 from "d3";
 import SpotifyPlayer from 'react-spotify-web-playback';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Artists from "./data/artists.json";
+import DummyData from "./DummyData/DummyArtists.json";
 
 
 const cartesianToPixel = 20;
@@ -20,7 +20,7 @@ class GraphWindow extends React.Component {
         super();
         this.state = {displayed: "Artist_editor"};
         console.log(this.state.displayed)
-        let randomArtist = Artists.artists[Math.floor(Artists.artists.length * Math.random())];
+        let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
         this.nodes = [
             {
                 ...randomArtist,
@@ -34,7 +34,7 @@ class GraphWindow extends React.Component {
         this.mouseCoord = null;
         this.selectedNode = null;
         this.adjacentRecommendedArtists = [];
-        this.topRecommendedArtists = Artists.artists.slice(0, 6);
+        this.topRecommendedArtists = DummyData.artists.slice(0, 6);
     }
 
     axialToCart(coord) {
@@ -253,7 +253,7 @@ class GraphWindow extends React.Component {
         if (this.adjacentRecommendedArtists.length === 0) {
             // Draw the recommended artists
             selectedNeighbors.forEach((neighborCoords) => {
-                let randomArtist = Artists.artists[Math.floor(Artists.artists.length * Math.random())];
+                let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
                 const length = this.adjacentRecommendedArtists.push({
                     ...randomArtist,
                     coords: neighborCoords,
@@ -341,16 +341,16 @@ class GraphWindow extends React.Component {
 
     handleClick = () => {
         var displayed = this.state.displayed;
-        if(displayed == null){
+        if (displayed == null) {
             this.setState({displayed: "Artist_editor"});
-        }else{
-        var newDisplayed = displayed === 'Playlist_editor' ? 'Artist_editor' : 'Playlist_editor';
-        this.setState({
-            displayed: newDisplayed
+        } else {
+          var newDisplayed = displayed === 'Playlist_editor' ? 'Artist_editor' : 'Playlist_editor';
+          this.setState({
+              displayed: newDisplayed
+          });
         }
-        );
-        }
-    };  
+    }
+
     quickAddStyle(index, image) {
         console.log(image);
         const style = {
@@ -358,7 +358,7 @@ class GraphWindow extends React.Component {
             height: "var(--sidebar-width)",
             position: "absolute",
             borderRadius: "50%",
-            top: "calc(max(50%, 3 * (var(--sidebar-width) + var(--sidebar-margin)) + var(--titlebar-height)) + " + (index - 3) + " * (var(--sidebar-width) + var(--sidebar-margin)))",
+            top: "calc(max(var(--sidebar-offset), 3 * (var(--sidebar-width) + var(--sidebar-margin)) + var(--titlebar-height)) + " + (index - 3) + " * (var(--sidebar-width) + var(--sidebar-margin)))",
             marginTop: "var(--sidebar-margin)",
             right: 0,
             display: "flex",
@@ -378,6 +378,7 @@ class GraphWindow extends React.Component {
                 backgroundColor: nodeBackground
             };
     }
+
     render() {
         var index = 0;
         return (
@@ -386,13 +387,11 @@ class GraphWindow extends React.Component {
                     <IconButton edge="end" onClick = {this.handleClick} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
                             <ArrowBackIosIcon style = {{width: "1.5vw", height: "1.5vw" }}></ArrowBackIosIcon>
                     </IconButton>
-                    <div>
-                        {this.state.displayed === 'Playlist_editor' ? (
-                            <Playlist_editor />
-                        ) : this.state.displayed  === 'Artist_editor' ? (
-                            <Artist_editor />
-                        ) : null}
-                    </div>
+                    {this.state.displayed === 'Playlist_editor' ? (
+                        <Playlist_editor />
+                    ) : this.state.displayed  === 'Artist_editor' ? (
+                        <Artist_editor />
+                    ) : null}
                     <div id="playback">
                     <SpotifyPlayer
                         token="BQD-oy8TLNVI9NEO6g2gTnq0RCeUW0XiqIRMRYqLB0qONzHL8amxHSHPOQqNiloPde6i7nDjYVmH_OussSp2Xcy2_ot6p7pixJzyrvscdJKV4dq0uCfXtwCr_thXcpbz6JbJBXkmmr8zEAfrY7HPE51p65it8xXdz__0WT60DlBMq52sSwDjYCSQJnE"
@@ -405,7 +404,7 @@ class GraphWindow extends React.Component {
                         key={ index }
                         style={ this.quickAddStyle(index) }
                     >
-                        <i className="fas fa-search" style={ { fontSize: "3vh" } }></i>
+                        <i className="fas fa-search" style={ { fontSize: "1.5rem" } }></i>
                     </div>
                 {
                     this.topRecommendedArtists.map((artist) => {
@@ -413,7 +412,7 @@ class GraphWindow extends React.Component {
                         return (
                             <div
                                 key={ index }
-                                style={ this.quickAddStyle(index, Artists.artists[index - 1].images[0].url) }
+                                style={ this.quickAddStyle(index, DummyData.artists[index - 1].images[0].url) }
                             />
                         );
                     })

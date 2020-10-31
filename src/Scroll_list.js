@@ -9,14 +9,7 @@ import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 import Typography from '@material-ui/core/Typography'
 
 
-import songs from "./DummyData/Neighbourhood.js";
 
-// function convertTime (ms) {
-//   ms = parseInt(ms);
-//   var min = Math.floor((ms/1000/60) << 0);
-//   var sec = Math.floor((ms/1000) % 60);
-//   return min.toString() + ":" + sec.toString();
-// };
 export default function ArtistSongList() {
   const [checked, setChecked] = React.useState([-1]);
   const handleToggle = (index) => () => {
@@ -31,23 +24,22 @@ export default function ArtistSongList() {
 
     setChecked(newChecked);
   };
-  var index =-1;
-
+  var json = require('./DummyData/DummyArtists.json');
+  const songs = json.graphicalPlaylists[0].artistNodes[3].tracks;
   return (
   <div style = {{overflow: 'hidden', height: "60%", position: "relative"}}>
     <List style = {{overflowY: "scroll", width:"100%", height: "100%", paddingRight: "3vw", boxSizing: "content-box"}}>
-      {songs.map(({album, song, image, duration}) => {
-        index ++;
-        const labelId = `checkbox-list-secondary-label-${index}`;
+      {songs.map(({spotifyTrackId, name, image, album}) => {
+        const labelId = `checkbox-list-secondary-label-${spotifyTrackId}`;
         return (
-          <ListItem key={index} button style={{marginTop: "1vh", marginBottom:"1vh", marginRight:"5vw", marginLeft:"1vw"}} >
+          <ListItem key={spotifyTrackId} button style={{marginTop: "1vh", marginBottom:"1vh", marginRight:"5vw", marginLeft:"1vw"}} >
             <div>
               <img alt="Album Cover" style = {{height: "2vw", width: "2vw", marginRight: "1vw"}} src={image}/>
             </div>    
             <ListItemText id={labelId} 
             disableTypography
-            primary={<Typography style={{ color: '#FFFFFF', fontSize: "1.25vw" }}>{song}</Typography>}
-            secondary={<Typography style={{color: '#FFFFFF', fontSize: ".75vw" }}>{album}</Typography>}
+            primary={<Typography style={{ color: '#FFFFFF', fontSize: ".9vw" }}>{name}</Typography>}
+            secondary={<Typography style={{color: 'gray', fontSize: ".75vw" }}>{album}</Typography>}
             />
           
             <ListItemSecondaryAction>
@@ -55,8 +47,8 @@ export default function ArtistSongList() {
                 icon={<FavoriteBorder style = {{width: "1.5vw", height: "1.5vw" }}/>}
                 checkedIcon={<Favorite style = {{width: "1.5vw", height: "1.5vw" }}/>}
                 edge="end"
-                onChange={handleToggle(index)}
-                checked={checked.indexOf(index) !== -1}
+                onChange={handleToggle(spotifyTrackId)}
+                checked={checked.indexOf(spotifyTrackId) !== -1}
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             </ListItemSecondaryAction>
