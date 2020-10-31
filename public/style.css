@@ -1,11 +1,14 @@
 :root {
     --background-color: rgb(56,56,56);
-    --titlebar-height: 2rem;
+    --text-color-primary: "white";
+    --text-color-secondary: #A0A0A0;
+    --titlebar-height: 3rem;
     --playlist-column-margin: 1rem;
     --playlist-column-width: max(22em, 20vw);
     --sidebar-width: 3rem;
     --playback-height: 3rem;
     --sidebar-margin: .5rem;
+    --sidebar-offset: 40%;
 }
 
 body {
@@ -20,18 +23,18 @@ body {
 
 #graph_window {
     width: 100%;
-    height: calc(96% - var(--titlebar-height));
+    height: calc(100% - var(--titlebar-height));
 }
 
 #playlist_column {
     width: var(--playlist-column-width);
-    height: calc(90% - var(--titlebar-height));
+    height: calc(100% - var(--titlebar-height));
     position: absolute;
 }
 
 #sidebar_column {
     width: var(--sidebar-width);
-    height: 70%;
+    height: 100%;
     top: 0;
     position: absolute;
     pointer-events: none;
@@ -40,7 +43,7 @@ body {
 
 #playlist_editor {
     width: calc(100% - 3 * var(--playlist-column-padding));
-    height: max(34em, calc(80vh - var(--playlist-column-margin)));
+    height: max(34em, calc(100% - 3 * var(--playlist-column-margin) - 48px));
     background-color: var(--background-color);
     border-color: black;
     border-width: 1;
@@ -57,34 +60,6 @@ body {
     height: var(--playback-height);
     background-color: var(--background-color);
     margin: var(--playlist-column-margin);
-}
-
-img.thumb{
-    height: 7vh;
-    width: 7vh;
-    border-radius: 50%;
-    overflow: hidden;
-}
-
-td{
-    height: 8vh;
-}
-
-td.imgSpace{
-    width: 10%;
-}
-
-td.titleSpace{
-    color: white;
-    width: 40%;
-}
-
-table tr:hover td{
-    background-color: grey;
-}
-
-table{
-    border-collapse: collapse;
 }
     
 #scroll_list {

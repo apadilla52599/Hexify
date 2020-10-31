@@ -31,26 +31,26 @@ class Titlebar extends React.Component {
             // b = "none";
         }
         return (
-            <div id="titlebar" style={{ ...this.props.style,minHeight: "5vh", display: "flex", alignItems: "center" }}>
+            <div id="titlebar" style={{ ...this.props.style,minHeight: "3rem", display: "flex", alignItems: "center" }}>
                 <div>
-                    <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "2.5vh", paddingLeft: "1vw" }}><i className="fas fa-bars"></i></p>
+                    <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.2rem", paddingLeft: ".8rem" }}><i className="fas fa-bars"></i></p>
                 </div>
-                <Input placeholder="Untitled Graph" style = {{marginTop: ".25vh", marginLeft: "3vw", marginRight:"1vw", color: "white", fontSize: "1.5vh",visibility:a}} />
-                <p style={{ color: "gray", cursor: "default", fontFamily: "monospace", fontSize: ".75vw",width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
+                <Input placeholder="Untitled Graph" style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem",visibility:a}} />
+                <p style={{ color: "var(--text-color-secondary)", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
                 
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <a href="/" style = {{textDecoration: "none"}}>
-                        <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "3vh" }}>Hexify</p>
+                        <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "1.2rem" }}>Hexify</p>
                     </a>
                 </div>
 
                 <IconButton href="/browse" style = {{color: "white", visibility:a, marginLeft: "22vw"}}>
-                    <PublicIcon style={{width:"2.5vh", height:"2.5vh"}}/>
+                    <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
                 </IconButton>
                 {/* <a href="/browse2" style = {{textDecoration: "none"}}>
                         <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "1vh", display: b }}>Second Browse</p>
                 </a> */}
-                <button style = {{fontSize: "1.5vh", borderColor:"B19CD9", backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
+                <button style = {{fontSize: ".8rem", borderColor:"B19CD9", backgroundColor: "B19CD9", marginRight:"2vw", marginLeft:"1vw"}}>
                     Login
                 </button>
             </div>
