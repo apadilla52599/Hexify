@@ -11,8 +11,6 @@ import img5 from "./DummyData/p5.JPG";
 import img6 from "./DummyData/p6.JPG";
 import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
-import img9 from "./DummyData/p9.JPG";
-
 
 
 class Browse extends React.Component {
@@ -29,8 +27,8 @@ class Browse extends React.Component {
     componentDidMount(){
         var json = require('./DummyData/DummyArtists.json');
         var graphList = json.graphicalPlaylists.map((thumbnails, index) => ({name: thumbnails.name, id: index}));
-        var otherList = [img1,img2,img3,img4,img5,img6,img7,img8,img9];
-        for(let i = 0; i < 9;i++){
+        var otherList = [img1,img2,img3,img4,img5,img6,img7,img8];
+        for(let i = 0; i < otherList.length;i++){
             graphList[i].src = otherList[i];
         }
         console.log(graphList);

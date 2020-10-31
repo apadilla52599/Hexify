@@ -17,7 +17,6 @@ import img5 from "./DummyData/p5.JPG";
 import img6 from "./DummyData/p6.JPG";
 import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
-import img9 from "./DummyData/p9.JPG";
 import { Divider } from "@material-ui/core";
 
 class HamburgerMenu extends React.Component {
@@ -33,8 +32,8 @@ class HamburgerMenu extends React.Component {
         var json = require('./DummyData/DummyArtists.json');
         var graphList = json.graphicalPlaylists.map(playlist => ({name: playlist.name}));
         // console.log(graphList);
-        var otherList = [img1,img2,img3,img4,img5,img6,img7,img8,img9];
-        for(let i = 0; i < 9;i++){
+        var otherList = [img1,img2,img3,img4,img5,img6,img7,img8];
+        for(let i = 0; i < 8;i++){
             graphList[i].thumbnail = otherList[i];
         }
         this.setState({graphList: graphList});
