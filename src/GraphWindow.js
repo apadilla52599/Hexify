@@ -341,16 +341,16 @@ class GraphWindow extends React.Component {
 
     handleClick = () => {
         var displayed = this.state.displayed;
-        if(displayed == null){
+        if (displayed == null) {
             this.setState({displayed: "Artist_editor"});
-        }else{
-        var newDisplayed = displayed === 'Playlist_editor' ? 'Artist_editor' : 'Playlist_editor';
-        this.setState({
-            displayed: newDisplayed
+        } else {
+          var newDisplayed = displayed === 'Playlist_editor' ? 'Artist_editor' : 'Playlist_editor';
+          this.setState({
+              displayed: newDisplayed
+          });
         }
-        );
-        }
-    };  
+    }
+
     quickAddStyle(index, image) {
         console.log(image);
         const style = {
@@ -358,7 +358,7 @@ class GraphWindow extends React.Component {
             height: "var(--sidebar-width)",
             position: "absolute",
             borderRadius: "50%",
-            top: "calc(max(50%, 3 * (var(--sidebar-width) + var(--sidebar-margin)) + var(--titlebar-height)) + " + (index - 3) + " * (var(--sidebar-width) + var(--sidebar-margin)))",
+            top: "calc(max(var(--sidebar-offset), 3 * (var(--sidebar-width) + var(--sidebar-margin)) + var(--titlebar-height)) + " + (index - 3) + " * (var(--sidebar-width) + var(--sidebar-margin)))",
             marginTop: "var(--sidebar-margin)",
             right: 0,
             display: "flex",
@@ -378,6 +378,7 @@ class GraphWindow extends React.Component {
                 backgroundColor: nodeBackground
             };
     }
+
     render() {
         var index = 0;
         return (
@@ -386,13 +387,11 @@ class GraphWindow extends React.Component {
                     <IconButton edge="end" onClick = {this.handleClick} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
                             <ArrowBackIosIcon style = {{width: "1.5vw", height: "1.5vw" }}></ArrowBackIosIcon>
                     </IconButton>
-                    <div>
-                        {this.state.displayed === 'Playlist_editor' ? (
-                            <Playlist_editor />
-                        ) : this.state.displayed  === 'Artist_editor' ? (
-                            <Artist_editor />
-                        ) : null}
-                    </div>
+                    {this.state.displayed === 'Playlist_editor' ? (
+                        <Playlist_editor />
+                    ) : this.state.displayed  === 'Artist_editor' ? (
+                        <Artist_editor />
+                    ) : null}
                     <div id="playback">
                     <SpotifyPlayer
                         token="BQD-oy8TLNVI9NEO6g2gTnq0RCeUW0XiqIRMRYqLB0qONzHL8amxHSHPOQqNiloPde6i7nDjYVmH_OussSp2Xcy2_ot6p7pixJzyrvscdJKV4dq0uCfXtwCr_thXcpbz6JbJBXkmmr8zEAfrY7HPE51p65it8xXdz__0WT60DlBMq52sSwDjYCSQJnE"
@@ -405,7 +404,7 @@ class GraphWindow extends React.Component {
                         key={ index }
                         style={ this.quickAddStyle(index) }
                     >
-                        <i className="fas fa-search" style={ { fontSize: "3vh" } }></i>
+                        <i className="fas fa-search" style={ { fontSize: "1.5rem" } }></i>
                     </div>
                 {
                     this.topRecommendedArtists.map((artist) => {
