@@ -7,7 +7,6 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DummyData from "./DummyData/DummyArtists.json";
 
-
 const cartesianToPixel = 20;
 const selectedColor = "#7ae15e";
 const hexRadius = cartesianToPixel;
@@ -25,8 +24,9 @@ class GraphWindow extends React.Component {
             {
                 ...randomArtist,
                 coords: { q: 0, r: 0},
+                selectedTracks: [],
                 image: null
-            }
+            },
         ];
         this.transform = null;
         this.canvas = null;
@@ -257,6 +257,7 @@ class GraphWindow extends React.Component {
                 const length = this.adjacentRecommendedArtists.push({
                     ...randomArtist,
                     coords: neighborCoords,
+                    selectedTracks: [],
                     image: null
                 });
                 this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
