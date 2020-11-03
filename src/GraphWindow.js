@@ -6,6 +6,7 @@ import SpotifyPlayer from 'react-spotify-web-playback';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DummyData from "./DummyData/DummyArtists.json";
+import TransactionStack from "./TransactionStack.js";
 
 const cartesianToPixel = 20;
 const selectedColor = "#7ae15e";
@@ -17,17 +18,19 @@ class GraphWindow extends React.Component {
 
     constructor() {
         super();
-        this.state = {displayed: "Artist_editor"};
-        console.log(this.state.displayed)
+        this.state = {
+            nodes: [],
+            displayed: "Artist_editor"
+        };
+        this.transactionStack = new TransactionStack(this.state.nodes);
         let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
-        this.nodes = [
-            {
-                ...randomArtist,
-                coords: { q: 0, r: 0},
-                selectedTracks: [],
-                image: null
-            },
-        ];
+        const firstNode = {
+            ...randomArtist,
+            coords: { q: 0, r: 0},
+            selectedTracks: [],
+            image: null
+        };
+        this.setState({ nodes: this.transactionStack.addNode(firstNode) });
         this.transform = null;
         this.canvas = null;
         this.ctx = null;
@@ -230,7 +233,7 @@ class GraphWindow extends React.Component {
             }
         }
 
-        this.nodes.forEach((node) => {
+        this.state.nodes.forEach((node) => {
             if (this.selectedNode != null &&
                 this.selectedNode.coords.q === node.coords.q &&
                 this.selectedNode.coords.r === node.coords.r)
@@ -311,7 +314,8 @@ class GraphWindow extends React.Component {
             var flag = false;
             this.adjacentRecommendedArtists.forEach((node) => {
                 if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
-                    this.nodes.push(node);
+                    //this.nodes.push(node);
+                    this.setState({ nodes: this.transactionStack.addNode(node) });
                     this.selectedNode = node;
                     this.adjacentRecommendedArtists = [];
                     this.draw();
@@ -319,7 +323,7 @@ class GraphWindow extends React.Component {
                 }
             });
             if (flag === false) {
-                this.nodes.forEach((node) => {
+                this.state.nodes.forEach((node) => {
                     if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
                         this.selectedNode = node;
                         this.adjacentRecommendedArtists = [];
@@ -355,7 +359,6 @@ class GraphWindow extends React.Component {
     }
 
     quickAddStyle(index, image) {
-        console.log(image);
         const style = {
             width: "var(--sidebar-width)",
             height: "var(--sidebar-width)",
