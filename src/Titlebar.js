@@ -22,22 +22,18 @@ class Titlebar extends React.Component {
     }
 
     render() {
-        var a = (window.location.pathname === "/browse");
-        var b;
-        if(a){
-            a = "hidden";
-            // b = "inline";
-        }else{
-            a = "visible";
-            // b = "none";
-        }
+        const browsing = (window.location.pathname === "/browse");
         return (
             <div id="titlebar" style={{ ...this.props.style,minHeight: "3rem", display: "flex", alignItems: "center" }}>
                 <div>
                     <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.2rem", paddingLeft: ".8rem" }}><i className="fas fa-bars"></i></p>
                 </div>
-                <Input placeholder="Untitled Graph" style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem",visibility:a}} />
-                <p style={{ color: "var(--text-color-secondary)", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw", visibility:a }}>Last Updated: Today 2:52pm</p>
+                { !browsing &&
+                    <Input placeholder="Untitled Graph" style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
+                }
+                { !browsing &&
+                    <p style={{ color: "var(--text-color-secondary)", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>
+                }
                 
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <a href="/" style = {{textDecoration: "none"}}>
@@ -45,9 +41,11 @@ class Titlebar extends React.Component {
                     </a>
                 </div>
 
-                <IconButton href="/browse" style = {{color: "white", visibility:a, marginLeft: "22vw"}}>
-                    <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
-                </IconButton>
+                { !browsing &&
+                    <IconButton href="/browse" style = {{color: "white", marginLeft: "22vw"}}>
+                        <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
+                    </IconButton>
+                }
                 <Button variant="contained" color="default" style = {{backgroundColor: "#B19CD9", marginRight: "1vw", marginLeft: "1vw", height: "2rem", fontSize: ".75rem"}}>
                     Log In
                 </Button>

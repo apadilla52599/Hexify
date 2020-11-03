@@ -2,7 +2,7 @@ import React from "react";
 import Playlist from './Scroll_list2.js';
 import Button from '@material-ui/core/Button'
 
-class Playlist_editor extends React.Component {
+class PlaylistEditor extends React.Component {
     render() {
         return (
             <div id="playlist_editor">
@@ -32,4 +32,4 @@ class Playlist_editor extends React.Component {
       }
 }
 
-export default Playlist_editor;
+export default PlaylistEditor;

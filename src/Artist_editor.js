@@ -2,7 +2,7 @@ import React from "react";
 import ArtistSongList from './Scroll_list.js';
 import Button from '@material-ui/core/Button'
 
-class Artist_editor extends React.Component {
+class ArtistEditor extends React.Component {
     render() {
         var json = require('./DummyData/DummyArtists.json');
         var artist = json.artists[0];
@@ -37,4 +37,4 @@ class Artist_editor extends React.Component {
       }
 }
 
-export default Artist_editor;
+export default ArtistEditor;

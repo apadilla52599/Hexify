@@ -1,6 +1,6 @@
 import React from "react";
-import Playlist_editor from './Playlist_editor.js';
-import Artist_editor from './Artist_editor.js';
+import PlaylistEditor from './Playlist_editor.js';
+import ArtistEditor from './Artist_editor.js';
 import * as d3 from "d3";
 import SpotifyPlayer from 'react-spotify-web-playback';
 import IconButton from '@material-ui/core/IconButton';
@@ -391,9 +391,9 @@ class GraphWindow extends React.Component {
                             <ArrowBackIosIcon style = {{width: "1.5vw", height: "1.5vw" }}></ArrowBackIosIcon>
                     </IconButton>
                     {this.state.displayed === 'Playlist_editor' ? (
-                        <Playlist_editor />
+                        <PlaylistEditor />
                     ) : this.state.displayed  === 'Artist_editor' ? (
-                        <Artist_editor />
+                        <ArtistEditor />
                     ) : null}
                     <div id="playback">
                     <SpotifyPlayer
