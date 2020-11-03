@@ -5,12 +5,12 @@ import Button from '@material-ui/core/Button'
 class Artist_editor extends React.Component {
     render() {
         var json = require('./DummyData/DummyArtists.json');
-        var artist = json.graphicalPlaylists[0].artistNodes[3];
+        var artist = json.artists[0];
         return (
             <div id="playlist_editor" style = {{align: "center"}}>
                 <div style={{display: "flex", alignItems: "center" }}>
                     <div  style={{paddingTop: "1.5rem", display: "flex", justifyContent: "center", flexGrow: 1}}>
-					    <img style = {{width: "6rem", height: "6rem", borderRadius: "50%"}} src= {artist.imageURL} className="img-responsive" alt=""/>
+					    <img style = {{width: "6rem", height: "6rem", borderRadius: "50%"}} src= {artist.images[2].url} className="img-responsive" alt=""/>
 				    </div>
                 </div>     
 				

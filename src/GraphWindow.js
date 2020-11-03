@@ -395,7 +395,7 @@ class GraphWindow extends React.Component {
                     <div id="playback">
                     <SpotifyPlayer
                         token="BQAOP1_rHvOwVYs4uVlqywfYA3JFHIS2vrDG2ppAvjE3HSA_vUx_9y8VkL5B2AWg9jvUWXLiF1W3UL3UEmiqckVUBZIvDi4cOfTFNdkDRUS-ZdYTdCQcicy27rG11DiXt-zkYWEMTpvSO_xX2SXak_rSpDadfCkP0RF4LTXwt_MLzmSnIm3oZy02oZs"
-                        uris={['spotify:playlist:37i9dQZF1DXcBWIGoYBM5M']}
+                        uris={['spotify:album:7H814Cg8HV0qpoMheYbhNn']}
                         />
                      </div>
                 </div>

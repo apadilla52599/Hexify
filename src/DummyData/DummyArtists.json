@@ -6742,7 +6742,7 @@
         }
       ]
     },
-  {
+    {
       "external_urls": {
         "spotify": "https://open.spotify.com/artist/0SwO7SWeDHJijQ3XNS7xEE"
       },
@@ -12382,7 +12382,6 @@
         }
       ]
     },
-  
     {
       "external_urls": {
         "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
@@ -12418,7 +12417,551 @@
       "name": "Alex Turner",
       "popularity": 66,
       "type": "artist",
-      "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+      "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S",
+      "tracks": [
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+                },
+                "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+                "id": "1ctkBmvz80MGyi72Ix055S",
+                "name": "Alex Turner",
+                "type": "artist",
+                "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2nrjrRYf2ANHE3jsUrs0gJ"
+            },
+            "href": "https://api.spotify.com/v1/albums/2nrjrRYf2ANHE3jsUrs0gJ",
+            "id": "2nrjrRYf2ANHE3jsUrs0gJ",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a87c2dadc455cd71519fddbf",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a87c2dadc455cd71519fddbf",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a87c2dadc455cd71519fddbf",
+                "width": 64
+              }
+            ],
+            "name": "Submarine - Original Songs From The Film By Alex Turner",
+            "release_date": "2011-03-15",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:2nrjrRYf2ANHE3jsUrs0gJ"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 211053,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBCEL1100045"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7w6QlKAOcNEnqRgrnJvQtr"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7w6QlKAOcNEnqRgrnJvQtr",
+          "id": "7w6QlKAOcNEnqRgrnJvQtr",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Stuck on the puzzle",
+          "popularity": 55,
+          "preview_url": "https://p.scdn.co/mp3-preview/a2186e656383ecaa3aedaa0fd2df9c299afa1e24?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 5,
+          "type": "track",
+          "uri": "spotify:track:7w6QlKAOcNEnqRgrnJvQtr"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+                },
+                "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+                "id": "1ctkBmvz80MGyi72Ix055S",
+                "name": "Alex Turner",
+                "type": "artist",
+                "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2nrjrRYf2ANHE3jsUrs0gJ"
+            },
+            "href": "https://api.spotify.com/v1/albums/2nrjrRYf2ANHE3jsUrs0gJ",
+            "id": "2nrjrRYf2ANHE3jsUrs0gJ",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a87c2dadc455cd71519fddbf",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a87c2dadc455cd71519fddbf",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a87c2dadc455cd71519fddbf",
+                "width": 64
+              }
+            ],
+            "name": "Submarine - Original Songs From The Film By Alex Turner",
+            "release_date": "2011-03-15",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:2nrjrRYf2ANHE3jsUrs0gJ"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 204880,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBCEL1100046"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/4PJxptsSC9S89hTO8gRCv3"
+          },
+          "href": "https://api.spotify.com/v1/tracks/4PJxptsSC9S89hTO8gRCv3",
+          "id": "4PJxptsSC9S89hTO8gRCv3",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Piledriver waltz",
+          "popularity": 46,
+          "preview_url": "https://p.scdn.co/mp3-preview/408a71e8f71740a3b4af96e849f09c99b93f0400?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 6,
+          "type": "track",
+          "uri": "spotify:track:4PJxptsSC9S89hTO8gRCv3"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+                },
+                "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+                "id": "1ctkBmvz80MGyi72Ix055S",
+                "name": "Alex Turner",
+                "type": "artist",
+                "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2nrjrRYf2ANHE3jsUrs0gJ"
+            },
+            "href": "https://api.spotify.com/v1/albums/2nrjrRYf2ANHE3jsUrs0gJ",
+            "id": "2nrjrRYf2ANHE3jsUrs0gJ",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a87c2dadc455cd71519fddbf",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a87c2dadc455cd71519fddbf",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a87c2dadc455cd71519fddbf",
+                "width": 64
+              }
+            ],
+            "name": "Submarine - Original Songs From The Film By Alex Turner",
+            "release_date": "2011-03-15",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:2nrjrRYf2ANHE3jsUrs0gJ"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 247013,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBCEL1100044"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/1XYX4JnSULbKGCi5uSjeJy"
+          },
+          "href": "https://api.spotify.com/v1/tracks/1XYX4JnSULbKGCi5uSjeJy",
+          "id": "1XYX4JnSULbKGCi5uSjeJy",
+          "is_local": false,
+          "is_playable": true,
+          "name": "It's hard to get around the wind",
+          "popularity": 44,
+          "preview_url": "https://p.scdn.co/mp3-preview/4a2941b78ce6704b99ae5518c98a6e912113ecaa?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 4,
+          "type": "track",
+          "uri": "spotify:track:1XYX4JnSULbKGCi5uSjeJy"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+                },
+                "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+                "id": "1ctkBmvz80MGyi72Ix055S",
+                "name": "Alex Turner",
+                "type": "artist",
+                "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2nrjrRYf2ANHE3jsUrs0gJ"
+            },
+            "href": "https://api.spotify.com/v1/albums/2nrjrRYf2ANHE3jsUrs0gJ",
+            "id": "2nrjrRYf2ANHE3jsUrs0gJ",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a87c2dadc455cd71519fddbf",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a87c2dadc455cd71519fddbf",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a87c2dadc455cd71519fddbf",
+                "width": 64
+              }
+            ],
+            "name": "Submarine - Original Songs From The Film By Alex Turner",
+            "release_date": "2011-03-15",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:2nrjrRYf2ANHE3jsUrs0gJ"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 186720,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBCEL1100042"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0x47zt71IYykbt1ET933pJ"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0x47zt71IYykbt1ET933pJ",
+          "id": "0x47zt71IYykbt1ET933pJ",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Hiding tonight",
+          "popularity": 45,
+          "preview_url": "https://p.scdn.co/mp3-preview/2f1f53828c68f3a2a6d7391ae6d3d51aa79a9d26?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:0x47zt71IYykbt1ET933pJ"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+                },
+                "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+                "id": "1ctkBmvz80MGyi72Ix055S",
+                "name": "Alex Turner",
+                "type": "artist",
+                "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2nrjrRYf2ANHE3jsUrs0gJ"
+            },
+            "href": "https://api.spotify.com/v1/albums/2nrjrRYf2ANHE3jsUrs0gJ",
+            "id": "2nrjrRYf2ANHE3jsUrs0gJ",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a87c2dadc455cd71519fddbf",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a87c2dadc455cd71519fddbf",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a87c2dadc455cd71519fddbf",
+                "width": 64
+              }
+            ],
+            "name": "Submarine - Original Songs From The Film By Alex Turner",
+            "release_date": "2011-03-15",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:2nrjrRYf2ANHE3jsUrs0gJ"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 239653,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBCEL1100043"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/1zdKc6UvnPuoVHkr0NYyIf"
+          },
+          "href": "https://api.spotify.com/v1/tracks/1zdKc6UvnPuoVHkr0NYyIf",
+          "id": "1zdKc6UvnPuoVHkr0NYyIf",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Glass in the park",
+          "popularity": 44,
+          "preview_url": "https://p.scdn.co/mp3-preview/7f90c0b38c46e3c0dcd3f6ff92985986e7fb5f9b?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 3,
+          "type": "track",
+          "uri": "spotify:track:1zdKc6UvnPuoVHkr0NYyIf"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+                },
+                "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+                "id": "1ctkBmvz80MGyi72Ix055S",
+                "name": "Alex Turner",
+                "type": "artist",
+                "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2nrjrRYf2ANHE3jsUrs0gJ"
+            },
+            "href": "https://api.spotify.com/v1/albums/2nrjrRYf2ANHE3jsUrs0gJ",
+            "id": "2nrjrRYf2ANHE3jsUrs0gJ",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a87c2dadc455cd71519fddbf",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a87c2dadc455cd71519fddbf",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a87c2dadc455cd71519fddbf",
+                "width": 64
+              }
+            ],
+            "name": "Submarine - Original Songs From The Film By Alex Turner",
+            "release_date": "2011-03-15",
+            "release_date_precision": "day",
+            "total_tracks": 6,
+            "type": "album",
+            "uri": "spotify:album:2nrjrRYf2ANHE3jsUrs0gJ"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 53760,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBCEL1100041"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/2T93gkzGo8Jy0v0SByKPws"
+          },
+          "href": "https://api.spotify.com/v1/tracks/2T93gkzGo8Jy0v0SByKPws",
+          "id": "2T93gkzGo8Jy0v0SByKPws",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Stuck on the puzzle - intro",
+          "popularity": 34,
+          "preview_url": "https://p.scdn.co/mp3-preview/f57652a7c98958dc923778c14948f0c5e5055355?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:2T93gkzGo8Jy0v0SByKPws"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0SvJhAgrXJIH6TJrvbf60x"
+                },
+                "href": "https://api.spotify.com/v1/artists/0SvJhAgrXJIH6TJrvbf60x",
+                "id": "0SvJhAgrXJIH6TJrvbf60x",
+                "name": "3Tekk",
+                "type": "artist",
+                "uri": "spotify:artist:0SvJhAgrXJIH6TJrvbf60x"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/5f1mHgzSygRFabJWqSBiqA"
+            },
+            "href": "https://api.spotify.com/v1/albums/5f1mHgzSygRFabJWqSBiqA",
+            "id": "5f1mHgzSygRFabJWqSBiqA",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2737596487d8b2ce0bba093d20e",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e027596487d8b2ce0bba093d20e",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048517596487d8b2ce0bba093d20e",
+                "width": 64
+              }
+            ],
+            "name": "Technologie",
+            "release_date": "2019-09-19",
+            "release_date_precision": "day",
+            "total_tracks": 5,
+            "type": "album",
+            "uri": "spotify:album:5f1mHgzSygRFabJWqSBiqA"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0SvJhAgrXJIH6TJrvbf60x"
+              },
+              "href": "https://api.spotify.com/v1/artists/0SvJhAgrXJIH6TJrvbf60x",
+              "id": "0SvJhAgrXJIH6TJrvbf60x",
+              "name": "3Tekk",
+              "type": "artist",
+              "uri": "spotify:artist:0SvJhAgrXJIH6TJrvbf60x"
+            },
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1ctkBmvz80MGyi72Ix055S"
+              },
+              "href": "https://api.spotify.com/v1/artists/1ctkBmvz80MGyi72Ix055S",
+              "id": "1ctkBmvz80MGyi72Ix055S",
+              "name": "Alex Turner",
+              "type": "artist",
+              "uri": "spotify:artist:1ctkBmvz80MGyi72Ix055S"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 430080,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USLZJ1971582"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3FPwGLDFzsQYr0gIphefxK"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3FPwGLDFzsQYr0gIphefxK",
+          "id": "3FPwGLDFzsQYr0gIphefxK",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Technologie - Alex Turner Remix",
+          "popularity": 25,
+          "preview_url": "https://p.scdn.co/mp3-preview/571a06a7a90b7e544fdaa864f830b79c936d828b?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:3FPwGLDFzsQYr0gIphefxK"
+        }
+      ]
     },
     {
       "external_urls": {
@@ -12461,7 +13004,769 @@
       "name": "The Raconteurs",
       "popularity": 64,
       "type": "artist",
-      "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+      "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc",
+      "tracks": [
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4fDaiqpXlswOza10LvoZHb"
+            },
+            "href": "https://api.spotify.com/v1/albums/4fDaiqpXlswOza10LvoZHb",
+            "id": "4fDaiqpXlswOza10LvoZHb",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739a71a41cc7efb05fc348e074",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029a71a41cc7efb05fc348e074",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519a71a41cc7efb05fc348e074",
+                "width": 64
+              }
+            ],
+            "name": "Broken Boy Soldiers",
+            "release_date": "2006",
+            "release_date_precision": "year",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:4fDaiqpXlswOza10LvoZHb"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 215266,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USVT10600052"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/19iqWNzp5LwEdvntpEK8MP"
+          },
+          "href": "https://api.spotify.com/v1/tracks/19iqWNzp5LwEdvntpEK8MP",
+          "id": "19iqWNzp5LwEdvntpEK8MP",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Steady, As She Goes",
+          "popularity": 70,
+          "preview_url": "https://p.scdn.co/mp3-preview/0f1c1e8351cc8e5b1f73941b7702a53d2c248fc4?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:19iqWNzp5LwEdvntpEK8MP"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4fDaiqpXlswOza10LvoZHb"
+            },
+            "href": "https://api.spotify.com/v1/albums/4fDaiqpXlswOza10LvoZHb",
+            "id": "4fDaiqpXlswOza10LvoZHb",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739a71a41cc7efb05fc348e074",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029a71a41cc7efb05fc348e074",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519a71a41cc7efb05fc348e074",
+                "width": 64
+              }
+            ],
+            "name": "Broken Boy Soldiers",
+            "release_date": "2006",
+            "release_date_precision": "year",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:4fDaiqpXlswOza10LvoZHb"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 141160,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USVT10600070"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/4iwChnVkJz2STSniIn3QMR"
+          },
+          "href": "https://api.spotify.com/v1/tracks/4iwChnVkJz2STSniIn3QMR",
+          "id": "4iwChnVkJz2STSniIn3QMR",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Level",
+          "popularity": 54,
+          "preview_url": "https://p.scdn.co/mp3-preview/2c9fbcd85826e329b16b3917f9377c30e4850dcb?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 6,
+          "type": "track",
+          "uri": "spotify:track:4iwChnVkJz2STSniIn3QMR"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0OBNtBshpjFPStZGJTGNJr"
+            },
+            "href": "https://api.spotify.com/v1/albums/0OBNtBshpjFPStZGJTGNJr",
+            "id": "0OBNtBshpjFPStZGJTGNJr",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273596f5c49176f3d485e0de325",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02596f5c49176f3d485e0de325",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851596f5c49176f3d485e0de325",
+                "width": 64
+              }
+            ],
+            "name": "Consolers Of The Lonely",
+            "release_date": "2008-03-05",
+            "release_date_precision": "day",
+            "total_tracks": 14,
+            "type": "album",
+            "uri": "spotify:album:0OBNtBshpjFPStZGJTGNJr"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 179973,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBBKS0800208"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0ydgFPcYrxaHgVuLd17mjh"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0ydgFPcYrxaHgVuLd17mjh",
+          "id": "0ydgFPcYrxaHgVuLd17mjh",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Salute Your Solution",
+          "popularity": 53,
+          "preview_url": "https://p.scdn.co/mp3-preview/22bfc7729f4009ad991a29275bb35af9168c152c?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:0ydgFPcYrxaHgVuLd17mjh"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4fDaiqpXlswOza10LvoZHb"
+            },
+            "href": "https://api.spotify.com/v1/albums/4fDaiqpXlswOza10LvoZHb",
+            "id": "4fDaiqpXlswOza10LvoZHb",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739a71a41cc7efb05fc348e074",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029a71a41cc7efb05fc348e074",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519a71a41cc7efb05fc348e074",
+                "width": 64
+              }
+            ],
+            "name": "Broken Boy Soldiers",
+            "release_date": "2006",
+            "release_date_precision": "year",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:4fDaiqpXlswOza10LvoZHb"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 232493,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USVT10600073"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3vPZNhkkhAupLlC9v3SrBj"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3vPZNhkkhAupLlC9v3SrBj",
+          "id": "3vPZNhkkhAupLlC9v3SrBj",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Blue Veins",
+          "popularity": 53,
+          "preview_url": "https://p.scdn.co/mp3-preview/f650e5eeaf257d47bc796a548629061738a08cd5?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 10,
+          "type": "track",
+          "uri": "spotify:track:3vPZNhkkhAupLlC9v3SrBj"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1AP1CpLlnQa4nPzDT8rR2v"
+            },
+            "href": "https://api.spotify.com/v1/albums/1AP1CpLlnQa4nPzDT8rR2v",
+            "id": "1AP1CpLlnQa4nPzDT8rR2v",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273c5cc206f3e8ea16b3ddad869",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02c5cc206f3e8ea16b3ddad869",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851c5cc206f3e8ea16b3ddad869",
+                "width": 64
+              }
+            ],
+            "name": "Live at Electric Lady",
+            "release_date": "2020-05-29",
+            "release_date_precision": "day",
+            "total_tracks": 9,
+            "type": "album",
+            "uri": "spotify:album:1AP1CpLlnQa4nPzDT8rR2v"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 233596,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "US3JJ1900330"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7rklSHokP7SFLERdaCbheh"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7rklSHokP7SFLERdaCbheh",
+          "id": "7rklSHokP7SFLERdaCbheh",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Blank Generation (Studio Version) - Recorded at Electric Lady Studios",
+          "popularity": 47,
+          "preview_url": "https://p.scdn.co/mp3-preview/f996643f81e2fac2c6980fcaf724c7eea74729ad?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 9,
+          "type": "track",
+          "uri": "spotify:track:7rklSHokP7SFLERdaCbheh"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4fDaiqpXlswOza10LvoZHb"
+            },
+            "href": "https://api.spotify.com/v1/albums/4fDaiqpXlswOza10LvoZHb",
+            "id": "4fDaiqpXlswOza10LvoZHb",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739a71a41cc7efb05fc348e074",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029a71a41cc7efb05fc348e074",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519a71a41cc7efb05fc348e074",
+                "width": 64
+              }
+            ],
+            "name": "Broken Boy Soldiers",
+            "release_date": "2006",
+            "release_date_precision": "year",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:4fDaiqpXlswOza10LvoZHb"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 182226,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USVT10600067"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/08QMa0YdlIYRY9peDOVCLe"
+          },
+          "href": "https://api.spotify.com/v1/tracks/08QMa0YdlIYRY9peDOVCLe",
+          "id": "08QMa0YdlIYRY9peDOVCLe",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Broken Boy Soldier",
+          "popularity": 47,
+          "preview_url": "https://p.scdn.co/mp3-preview/d7ca46c1295c0187c4ce27c2e456ee25c62984f0?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 3,
+          "type": "track",
+          "uri": "spotify:track:08QMa0YdlIYRY9peDOVCLe"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/5nT0zM0q3zCwbISrPd7Xkd"
+            },
+            "href": "https://api.spotify.com/v1/albums/5nT0zM0q3zCwbISrPd7Xkd",
+            "id": "5nT0zM0q3zCwbISrPd7Xkd",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27351561e4a23ef607a9e9a6ebe",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0251561e4a23ef607a9e9a6ebe",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485151561e4a23ef607a9e9a6ebe",
+                "width": 64
+              }
+            ],
+            "name": "Help Us Stranger - With Track-by-Track Commentary",
+            "release_date": "2019-06-20",
+            "release_date_precision": "day",
+            "total_tracks": 24,
+            "type": "album",
+            "uri": "spotify:album:5nT0zM0q3zCwbISrPd7Xkd"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 240985,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "US3JJ1900057"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0JwlVxE6RtIGSAcAwBlJKk"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0JwlVxE6RtIGSAcAwBlJKk",
+          "id": "0JwlVxE6RtIGSAcAwBlJKk",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Now That You're Gone",
+          "popularity": 44,
+          "preview_url": "https://p.scdn.co/mp3-preview/adb9e71a2f1f30c84f73f65ad1ea3d7be9d7a9dd?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 18,
+          "type": "track",
+          "uri": "spotify:track:0JwlVxE6RtIGSAcAwBlJKk"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0OBNtBshpjFPStZGJTGNJr"
+            },
+            "href": "https://api.spotify.com/v1/albums/0OBNtBshpjFPStZGJTGNJr",
+            "id": "0OBNtBshpjFPStZGJTGNJr",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273596f5c49176f3d485e0de325",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02596f5c49176f3d485e0de325",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851596f5c49176f3d485e0de325",
+                "width": 64
+              }
+            ],
+            "name": "Consolers Of The Lonely",
+            "release_date": "2008-03-05",
+            "release_date_precision": "day",
+            "total_tracks": 14,
+            "type": "album",
+            "uri": "spotify:album:0OBNtBshpjFPStZGJTGNJr"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 205586,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBBKS0800207"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/55rs5f3NvawRGMO666XqL5"
+          },
+          "href": "https://api.spotify.com/v1/tracks/55rs5f3NvawRGMO666XqL5",
+          "id": "55rs5f3NvawRGMO666XqL5",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Consoler of the Lonely",
+          "popularity": 45,
+          "preview_url": "https://p.scdn.co/mp3-preview/e03ff98abae11b05dfbb0f8b37496a8c2c2a07db?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:55rs5f3NvawRGMO666XqL5"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/5nT0zM0q3zCwbISrPd7Xkd"
+            },
+            "href": "https://api.spotify.com/v1/albums/5nT0zM0q3zCwbISrPd7Xkd",
+            "id": "5nT0zM0q3zCwbISrPd7Xkd",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27351561e4a23ef607a9e9a6ebe",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0251561e4a23ef607a9e9a6ebe",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485151561e4a23ef607a9e9a6ebe",
+                "width": 64
+              }
+            ],
+            "name": "Help Us Stranger - With Track-by-Track Commentary",
+            "release_date": "2019-06-20",
+            "release_date_precision": "day",
+            "total_tracks": 24,
+            "type": "album",
+            "uri": "spotify:album:5nT0zM0q3zCwbISrPd7Xkd"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 218806,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "US3JJ1900056"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0qVSoMLshegqzDE2FZlIsc"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0qVSoMLshegqzDE2FZlIsc",
+          "id": "0qVSoMLshegqzDE2FZlIsc",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Sunday Driver",
+          "popularity": 42,
+          "preview_url": "https://p.scdn.co/mp3-preview/c8a9da72d9f55a0d376a2fe52962486947feb8b5?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 16,
+          "type": "track",
+          "uri": "spotify:track:0qVSoMLshegqzDE2FZlIsc"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+                },
+                "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+                "id": "4wo1267SJuUfHgasdlfNfc",
+                "name": "The Raconteurs",
+                "type": "artist",
+                "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0OBNtBshpjFPStZGJTGNJr"
+            },
+            "href": "https://api.spotify.com/v1/albums/0OBNtBshpjFPStZGJTGNJr",
+            "id": "0OBNtBshpjFPStZGJTGNJr",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273596f5c49176f3d485e0de325",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02596f5c49176f3d485e0de325",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851596f5c49176f3d485e0de325",
+                "width": 64
+              }
+            ],
+            "name": "Consolers Of The Lonely",
+            "release_date": "2008-03-05",
+            "release_date_precision": "day",
+            "total_tracks": 14,
+            "type": "album",
+            "uri": "spotify:album:0OBNtBshpjFPStZGJTGNJr"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/4wo1267SJuUfHgasdlfNfc"
+              },
+              "href": "https://api.spotify.com/v1/artists/4wo1267SJuUfHgasdlfNfc",
+              "id": "4wo1267SJuUfHgasdlfNfc",
+              "name": "The Raconteurs",
+              "type": "artist",
+              "uri": "spotify:artist:4wo1267SJuUfHgasdlfNfc"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 355000,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBBKS0800220"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/51nWdZNUyFZqpUMwWZDhMH"
+          },
+          "href": "https://api.spotify.com/v1/tracks/51nWdZNUyFZqpUMwWZDhMH",
+          "id": "51nWdZNUyFZqpUMwWZDhMH",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Carolina Drama",
+          "popularity": 44,
+          "preview_url": "https://p.scdn.co/mp3-preview/957b8cd84ff94784ffaf82f147868a22b8686938?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 14,
+          "type": "track",
+          "uri": "spotify:track:51nWdZNUyFZqpUMwWZDhMH"
+        }
+      ]
     },
     {
       "external_urls": {
@@ -12507,7 +13812,769 @@
       "name": "Arcade Fire",
       "popularity": 72,
       "type": "artist",
-      "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+      "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB",
+      "tracks": [
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3DrgM5X3yX1JP1liNLAOHI"
+            },
+            "href": "https://api.spotify.com/v1/albums/3DrgM5X3yX1JP1liNLAOHI",
+            "id": "3DrgM5X3yX1JP1liNLAOHI",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273532391d63cfd6d32677f7af6",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02532391d63cfd6d32677f7af6",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851532391d63cfd6d32677f7af6",
+                "width": 64
+              }
+            ],
+            "name": "The Suburbs",
+            "release_date": "2010",
+            "release_date_precision": "year",
+            "total_tracks": 16,
+            "type": "album",
+            "uri": "spotify:album:3DrgM5X3yX1JP1liNLAOHI"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 315200,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBUM71018417"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/2UWdUez9MB9yzL7Y81Mcip"
+          },
+          "href": "https://api.spotify.com/v1/tracks/2UWdUez9MB9yzL7Y81Mcip",
+          "id": "2UWdUez9MB9yzL7Y81Mcip",
+          "is_local": false,
+          "is_playable": true,
+          "name": "The Suburbs",
+          "popularity": 69,
+          "preview_url": "https://p.scdn.co/mp3-preview/71c82f0594ad7346e7337f2c4aba5b2bf47627c0?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:2UWdUez9MB9yzL7Y81Mcip"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/6ZB8qaR9JNuS0Q0bG1nbcH"
+            },
+            "href": "https://api.spotify.com/v1/albums/6ZB8qaR9JNuS0Q0bG1nbcH",
+            "id": "6ZB8qaR9JNuS0Q0bG1nbcH",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2737870762a58313ad6f981d664",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e027870762a58313ad6f981d664",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048517870762a58313ad6f981d664",
+                "width": 64
+              }
+            ],
+            "name": "Funeral",
+            "release_date": "2004-06-16",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:6ZB8qaR9JNuS0Q0bG1nbcH"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 335333,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USMRG0467008"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/6Hmj7SrLRbreLVfVS7mV1S"
+          },
+          "href": "https://api.spotify.com/v1/tracks/6Hmj7SrLRbreLVfVS7mV1S",
+          "id": "6Hmj7SrLRbreLVfVS7mV1S",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Wake Up",
+          "popularity": 66,
+          "preview_url": "https://p.scdn.co/mp3-preview/ac5b3fe8da86eb5aaf0729c91f62d1c13db91f27?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 7,
+          "type": "track",
+          "uri": "spotify:track:6Hmj7SrLRbreLVfVS7mV1S"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/6ZB8qaR9JNuS0Q0bG1nbcH"
+            },
+            "href": "https://api.spotify.com/v1/albums/6ZB8qaR9JNuS0Q0bG1nbcH",
+            "id": "6ZB8qaR9JNuS0Q0bG1nbcH",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2737870762a58313ad6f981d664",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e027870762a58313ad6f981d664",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048517870762a58313ad6f981d664",
+                "width": 64
+              }
+            ],
+            "name": "Funeral",
+            "release_date": "2004-06-16",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:6ZB8qaR9JNuS0Q0bG1nbcH"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 310893,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USMRG0467010"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0xOeB16JDbBJBJKSdHbElT"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0xOeB16JDbBJBJKSdHbElT",
+          "id": "0xOeB16JDbBJBJKSdHbElT",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Rebellion (Lies)",
+          "popularity": 65,
+          "preview_url": "https://p.scdn.co/mp3-preview/5f45cc727dfb702475cfc70fafa8bb8e861997c1?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 9,
+          "type": "track",
+          "uri": "spotify:track:0xOeB16JDbBJBJKSdHbElT"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1DNojVW079FU9YnAMk3Cgr"
+            },
+            "href": "https://api.spotify.com/v1/albums/1DNojVW079FU9YnAMk3Cgr",
+            "id": "1DNojVW079FU9YnAMk3Cgr",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a36d123f9906888d0af2aed8",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a36d123f9906888d0af2aed8",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a36d123f9906888d0af2aed8",
+                "width": 64
+              }
+            ],
+            "name": "Everything Now",
+            "release_date": "2017-07-28",
+            "release_date_precision": "day",
+            "total_tracks": 13,
+            "type": "album",
+            "uri": "spotify:album:1DNojVW079FU9YnAMk3Cgr"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 303013,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1700812"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7KsZHCfOitA5V9oQYVdltG"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7KsZHCfOitA5V9oQYVdltG",
+          "id": "7KsZHCfOitA5V9oQYVdltG",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Everything Now",
+          "popularity": 64,
+          "preview_url": "https://p.scdn.co/mp3-preview/676b877299381f3f0cac27364f79fcbaa2dcce60?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:7KsZHCfOitA5V9oQYVdltG"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3DrgM5X3yX1JP1liNLAOHI"
+            },
+            "href": "https://api.spotify.com/v1/albums/3DrgM5X3yX1JP1liNLAOHI",
+            "id": "3DrgM5X3yX1JP1liNLAOHI",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273532391d63cfd6d32677f7af6",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02532391d63cfd6d32677f7af6",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851532391d63cfd6d32677f7af6",
+                "width": 64
+              }
+            ],
+            "name": "The Suburbs",
+            "release_date": "2010",
+            "release_date_precision": "year",
+            "total_tracks": 16,
+            "type": "album",
+            "uri": "spotify:album:3DrgM5X3yX1JP1liNLAOHI"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 255893,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBUM71021615"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/01wsKcJ8ptqUmatpJlEGYj"
+          },
+          "href": "https://api.spotify.com/v1/tracks/01wsKcJ8ptqUmatpJlEGYj",
+          "id": "01wsKcJ8ptqUmatpJlEGYj",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Ready to Start",
+          "popularity": 62,
+          "preview_url": "https://p.scdn.co/mp3-preview/050a9ba5db4719d7f628338a7f0879850df52214?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:01wsKcJ8ptqUmatpJlEGYj"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4GT6uZod4p5RiDMOVHOMme"
+            },
+            "href": "https://api.spotify.com/v1/albums/4GT6uZod4p5RiDMOVHOMme",
+            "id": "4GT6uZod4p5RiDMOVHOMme",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739e0e42aa866e5fa167b19608",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029e0e42aa866e5fa167b19608",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519e0e42aa866e5fa167b19608",
+                "width": 64
+              }
+            ],
+            "name": "Neon Bible",
+            "release_date": "2007",
+            "release_date_precision": "year",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:4GT6uZod4p5RiDMOVHOMme"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 287240,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USMRG0728510"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/1rOlTL4pKQ9Y1fURua4AJR"
+          },
+          "href": "https://api.spotify.com/v1/tracks/1rOlTL4pKQ9Y1fURua4AJR",
+          "id": "1rOlTL4pKQ9Y1fURua4AJR",
+          "is_local": false,
+          "is_playable": true,
+          "name": "My Body Is a Cage",
+          "popularity": 62,
+          "preview_url": "https://p.scdn.co/mp3-preview/f52f14fe2d035a56a871f4aa9421bee10584016a?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 11,
+          "type": "track",
+          "uri": "spotify:track:1rOlTL4pKQ9Y1fURua4AJR"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3DrgM5X3yX1JP1liNLAOHI"
+            },
+            "href": "https://api.spotify.com/v1/albums/3DrgM5X3yX1JP1liNLAOHI",
+            "id": "3DrgM5X3yX1JP1liNLAOHI",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273532391d63cfd6d32677f7af6",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02532391d63cfd6d32677f7af6",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851532391d63cfd6d32677f7af6",
+                "width": 64
+              }
+            ],
+            "name": "The Suburbs",
+            "release_date": "2010",
+            "release_date_precision": "year",
+            "total_tracks": 16,
+            "type": "album",
+            "uri": "spotify:album:3DrgM5X3yX1JP1liNLAOHI"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 325546,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBUM71021646"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0U0p8weaMIbIFMJ0CPlvHV"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0U0p8weaMIbIFMJ0CPlvHV",
+          "id": "0U0p8weaMIbIFMJ0CPlvHV",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Sprawl II (Mountains Beyond Mountains)",
+          "popularity": 61,
+          "preview_url": "https://p.scdn.co/mp3-preview/d836604cf93ac0c0b453cf8276ac3594a734238d?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 15,
+          "type": "track",
+          "uri": "spotify:track:0U0p8weaMIbIFMJ0CPlvHV"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1DNojVW079FU9YnAMk3Cgr"
+            },
+            "href": "https://api.spotify.com/v1/albums/1DNojVW079FU9YnAMk3Cgr",
+            "id": "1DNojVW079FU9YnAMk3Cgr",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273a36d123f9906888d0af2aed8",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02a36d123f9906888d0af2aed8",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851a36d123f9906888d0af2aed8",
+                "width": 64
+              }
+            ],
+            "name": "Everything Now",
+            "release_date": "2017-07-28",
+            "release_date_precision": "day",
+            "total_tracks": 13,
+            "type": "album",
+            "uri": "spotify:album:1DNojVW079FU9YnAMk3Cgr"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 353240,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1700821"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0SaEmR2rdtfsZawPjMYkWg"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0SaEmR2rdtfsZawPjMYkWg",
+          "id": "0SaEmR2rdtfsZawPjMYkWg",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Put Your Money on Me",
+          "popularity": 60,
+          "preview_url": "https://p.scdn.co/mp3-preview/37843fcfbace2105e9317dee36afe538310cc07c?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 11,
+          "type": "track",
+          "uri": "spotify:track:0SaEmR2rdtfsZawPjMYkWg"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4GT6uZod4p5RiDMOVHOMme"
+            },
+            "href": "https://api.spotify.com/v1/albums/4GT6uZod4p5RiDMOVHOMme",
+            "id": "4GT6uZod4p5RiDMOVHOMme",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2739e0e42aa866e5fa167b19608",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e029e0e42aa866e5fa167b19608",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048519e0e42aa866e5fa167b19608",
+                "width": 64
+              }
+            ],
+            "name": "Neon Bible",
+            "release_date": "2007",
+            "release_date_precision": "year",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:4GT6uZod4p5RiDMOVHOMme"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 343626,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USMRG0728504"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/51xBgzcyzojRpqFW2ICQAB"
+          },
+          "href": "https://api.spotify.com/v1/tracks/51xBgzcyzojRpqFW2ICQAB",
+          "id": "51xBgzcyzojRpqFW2ICQAB",
+          "is_local": false,
+          "is_playable": true,
+          "name": "No Cars Go",
+          "popularity": 58,
+          "preview_url": "https://p.scdn.co/mp3-preview/8e6a84174cc98edec0b02f4cea9f319c4f41a139?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 10,
+          "type": "track",
+          "uri": "spotify:track:51xBgzcyzojRpqFW2ICQAB"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+                },
+                "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+                "id": "3kjuyTCjPG1WMFCiyc5IuB",
+                "name": "Arcade Fire",
+                "type": "artist",
+                "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/6ZB8qaR9JNuS0Q0bG1nbcH"
+            },
+            "href": "https://api.spotify.com/v1/albums/6ZB8qaR9JNuS0Q0bG1nbcH",
+            "id": "6ZB8qaR9JNuS0Q0bG1nbcH",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2737870762a58313ad6f981d664",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e027870762a58313ad6f981d664",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048517870762a58313ad6f981d664",
+                "width": 64
+              }
+            ],
+            "name": "Funeral",
+            "release_date": "2004-06-16",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:6ZB8qaR9JNuS0Q0bG1nbcH"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/3kjuyTCjPG1WMFCiyc5IuB"
+              },
+              "href": "https://api.spotify.com/v1/artists/3kjuyTCjPG1WMFCiyc5IuB",
+              "id": "3kjuyTCjPG1WMFCiyc5IuB",
+              "name": "Arcade Fire",
+              "type": "artist",
+              "uri": "spotify:artist:3kjuyTCjPG1WMFCiyc5IuB"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 288333,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "USMRG0467001"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0WZZJ0mDKIkLfL0710ssZt"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0WZZJ0mDKIkLfL0710ssZt",
+          "id": "0WZZJ0mDKIkLfL0710ssZt",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Neighborhood #1 (Tunnels)",
+          "popularity": 58,
+          "preview_url": "https://p.scdn.co/mp3-preview/5864c6774e3b465bdd73acc807b15bd830fdbbdb?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:0WZZJ0mDKIkLfL0710ssZt"
+        }
+      ]
     },
     {
       "external_urls": {
@@ -12546,7 +14613,769 @@
       "name": "The Vaccines",
       "popularity": 62,
       "type": "artist",
-      "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+      "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA",
+      "tracks": [
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2T0iwqVWzr4Y63x4kKO5DW"
+            },
+            "href": "https://api.spotify.com/v1/albums/2T0iwqVWzr4Y63x4kKO5DW",
+            "id": "2T0iwqVWzr4Y63x4kKO5DW",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27373a8b8f4292ed4f6fb53b69c",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0273a8b8f4292ed4f6fb53b69c",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485173a8b8f4292ed4f6fb53b69c",
+                "width": 64
+              }
+            ],
+            "name": "What Did You Expect from The Vaccines?",
+            "release_date": "2011-03-14",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:2T0iwqVWzr4Y63x4kKO5DW"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 174013,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1100001"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/6Ca3uEAuun3HusTUiIXKs1"
+          },
+          "href": "https://api.spotify.com/v1/tracks/6Ca3uEAuun3HusTUiIXKs1",
+          "id": "6Ca3uEAuun3HusTUiIXKs1",
+          "is_local": false,
+          "is_playable": true,
+          "name": "If You Wanna",
+          "popularity": 64,
+          "preview_url": "https://p.scdn.co/mp3-preview/5dd61731c9aa8dec08e4e39981141ca4f299bb6f?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:6Ca3uEAuun3HusTUiIXKs1"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/36dPTCQrHjXgcgKhHi6jcV"
+            },
+            "href": "https://api.spotify.com/v1/albums/36dPTCQrHjXgcgKhHi6jcV",
+            "id": "36dPTCQrHjXgcgKhHi6jcV",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27385ae3ec17655219b6bfbbe49",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0285ae3ec17655219b6bfbbe49",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485185ae3ec17655219b6bfbbe49",
+                "width": 64
+              }
+            ],
+            "name": "All My Friends Are Falling In Love",
+            "release_date": "2018-11-13",
+            "release_date_precision": "day",
+            "total_tracks": 1,
+            "type": "album",
+            "uri": "spotify:album:36dPTCQrHjXgcgKhHi6jcV"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 210161,
+          "explicit": true,
+          "external_ids": {
+            "isrc": "GBARL1801482"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0JAQUGJudVlhRoAqqhVoYX"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0JAQUGJudVlhRoAqqhVoYX",
+          "id": "0JAQUGJudVlhRoAqqhVoYX",
+          "is_local": false,
+          "is_playable": true,
+          "name": "All My Friends Are Falling In Love",
+          "popularity": 59,
+          "preview_url": "https://p.scdn.co/mp3-preview/0fd51aaa41b1f518c0c2fbb77046dab55a43e846?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:0JAQUGJudVlhRoAqqhVoYX"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2XWOaQwiK4GAODTPVwDSr4"
+            },
+            "href": "https://api.spotify.com/v1/albums/2XWOaQwiK4GAODTPVwDSr4",
+            "id": "2XWOaQwiK4GAODTPVwDSr4",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273bf25c435afdd3f63252692f2",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02bf25c435afdd3f63252692f2",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851bf25c435afdd3f63252692f2",
+                "width": 64
+              }
+            ],
+            "name": "Come Of Age",
+            "release_date": "2012-09-03",
+            "release_date_precision": "day",
+            "total_tracks": 14,
+            "type": "album",
+            "uri": "spotify:album:2XWOaQwiK4GAODTPVwDSr4"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 214346,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1200826"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/6E3NosMXYlGD21K7KqIxQ1"
+          },
+          "href": "https://api.spotify.com/v1/tracks/6E3NosMXYlGD21K7KqIxQ1",
+          "id": "6E3NosMXYlGD21K7KqIxQ1",
+          "is_local": false,
+          "is_playable": true,
+          "name": "I Always Knew",
+          "popularity": 58,
+          "preview_url": "https://p.scdn.co/mp3-preview/17c287d5d88a44ea539e9cc711d763efb9ca0617?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:6E3NosMXYlGD21K7KqIxQ1"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2T0iwqVWzr4Y63x4kKO5DW"
+            },
+            "href": "https://api.spotify.com/v1/albums/2T0iwqVWzr4Y63x4kKO5DW",
+            "id": "2T0iwqVWzr4Y63x4kKO5DW",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27373a8b8f4292ed4f6fb53b69c",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0273a8b8f4292ed4f6fb53b69c",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485173a8b8f4292ed4f6fb53b69c",
+                "width": 64
+              }
+            ],
+            "name": "What Did You Expect from The Vaccines?",
+            "release_date": "2011-03-14",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:2T0iwqVWzr4Y63x4kKO5DW"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 174453,
+          "explicit": true,
+          "external_ids": {
+            "isrc": "GBARL1001558"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/47oXAoC5TynVLCZ3FKb0gC"
+          },
+          "href": "https://api.spotify.com/v1/tracks/47oXAoC5TynVLCZ3FKb0gC",
+          "id": "47oXAoC5TynVLCZ3FKb0gC",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Post Break-Up Sex",
+          "popularity": 57,
+          "preview_url": "https://p.scdn.co/mp3-preview/fac6c08fd50d97cda9f1ddb7c8abebac277660a9?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 7,
+          "type": "track",
+          "uri": "spotify:track:47oXAoC5TynVLCZ3FKb0gC"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2T0iwqVWzr4Y63x4kKO5DW"
+            },
+            "href": "https://api.spotify.com/v1/albums/2T0iwqVWzr4Y63x4kKO5DW",
+            "id": "2T0iwqVWzr4Y63x4kKO5DW",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27373a8b8f4292ed4f6fb53b69c",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0273a8b8f4292ed4f6fb53b69c",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485173a8b8f4292ed4f6fb53b69c",
+                "width": 64
+              }
+            ],
+            "name": "What Did You Expect from The Vaccines?",
+            "release_date": "2011-03-14",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:2T0iwqVWzr4Y63x4kKO5DW"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 98400,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1100004"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/07e14r44g2EeOg9PIFsimm"
+          },
+          "href": "https://api.spotify.com/v1/tracks/07e14r44g2EeOg9PIFsimm",
+          "id": "07e14r44g2EeOg9PIFsimm",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Norgaard",
+          "popularity": 54,
+          "preview_url": "https://p.scdn.co/mp3-preview/834d0ec37a0a862ef0284899035e873b274a6572?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 6,
+          "type": "track",
+          "uri": "spotify:track:07e14r44g2EeOg9PIFsimm"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2T0iwqVWzr4Y63x4kKO5DW"
+            },
+            "href": "https://api.spotify.com/v1/albums/2T0iwqVWzr4Y63x4kKO5DW",
+            "id": "2T0iwqVWzr4Y63x4kKO5DW",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27373a8b8f4292ed4f6fb53b69c",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0273a8b8f4292ed4f6fb53b69c",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485173a8b8f4292ed4f6fb53b69c",
+                "width": 64
+              }
+            ],
+            "name": "What Did You Expect from The Vaccines?",
+            "release_date": "2011-03-14",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:2T0iwqVWzr4Y63x4kKO5DW"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 230240,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1100005"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/2sqtkSLyuo3hdpnp0gyVCq"
+          },
+          "href": "https://api.spotify.com/v1/tracks/2sqtkSLyuo3hdpnp0gyVCq",
+          "id": "2sqtkSLyuo3hdpnp0gyVCq",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Wetsuit",
+          "popularity": 52,
+          "preview_url": "https://p.scdn.co/mp3-preview/6ff66477eabd9c5b7c3dd2a2e6277ef9be929cc6?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 5,
+          "type": "track",
+          "uri": "spotify:track:2sqtkSLyuo3hdpnp0gyVCq"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3lgzoi5buvKM7M01qh6WAY"
+            },
+            "href": "https://api.spotify.com/v1/albums/3lgzoi5buvKM7M01qh6WAY",
+            "id": "3lgzoi5buvKM7M01qh6WAY",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27359f0862c323a19ccf47678fc",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0259f0862c323a19ccf47678fc",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485159f0862c323a19ccf47678fc",
+                "width": 64
+              }
+            ],
+            "name": "Combat Sports",
+            "release_date": "2018-03-30",
+            "release_date_precision": "day",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:3lgzoi5buvKM7M01qh6WAY"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 162746,
+          "explicit": true,
+          "external_ids": {
+            "isrc": "GBARL1702038"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/4DBeUcBD2zVZzhf2oX1PLc"
+          },
+          "href": "https://api.spotify.com/v1/tracks/4DBeUcBD2zVZzhf2oX1PLc",
+          "id": "4DBeUcBD2zVZzhf2oX1PLc",
+          "is_local": false,
+          "is_playable": true,
+          "name": "I Can't Quit",
+          "popularity": 51,
+          "preview_url": "https://p.scdn.co/mp3-preview/7dc6f33cfa3bff939128383b466673bb1986aab4?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:4DBeUcBD2zVZzhf2oX1PLc"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0aroGGkehVjsg8QCNDGjTK"
+            },
+            "href": "https://api.spotify.com/v1/albums/0aroGGkehVjsg8QCNDGjTK",
+            "id": "0aroGGkehVjsg8QCNDGjTK",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273d2f1a616b2332c827bc71370",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02d2f1a616b2332c827bc71370",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851d2f1a616b2332c827bc71370",
+                "width": 64
+              }
+            ],
+            "name": "English Graffiti (Expanded Edition)",
+            "release_date": "2015-05-26",
+            "release_date_precision": "day",
+            "total_tracks": 14,
+            "type": "album",
+            "uri": "spotify:album:0aroGGkehVjsg8QCNDGjTK"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 258720,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1500148"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/69Wh0ipeW1z2x78lOpsKuL"
+          },
+          "href": "https://api.spotify.com/v1/tracks/69Wh0ipeW1z2x78lOpsKuL",
+          "id": "69Wh0ipeW1z2x78lOpsKuL",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Want You So Bad",
+          "popularity": 51,
+          "preview_url": "https://p.scdn.co/mp3-preview/1a38854d34ebe013743e94a29ea366ae6e34b1b5?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 7,
+          "type": "track",
+          "uri": "spotify:track:69Wh0ipeW1z2x78lOpsKuL"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2T0iwqVWzr4Y63x4kKO5DW"
+            },
+            "href": "https://api.spotify.com/v1/albums/2T0iwqVWzr4Y63x4kKO5DW",
+            "id": "2T0iwqVWzr4Y63x4kKO5DW",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27373a8b8f4292ed4f6fb53b69c",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0273a8b8f4292ed4f6fb53b69c",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485173a8b8f4292ed4f6fb53b69c",
+                "width": 64
+              }
+            ],
+            "name": "What Did You Expect from The Vaccines?",
+            "release_date": "2011-03-14",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:2T0iwqVWzr4Y63x4kKO5DW"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 81720,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1001381"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/1K5vb3Yu4F8yMaHggtdpDY"
+          },
+          "href": "https://api.spotify.com/v1/tracks/1K5vb3Yu4F8yMaHggtdpDY",
+          "id": "1K5vb3Yu4F8yMaHggtdpDY",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Wreckin' Bar (Ra Ra Ra)",
+          "popularity": 48,
+          "preview_url": "https://p.scdn.co/mp3-preview/9db7d097f6b31dc2a8db4582608edd52ab3ce8ca?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:1K5vb3Yu4F8yMaHggtdpDY"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+                },
+                "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+                "id": "0Ak6DLKHtpR6TEEnmcorKA",
+                "name": "The Vaccines",
+                "type": "artist",
+                "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3lgzoi5buvKM7M01qh6WAY"
+            },
+            "href": "https://api.spotify.com/v1/albums/3lgzoi5buvKM7M01qh6WAY",
+            "id": "3lgzoi5buvKM7M01qh6WAY",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27359f0862c323a19ccf47678fc",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0259f0862c323a19ccf47678fc",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485159f0862c323a19ccf47678fc",
+                "width": 64
+              }
+            ],
+            "name": "Combat Sports",
+            "release_date": "2018-03-30",
+            "release_date_precision": "day",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:3lgzoi5buvKM7M01qh6WAY"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0Ak6DLKHtpR6TEEnmcorKA"
+              },
+              "href": "https://api.spotify.com/v1/artists/0Ak6DLKHtpR6TEEnmcorKA",
+              "id": "0Ak6DLKHtpR6TEEnmcorKA",
+              "name": "The Vaccines",
+              "type": "artist",
+              "uri": "spotify:artist:0Ak6DLKHtpR6TEEnmcorKA"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 189533,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBARL1702039"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/6OaNZ1eJMuPquhppWYNyTN"
+          },
+          "href": "https://api.spotify.com/v1/tracks/6OaNZ1eJMuPquhppWYNyTN",
+          "id": "6OaNZ1eJMuPquhppWYNyTN",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Your Love Is My Favourite Band",
+          "popularity": 47,
+          "preview_url": "https://p.scdn.co/mp3-preview/12047cefcaab15d54a43f7b6f9ca9dd6b1afa2ff?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 3,
+          "type": "track",
+          "uri": "spotify:track:6OaNZ1eJMuPquhppWYNyTN"
+        }
+      ]
     },
     {
       "external_urls": {
@@ -12584,7 +15413,769 @@
       "name": "Kaiser Chiefs",
       "popularity": 64,
       "type": "artist",
-      "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+      "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt",
+      "tracks": [
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3Hrcrl4FUmt262YeNQJaTM"
+            },
+            "href": "https://api.spotify.com/v1/albums/3Hrcrl4FUmt262YeNQJaTM",
+            "id": "3Hrcrl4FUmt262YeNQJaTM",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27390ec453e1516e7db62448d06",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0290ec453e1516e7db62448d06",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485190ec453e1516e7db62448d06",
+                "width": 64
+              }
+            ],
+            "name": "Yours Truly, Angry Mob (Deluxe)",
+            "release_date": "2007-02-26",
+            "release_date_precision": "day",
+            "total_tracks": 18,
+            "type": "album",
+            "uri": "spotify:album:3Hrcrl4FUmt262YeNQJaTM"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 202800,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0600080"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0VhhaYztcRWc7PEjJCjr1g"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0VhhaYztcRWc7PEjJCjr1g",
+          "id": "0VhhaYztcRWc7PEjJCjr1g",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Ruby",
+          "popularity": 62,
+          "preview_url": "https://p.scdn.co/mp3-preview/1422cd2e87b27ea43bb11765d250fadf7eaf4a38?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:0VhhaYztcRWc7PEjJCjr1g"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1jnbLwKGgg3XoKYlDmaxmF"
+            },
+            "href": "https://api.spotify.com/v1/albums/1jnbLwKGgg3XoKYlDmaxmF",
+            "id": "1jnbLwKGgg3XoKYlDmaxmF",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2734fbff47052269f108a27b97b",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e024fbff47052269f108a27b97b",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048514fbff47052269f108a27b97b",
+                "width": 64
+              }
+            ],
+            "name": "Employment",
+            "release_date": "2005-03-07",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:1jnbLwKGgg3XoKYlDmaxmF"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 234773,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0400045"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3fMoeGj4mDusrmYOOF60aC"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3fMoeGj4mDusrmYOOF60aC",
+          "id": "3fMoeGj4mDusrmYOOF60aC",
+          "is_local": false,
+          "is_playable": true,
+          "name": "I Predict a Riot",
+          "popularity": 52,
+          "preview_url": "https://p.scdn.co/mp3-preview/b338cef8390ecfcf76372819c36bc2108d1c4ec8?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:3fMoeGj4mDusrmYOOF60aC"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1jnbLwKGgg3XoKYlDmaxmF"
+            },
+            "href": "https://api.spotify.com/v1/albums/1jnbLwKGgg3XoKYlDmaxmF",
+            "id": "1jnbLwKGgg3XoKYlDmaxmF",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2734fbff47052269f108a27b97b",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e024fbff47052269f108a27b97b",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048514fbff47052269f108a27b97b",
+                "width": 64
+              }
+            ],
+            "name": "Employment",
+            "release_date": "2005-03-07",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:1jnbLwKGgg3XoKYlDmaxmF"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 217706,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0400056"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7IdfMBufDn3yf2JhS3a5w0"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7IdfMBufDn3yf2JhS3a5w0",
+          "id": "7IdfMBufDn3yf2JhS3a5w0",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Everyday I Love You Less and Less",
+          "popularity": 50,
+          "preview_url": "https://p.scdn.co/mp3-preview/2af74475a993104c77f656566ba700f8afa264b7?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:7IdfMBufDn3yf2JhS3a5w0"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3b2BSh5Tj5ZzS4EbHGbDYM"
+            },
+            "href": "https://api.spotify.com/v1/albums/3b2BSh5Tj5ZzS4EbHGbDYM",
+            "id": "3b2BSh5Tj5ZzS4EbHGbDYM",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27388381e4837d636c3c2bce2cd",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0288381e4837d636c3c2bce2cd",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485188381e4837d636c3c2bce2cd",
+                "width": 64
+              }
+            ],
+            "name": "Off with Their Heads",
+            "release_date": "2008-10-20",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:3b2BSh5Tj5ZzS4EbHGbDYM"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 188853,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0800077"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/71aEq5ZnRE2Hr11PXZqpn9"
+          },
+          "href": "https://api.spotify.com/v1/tracks/71aEq5ZnRE2Hr11PXZqpn9",
+          "id": "71aEq5ZnRE2Hr11PXZqpn9",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Never Miss a Beat",
+          "popularity": 47,
+          "preview_url": "https://p.scdn.co/mp3-preview/00b1e61042a2ab2f29630355536d373b5bcec47f?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:71aEq5ZnRE2Hr11PXZqpn9"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1jnbLwKGgg3XoKYlDmaxmF"
+            },
+            "href": "https://api.spotify.com/v1/albums/1jnbLwKGgg3XoKYlDmaxmF",
+            "id": "1jnbLwKGgg3XoKYlDmaxmF",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2734fbff47052269f108a27b97b",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e024fbff47052269f108a27b97b",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048514fbff47052269f108a27b97b",
+                "width": 64
+              }
+            ],
+            "name": "Employment",
+            "release_date": "2005-03-07",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:1jnbLwKGgg3XoKYlDmaxmF"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 214880,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0400055"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/057IenQSxQmNEfESF1jsDn"
+          },
+          "href": "https://api.spotify.com/v1/tracks/057IenQSxQmNEfESF1jsDn",
+          "id": "057IenQSxQmNEfESF1jsDn",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Oh My God",
+          "popularity": 40,
+          "preview_url": "https://p.scdn.co/mp3-preview/b2ff0c77c92b2fd7a916500baad45580c7ae448b?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 6,
+          "type": "track",
+          "uri": "spotify:track:057IenQSxQmNEfESF1jsDn"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/6PQJubA12Yap1KhrUruMfW"
+            },
+            "href": "https://api.spotify.com/v1/albums/6PQJubA12Yap1KhrUruMfW",
+            "id": "6PQJubA12Yap1KhrUruMfW",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273b855616be25975eb47e16692",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02b855616be25975eb47e16692",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851b855616be25975eb47e16692",
+                "width": 64
+              }
+            ],
+            "name": "Zombie Prom (Hallowe'en At Home Edition)",
+            "release_date": "2020-10-30",
+            "release_date_precision": "day",
+            "total_tracks": 1,
+            "type": "album",
+            "uri": "spotify:album:6PQJubA12Yap1KhrUruMfW"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 218693,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBUM72005734"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7yMbT5HHdk8NpuchXIL18b"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7yMbT5HHdk8NpuchXIL18b",
+          "id": "7yMbT5HHdk8NpuchXIL18b",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Zombie Prom",
+          "popularity": 42,
+          "preview_url": "https://p.scdn.co/mp3-preview/4682467ebf3f46aa162b0c0ac062de65e884ea55?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:7yMbT5HHdk8NpuchXIL18b"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/1jnbLwKGgg3XoKYlDmaxmF"
+            },
+            "href": "https://api.spotify.com/v1/albums/1jnbLwKGgg3XoKYlDmaxmF",
+            "id": "1jnbLwKGgg3XoKYlDmaxmF",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2734fbff47052269f108a27b97b",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e024fbff47052269f108a27b97b",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048514fbff47052269f108a27b97b",
+                "width": 64
+              }
+            ],
+            "name": "Employment",
+            "release_date": "2005-03-07",
+            "release_date_precision": "day",
+            "total_tracks": 12,
+            "type": "album",
+            "uri": "spotify:album:1jnbLwKGgg3XoKYlDmaxmF"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 243626,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0400061"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7b81dVrO2wcptSCKfJ0QSz"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7b81dVrO2wcptSCKfJ0QSz",
+          "id": "7b81dVrO2wcptSCKfJ0QSz",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Modern Way",
+          "popularity": 36,
+          "preview_url": "https://p.scdn.co/mp3-preview/89847b47ba4891db68b7080f211e474c0eed9977?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 3,
+          "type": "track",
+          "uri": "spotify:track:7b81dVrO2wcptSCKfJ0QSz"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4xKV6OFfOiA9b0VEhm7L2L"
+            },
+            "href": "https://api.spotify.com/v1/albums/4xKV6OFfOiA9b0VEhm7L2L",
+            "id": "4xKV6OFfOiA9b0VEhm7L2L",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273924d7d8a939eb3ff5e4cac24",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02924d7d8a939eb3ff5e4cac24",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851924d7d8a939eb3ff5e4cac24",
+                "width": 64
+              }
+            ],
+            "name": "Duck",
+            "release_date": "2019-07-26",
+            "release_date_precision": "day",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:4xKV6OFfOiA9b0VEhm7L2L"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 257506,
+          "explicit": true,
+          "external_ids": {
+            "isrc": "GBUM71902307"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/0ItD5cgfl9jvzVTOlehFxd"
+          },
+          "href": "https://api.spotify.com/v1/tracks/0ItD5cgfl9jvzVTOlehFxd",
+          "id": "0ItD5cgfl9jvzVTOlehFxd",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Record Collection",
+          "popularity": 44,
+          "preview_url": "https://p.scdn.co/mp3-preview/10edcbfb339105b0c712e9786dc7aa686a46ac0d?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 6,
+          "type": "track",
+          "uri": "spotify:track:0ItD5cgfl9jvzVTOlehFxd"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4xKV6OFfOiA9b0VEhm7L2L"
+            },
+            "href": "https://api.spotify.com/v1/albums/4xKV6OFfOiA9b0VEhm7L2L",
+            "id": "4xKV6OFfOiA9b0VEhm7L2L",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273924d7d8a939eb3ff5e4cac24",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02924d7d8a939eb3ff5e4cac24",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851924d7d8a939eb3ff5e4cac24",
+                "width": 64
+              }
+            ],
+            "name": "Duck",
+            "release_date": "2019-07-26",
+            "release_date_precision": "day",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:4xKV6OFfOiA9b0VEhm7L2L"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 243733,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBUM71902299"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/2Eq2jhfIN8WKPDzkegtwQr"
+          },
+          "href": "https://api.spotify.com/v1/tracks/2Eq2jhfIN8WKPDzkegtwQr",
+          "id": "2Eq2jhfIN8WKPDzkegtwQr",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Golden Oldies",
+          "popularity": 41,
+          "preview_url": "https://p.scdn.co/mp3-preview/0ac6d247627828baa92aa060a4e7e6fc0b0c53c3?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:2Eq2jhfIN8WKPDzkegtwQr"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+                },
+                "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+                "id": "0LbLWjaweRbO4FDKYlbfNt",
+                "name": "Kaiser Chiefs",
+                "type": "artist",
+                "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/3Hrcrl4FUmt262YeNQJaTM"
+            },
+            "href": "https://api.spotify.com/v1/albums/3Hrcrl4FUmt262YeNQJaTM",
+            "id": "3Hrcrl4FUmt262YeNQJaTM",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b27390ec453e1516e7db62448d06",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e0290ec453e1516e7db62448d06",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d0000485190ec453e1516e7db62448d06",
+                "width": 64
+              }
+            ],
+            "name": "Yours Truly, Angry Mob (Deluxe)",
+            "release_date": "2007-02-26",
+            "release_date_precision": "day",
+            "total_tracks": 18,
+            "type": "album",
+            "uri": "spotify:album:3Hrcrl4FUmt262YeNQJaTM"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/0LbLWjaweRbO4FDKYlbfNt"
+              },
+              "href": "https://api.spotify.com/v1/artists/0LbLWjaweRbO4FDKYlbfNt",
+              "id": "0LbLWjaweRbO4FDKYlbfNt",
+              "name": "Kaiser Chiefs",
+              "type": "artist",
+              "uri": "spotify:artist:0LbLWjaweRbO4FDKYlbfNt"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 286759,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "GBDVX0600086"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/2cWjAvvFJTQxBeKfm9Ssca"
+          },
+          "href": "https://api.spotify.com/v1/tracks/2cWjAvvFJTQxBeKfm9Ssca",
+          "id": "2cWjAvvFJTQxBeKfm9Ssca",
+          "is_local": false,
+          "is_playable": true,
+          "name": "The Angry Mob",
+          "popularity": 35,
+          "preview_url": "https://p.scdn.co/mp3-preview/cf960bead7f9b5cf4aef481543e4ded242272842?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:2cWjAvvFJTQxBeKfm9Ssca"
+        }
+      ]
     },
     {
       "external_urls": {
@@ -12625,7 +16216,769 @@
       "name": "Phoenix",
       "popularity": 69,
       "type": "artist",
-      "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+      "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU",
+      "tracks": [
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0IQbQC6V4UuHLcgO9Yt3uu"
+            },
+            "href": "https://api.spotify.com/v1/albums/0IQbQC6V4UuHLcgO9Yt3uu",
+            "id": "0IQbQC6V4UuHLcgO9Yt3uu",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273738f2371ae0c10a381aa5052",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02738f2371ae0c10a381aa5052",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851738f2371ae0c10a381aa5052",
+                "width": 64
+              }
+            ],
+            "name": "Wolfgang Amadeus Phoenix",
+            "release_date": "2009-05-25",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:0IQbQC6V4UuHLcgO9Yt3uu"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 193106,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FR31Q0900002"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3FM33HqRlV7J1QJoPOnd2u"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3FM33HqRlV7J1QJoPOnd2u",
+          "id": "3FM33HqRlV7J1QJoPOnd2u",
+          "is_local": false,
+          "is_playable": true,
+          "name": "1901",
+          "popularity": 67,
+          "preview_url": "https://p.scdn.co/mp3-preview/6566d9e440cf5b8efd1d5df9e912b37c8b2202d7?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:3FM33HqRlV7J1QJoPOnd2u"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/5MBUL8d9FAYCCMrogOFX68"
+            },
+            "href": "https://api.spotify.com/v1/albums/5MBUL8d9FAYCCMrogOFX68",
+            "id": "5MBUL8d9FAYCCMrogOFX68",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273fd7121d725a0e4aafd4fe785",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02fd7121d725a0e4aafd4fe785",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851fd7121d725a0e4aafd4fe785",
+                "width": 64
+              }
+            ],
+            "name": "United",
+            "release_date": "2000-03-06",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:5MBUL8d9FAYCCMrogOFX68"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 266600,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FRS639900098"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3AA8xNhDC0MpqwkGX3EP5V"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3AA8xNhDC0MpqwkGX3EP5V",
+          "id": "3AA8xNhDC0MpqwkGX3EP5V",
+          "is_local": false,
+          "is_playable": true,
+          "name": "If I Ever Feel Better",
+          "popularity": 66,
+          "preview_url": "https://p.scdn.co/mp3-preview/1a42fab99c251f09cc72a7c9a37f37f57383eb2a?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 4,
+          "type": "track",
+          "uri": "spotify:track:3AA8xNhDC0MpqwkGX3EP5V"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0IQbQC6V4UuHLcgO9Yt3uu"
+            },
+            "href": "https://api.spotify.com/v1/albums/0IQbQC6V4UuHLcgO9Yt3uu",
+            "id": "0IQbQC6V4UuHLcgO9Yt3uu",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273738f2371ae0c10a381aa5052",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02738f2371ae0c10a381aa5052",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851738f2371ae0c10a381aa5052",
+                "width": 64
+              }
+            ],
+            "name": "Wolfgang Amadeus Phoenix",
+            "release_date": "2009-05-25",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:0IQbQC6V4UuHLcgO9Yt3uu"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 241640,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FR31Q0900001"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7hwcojGiRqYm100tSmpZE3"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7hwcojGiRqYm100tSmpZE3",
+          "id": "7hwcojGiRqYm100tSmpZE3",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Lisztomania",
+          "popularity": 65,
+          "preview_url": "https://p.scdn.co/mp3-preview/0029b7635f0aa9e3a92868a58cb916fb43338c92?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:7hwcojGiRqYm100tSmpZE3"
+        },
+        {
+          "album": {
+            "album_type": "single",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/139j4SM1xPPfS0dhGcrTvd"
+            },
+            "href": "https://api.spotify.com/v1/albums/139j4SM1xPPfS0dhGcrTvd",
+            "id": "139j4SM1xPPfS0dhGcrTvd",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2730e71c5fe5fd1fff0530fcb06",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e020e71c5fe5fd1fff0530fcb06",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048510e71c5fe5fd1fff0530fcb06",
+                "width": 64
+              }
+            ],
+            "name": "Identical (From The Motion Picture \"On The Rocks\")",
+            "release_date": "2020-08-19",
+            "release_date_precision": "day",
+            "total_tracks": 1,
+            "type": "album",
+            "uri": "spotify:album:139j4SM1xPPfS0dhGcrTvd"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 193263,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FR9W12022142"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/4tZwZVNhVCeBQYQtgQN5vW"
+          },
+          "href": "https://api.spotify.com/v1/tracks/4tZwZVNhVCeBQYQtgQN5vW",
+          "id": "4tZwZVNhVCeBQYQtgQN5vW",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Identical - From The Motion Picture \"On The Rocks\"",
+          "popularity": 61,
+          "preview_url": "https://p.scdn.co/mp3-preview/99f525927cf783cd187eb24e29ccc55247e9c84c?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:4tZwZVNhVCeBQYQtgQN5vW"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/5MBUL8d9FAYCCMrogOFX68"
+            },
+            "href": "https://api.spotify.com/v1/albums/5MBUL8d9FAYCCMrogOFX68",
+            "id": "5MBUL8d9FAYCCMrogOFX68",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273fd7121d725a0e4aafd4fe785",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02fd7121d725a0e4aafd4fe785",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851fd7121d725a0e4aafd4fe785",
+                "width": 64
+              }
+            ],
+            "name": "United",
+            "release_date": "2000-03-06",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:5MBUL8d9FAYCCMrogOFX68"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 197973,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FRS639900096"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/2THkQauDWMvJgXFGPY4iKB"
+          },
+          "href": "https://api.spotify.com/v1/tracks/2THkQauDWMvJgXFGPY4iKB",
+          "id": "2THkQauDWMvJgXFGPY4iKB",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Too Young",
+          "popularity": 57,
+          "preview_url": "https://p.scdn.co/mp3-preview/45c3e4c96b9a062afc774ab725202cc43611545b?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 2,
+          "type": "track",
+          "uri": "spotify:track:2THkQauDWMvJgXFGPY4iKB"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0IQbQC6V4UuHLcgO9Yt3uu"
+            },
+            "href": "https://api.spotify.com/v1/albums/0IQbQC6V4UuHLcgO9Yt3uu",
+            "id": "0IQbQC6V4UuHLcgO9Yt3uu",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273738f2371ae0c10a381aa5052",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02738f2371ae0c10a381aa5052",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851738f2371ae0c10a381aa5052",
+                "width": 64
+              }
+            ],
+            "name": "Wolfgang Amadeus Phoenix",
+            "release_date": "2009-05-25",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:0IQbQC6V4UuHLcgO9Yt3uu"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 167840,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FR31Q0900006"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/1DqTNIgasdUuTVBfHuEZds"
+          },
+          "href": "https://api.spotify.com/v1/tracks/1DqTNIgasdUuTVBfHuEZds",
+          "id": "1DqTNIgasdUuTVBfHuEZds",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Lasso",
+          "popularity": 53,
+          "preview_url": "https://p.scdn.co/mp3-preview/37351998aa3c1f4ceb75469ef9adbe0d41be28fb?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 6,
+          "type": "track",
+          "uri": "spotify:track:1DqTNIgasdUuTVBfHuEZds"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0q1YbH7gLkklLFxNBLRKHD"
+            },
+            "href": "https://api.spotify.com/v1/albums/0q1YbH7gLkklLFxNBLRKHD",
+            "id": "0q1YbH7gLkklLFxNBLRKHD",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2737ce45a1083d80c29d658537c",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e027ce45a1083d80c29d658537c",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048517ce45a1083d80c29d658537c",
+                "width": 64
+              }
+            ],
+            "name": "Alphabetical",
+            "release_date": "2004-03-22",
+            "release_date_precision": "day",
+            "total_tracks": 11,
+            "type": "album",
+            "uri": "spotify:album:0q1YbH7gLkklLFxNBLRKHD"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 178613,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FRS630300079"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/3pzJXZ1PW3l3B69PoTx5lC"
+          },
+          "href": "https://api.spotify.com/v1/tracks/3pzJXZ1PW3l3B69PoTx5lC",
+          "id": "3pzJXZ1PW3l3B69PoTx5lC",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Everything Is Everything",
+          "popularity": 49,
+          "preview_url": "https://p.scdn.co/mp3-preview/469e0d3aa316f9956c7d033b21813c0573ef7c26?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:3pzJXZ1PW3l3B69PoTx5lC"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/4VlRZ0j4hEJquxPDIzFVuX"
+            },
+            "href": "https://api.spotify.com/v1/albums/4VlRZ0j4hEJquxPDIzFVuX",
+            "id": "4VlRZ0j4hEJquxPDIzFVuX",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2736f85d6ff79800e25b1aba214",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e026f85d6ff79800e25b1aba214",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048516f85d6ff79800e25b1aba214",
+                "width": 64
+              }
+            ],
+            "name": "Ti Amo",
+            "release_date": "2017-05-09",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:4VlRZ0j4hEJquxPDIzFVuX"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 247373,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FR9W11704455"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7fu8iCAdNuV5HLkuZVHLZP"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7fu8iCAdNuV5HLkuZVHLZP",
+          "id": "7fu8iCAdNuV5HLkuZVHLZP",
+          "is_local": false,
+          "is_playable": true,
+          "name": "J-Boy",
+          "popularity": 48,
+          "preview_url": "https://p.scdn.co/mp3-preview/9412a5da2e107c315da1061876cfe9c86f2a82b3?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 1,
+          "type": "track",
+          "uri": "spotify:track:7fu8iCAdNuV5HLkuZVHLZP"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/0IQbQC6V4UuHLcgO9Yt3uu"
+            },
+            "href": "https://api.spotify.com/v1/albums/0IQbQC6V4UuHLcgO9Yt3uu",
+            "id": "0IQbQC6V4UuHLcgO9Yt3uu",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b273738f2371ae0c10a381aa5052",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e02738f2371ae0c10a381aa5052",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d00004851738f2371ae0c10a381aa5052",
+                "width": 64
+              }
+            ],
+            "name": "Wolfgang Amadeus Phoenix",
+            "release_date": "2009-05-25",
+            "release_date_precision": "day",
+            "total_tracks": 10,
+            "type": "album",
+            "uri": "spotify:album:0IQbQC6V4UuHLcgO9Yt3uu"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 278080,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FR31Q0900007"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/4HeuTZvLutZJ9Z4gMqDnU4"
+          },
+          "href": "https://api.spotify.com/v1/tracks/4HeuTZvLutZJ9Z4gMqDnU4",
+          "id": "4HeuTZvLutZJ9Z4gMqDnU4",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Rome",
+          "popularity": 45,
+          "preview_url": "https://p.scdn.co/mp3-preview/b8e0bed3116f29ee14b8a4823de354fd86716039?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 7,
+          "type": "track",
+          "uri": "spotify:track:4HeuTZvLutZJ9Z4gMqDnU4"
+        },
+        {
+          "album": {
+            "album_type": "album",
+            "artists": [
+              {
+                "external_urls": {
+                  "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+                },
+                "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+                "id": "1xU878Z1QtBldR7ru9owdU",
+                "name": "Phoenix",
+                "type": "artist",
+                "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+              }
+            ],
+            "external_urls": {
+              "spotify": "https://open.spotify.com/album/2STZqJIh4Kf0OIU5yVgYGV"
+            },
+            "href": "https://api.spotify.com/v1/albums/2STZqJIh4Kf0OIU5yVgYGV",
+            "id": "2STZqJIh4Kf0OIU5yVgYGV",
+            "images": [
+              {
+                "height": 640,
+                "url": "https://i.scdn.co/image/ab67616d0000b2734ba84e6d1472a0eb41ad2158",
+                "width": 640
+              },
+              {
+                "height": 300,
+                "url": "https://i.scdn.co/image/ab67616d00001e024ba84e6d1472a0eb41ad2158",
+                "width": 300
+              },
+              {
+                "height": 64,
+                "url": "https://i.scdn.co/image/ab67616d000048514ba84e6d1472a0eb41ad2158",
+                "width": 64
+              }
+            ],
+            "name": "It's Never Been Like That (Deluxe Version)",
+            "release_date": "2006-05-12",
+            "release_date_precision": "day",
+            "total_tracks": 14,
+            "type": "album",
+            "uri": "spotify:album:2STZqJIh4Kf0OIU5yVgYGV"
+          },
+          "artists": [
+            {
+              "external_urls": {
+                "spotify": "https://open.spotify.com/artist/1xU878Z1QtBldR7ru9owdU"
+              },
+              "href": "https://api.spotify.com/v1/artists/1xU878Z1QtBldR7ru9owdU",
+              "id": "1xU878Z1QtBldR7ru9owdU",
+              "name": "Phoenix",
+              "type": "artist",
+              "uri": "spotify:artist:1xU878Z1QtBldR7ru9owdU"
+            }
+          ],
+          "disc_number": 1,
+          "duration_ms": 186159,
+          "explicit": false,
+          "external_ids": {
+            "isrc": "FRZ110600293"
+          },
+          "external_urls": {
+            "spotify": "https://open.spotify.com/track/7dGubYmPavaI9YNansq9TW"
+          },
+          "href": "https://api.spotify.com/v1/tracks/7dGubYmPavaI9YNansq9TW",
+          "id": "7dGubYmPavaI9YNansq9TW",
+          "is_local": false,
+          "is_playable": true,
+          "name": "Long Distance Call",
+          "popularity": 47,
+          "preview_url": "https://p.scdn.co/mp3-preview/0df25e79c4504aea49522adefe6c7d7f15d14549?cid=774b29d4f13844c495f206cafdad9c86",
+          "track_number": 4,
+          "type": "track",
+          "uri": "spotify:track:7dGubYmPavaI9YNansq9TW"
+        }
+      ]
     }
   ]
 }

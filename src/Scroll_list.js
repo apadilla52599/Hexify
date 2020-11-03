@@ -25,21 +25,21 @@ export default function ArtistSongList() {
     setChecked(newChecked);
   };
   var json = require('./DummyData/DummyArtists.json');
-  const songs = json.graphicalPlaylists[0].artistNodes[3].tracks;
+  var songs = json.artists[0].tracks;
   return (
   <div style = {{overflow: 'hidden', height: "calc(100% - 18rem)", position: "relative"}}>
     <List style = {{overflowY: "scroll", width:"100%", height: "100%", paddingRight: "3rem", boxSizing: "content-box"}}>
-      {songs.map(({spotifyTrackId, name, image, album}) => {
-        const labelId = `checkbox-list-secondary-label-${spotifyTrackId}`;
+      {songs.map(({uri, name, album}) => {
+        const labelId = `checkbox-list-secondary-label-${uri}`;
         return (
-          <ListItem key={spotifyTrackId} button style={{marginLeft:"1rem"}} >
+          <ListItem key={uri} button style={{marginLeft:"1rem"}} >
             <div>
-              <img alt="Album Cover" style = {{height: "2rem", width: "2rem", marginRight: "1rem"}} src={image}/>
+              <img alt="Album Cover" style = {{height: "2rem", width: "2rem", marginRight: "1rem"}} src={album.images[0].url}/>
             </div>    
             <ListItemText id={labelId} 
             disableTypography
             primary={<Typography style={{ color: '#FFFFFF', fontSize: ".9rem" }}>{name}</Typography>}
-            secondary={<Typography style={{color: 'gray', fontSize: ".75rem" }}>{album}</Typography>}
+            secondary={<Typography style={{color: 'gray', fontSize: ".75rem" }}>{album.name}</Typography>}
             />
           
             <ListItemSecondaryAction>
@@ -47,8 +47,8 @@ export default function ArtistSongList() {
                 icon={<FavoriteBorder style = {{width: "1.5rem", height: "1.5rem" }}/>}
                 checkedIcon={<Favorite style = {{width: "1.5rem", height: "1.5rem" }}/>}
                 edge="end"
-                onChange={handleToggle(spotifyTrackId)}
-                checked={checked.indexOf(spotifyTrackId) !== -1}
+                onChange={handleToggle(uri)}
+                checked={checked.indexOf(uri) !== -1}
                 inputProps={{ 'aria-labelledby': labelId }}
               />
             </ListItemSecondaryAction>
