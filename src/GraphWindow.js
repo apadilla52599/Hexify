@@ -334,10 +334,12 @@ class GraphWindow extends React.Component {
                 this.draw();
             }
         }
+    }
 
-        this.canvas.oncontextmenu = (e) => {
-            e.preventDefault();
-        }
+    componentWillUnmount() {
+        this.canvas.onmousemove = null;
+        this.canvas.onmouseleave = null;
+        this.canvas.onclick = null;
     }
 
     handleClick = () => {
