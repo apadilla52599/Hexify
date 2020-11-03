@@ -18,18 +18,19 @@ class GraphWindow extends React.Component {
 
     constructor() {
         super();
-        this.transactionStack = new TransactionStack();
         let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
-        const firstNode = {
-            ...randomArtist,
-            coords: { q: 0, r: 0},
-            selectedTracks: [],
-            image: null
-        };
         this.state = {
-            nodes: this.transactionStack.addNode(firstNode),
+            nodes: [
+                {
+                    ...randomArtist,
+                    coords: { q: 0, r: 0},
+                    selectedTracks: [],
+                    image: null
+                }
+            ],
             displayed: "Artist_editor"
         };
+        this.transactionStack = new TransactionStack(this.state.nodes);
         this.transform = null;
         this.canvas = null;
         this.ctx = null;
@@ -314,7 +315,9 @@ class GraphWindow extends React.Component {
             this.adjacentRecommendedArtists.forEach((node) => {
                 if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
                     //this.nodes.push(node);
-                    this.setState({ nodes: this.transactionStack.addNode(node) });
+                    const receipt = this.transactionStack.addNode(node)
+                    if (receipt.update)
+                        this.setState({ nodes: receipt.nodes });
                     this.selectedNode = node;
                     this.adjacentRecommendedArtists = [];
                     this.draw();
@@ -337,6 +340,27 @@ class GraphWindow extends React.Component {
                 this.draw();
             }
         }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey) {
+                if (e.key === 'z') {
+                    const receipt = this.transactionStack.undo();
+                    if (receipt.update) {
+                        this.selectedNode = null;
+                        this.adjacentRecommendedArtists = [];
+                        this.setState({ nodes: receipt.nodes }, this.draw);
+                    }
+                }
+                else if (e.key === 'y') {
+                    const receipt = this.transactionStack.redo();
+                    if (receipt.update) {
+                        this.selectedNode = null;
+                        this.adjacentRecommendedArtists = [];
+                        this.setState({ nodes: receipt.nodes }, this.draw);
+                    }
+                }
+            }
+        });
     }
 
     componentWillUnmount() {
