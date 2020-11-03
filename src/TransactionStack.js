@@ -56,6 +56,11 @@ class TransactionStack {
                     }
                 }
             }
+            else if (transaction.type === "remove") {
+                this.nodes.push(transaction.data);
+                this.topIndex -= 1;
+                update = true;
+            }
         }
         return {
             update: update,
@@ -71,6 +76,15 @@ class TransactionStack {
                 this.nodes.push(transaction.data);
                 this.topIndex += 1;
                 update = true;
+            }
+            else if (transaction.type === "remove") {
+                for (let i = 0; i < this.nodes.length; i++) {
+                    if (this.nodes[i].coords === transaction.data.coords) {
+                        this.nodes.splice(i, 1);
+                        this.topIndex += 1;
+                        update = true;
+                    }
+                }
             }
         }
         return {

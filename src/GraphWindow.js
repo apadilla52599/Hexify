@@ -360,6 +360,14 @@ class GraphWindow extends React.Component {
                     }
                 }
             }
+            if (e.key === "Delete" && this.selectedNode != null) {
+                const receipt = this.transactionStack.removeNode(this.selectedNode);
+                if (receipt.update) {
+                    this.selectedNode = null;
+                    this.adjacentRecommendedArtists = [];
+                    this.setState({ nodes: receipt.nodes }, this.draw);
+                }
+            }
         });
     }
 
