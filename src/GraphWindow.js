@@ -18,11 +18,7 @@ class GraphWindow extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            nodes: [],
-            displayed: "Artist_editor"
-        };
-        this.transactionStack = new TransactionStack(this.state.nodes);
+        this.transactionStack = new TransactionStack();
         let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
         const firstNode = {
             ...randomArtist,
@@ -30,7 +26,10 @@ class GraphWindow extends React.Component {
             selectedTracks: [],
             image: null
         };
-        this.setState({ nodes: this.transactionStack.addNode(firstNode) });
+        this.state = {
+            nodes: this.transactionStack.addNode(firstNode),
+            displayed: "Artist_editor"
+        };
         this.transform = null;
         this.canvas = null;
         this.ctx = null;
