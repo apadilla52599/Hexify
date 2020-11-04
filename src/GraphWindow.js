@@ -28,7 +28,7 @@ class GraphWindow extends React.Component {
                     image: null
                 }
             ],
-            displayed: "Artist_editor"
+            displayed: "Playlist_editor"
         };
         this.transactionStack = new TransactionStack(this.state.nodes);
         this.transform = null;
@@ -318,7 +318,7 @@ class GraphWindow extends React.Component {
                     //this.nodes.push(node);
                     const receipt = this.transactionStack.addNode(node)
                     if (receipt.update)
-                        this.setState({ nodes: receipt.nodes });
+                        this.setState({displayed: 'Artist_editor', nodes: receipt.nodes });
                     
                     this.adjacentRecommendedArtists = [];
                     this.draw();
@@ -329,7 +329,7 @@ class GraphWindow extends React.Component {
                 this.state.nodes.forEach((node) => {
                     if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
                         this.selectedNode = node;
-                        this.setState({ nodes: this.state.nodes });
+                        this.setState({displayed: 'Artist_editor', nodes: this.state.nodes });
                         this.adjacentRecommendedArtists = [];
                         this.draw();
                         flag = true;
@@ -338,6 +338,7 @@ class GraphWindow extends React.Component {
             }
             if (flag === false) {
                 this.selectedNode = null;
+                this.setState({ displayed: 'Playlist_editor', nodes: this.state.nodes });
                 this.adjacentRecommendedArtists = [];
                 this.draw();
             }
@@ -379,16 +380,10 @@ class GraphWindow extends React.Component {
         this.canvas.onclick = null;
     }
 
-    handleClick = () => {
-        var displayed = this.state.displayed;
-        if (displayed == null) {
-            this.setState({displayed: "Artist_editor"});
-        } else {
-          var newDisplayed = displayed === 'Playlist_editor' ? 'Artist_editor' : 'Playlist_editor';
-          this.setState({
-              displayed: newDisplayed
-          });
-        }
+    showPlaylist = () => {
+        this.setState({
+            displayed: 'Playlist_editor'
+        });
     }
 
     quickAddStyle(index, image) {
@@ -423,13 +418,15 @@ class GraphWindow extends React.Component {
         return (
             <div id="graph_window">
                 <div id="playlist_column">
-                    <IconButton edge="end" onClick = {this.handleClick} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
-                            <ArrowBackIosIcon style = {{width: "1.5vw", height: "1.5vw" }}></ArrowBackIosIcon>
-                    </IconButton>
                     {this.state.displayed === 'Playlist_editor' ? (
                         <PlaylistEditor nodes = {this.state.nodes}/>
                     ) : this.state.displayed  === 'Artist_editor' ? (
+                        <div>
+                        <IconButton edge="end" onClick = {this.showPlaylist} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
+                            <ArrowBackIosIcon style = {{width: "2.5vh", height: "2.5vh" }}></ArrowBackIosIcon>
+                        </IconButton>
                         <ArtistEditor selected = {this.selectedNode}/>
+                        </div>
                     ) : null}
                     <div id="playback">
                     <SpotifyPlayer

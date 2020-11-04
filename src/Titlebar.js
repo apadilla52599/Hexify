@@ -32,7 +32,7 @@ class Titlebar extends React.Component {
                     <Input placeholder="Untitled Graph" style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
                 }
                 { !browsing &&
-                    <p style={{ color: "var(--text-color-secondary)", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>
+                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>
                 }
                 
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>

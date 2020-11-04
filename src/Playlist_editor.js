@@ -7,10 +7,10 @@ class PlaylistEditor extends React.Component {
         return (
             <div id="playlist_editor">
                 <div style={{display: "flex", alignItems: "center"}}>
-                        <p style={{ color: "B19CD9", fontFamily: "monospace", fontSize: "1.5vw",  display: "flex", justifyContent: "center", flexGrow: 1}}>Playlist Editor</p>
+                        <p style={{ color: "B19CD9", fontFamily: "monospace", fontSize: "2.5vh",  display: "flex", justifyContent: "center", flexGrow: 1}}>Playlist Editor</p>
                 </div>
                 <div  style = {{display: "flex", justifyContent: "center", flexGrow: 1, marginTop: "0", marginBottom: "1vh"}}>
-                    <input style = {{height: "1.5vw", width:"15vw", fontSize: ".75vw", marginTop: 0}} type="text" placeholder="Search.." ></input>
+                    <input style = {{height: "2vh", width:"80%", fontSize: "1vh", marginTop: 0}} type="text" placeholder="Search.." ></input>
                 </div>                    
                 <div>
                     <Playlist nodes = {this.props.nodes}/>
