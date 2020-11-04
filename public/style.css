@@ -2,6 +2,7 @@
     --background-color: rgb(56,56,56);
     --text-color-primary: "white";
     --text-color-secondary: #A0A0A0;
+    --text-color-purple: #B19CD9;
     --titlebar-height: 3rem;
     --playlist-column-margin: 1rem;
     --playlist-column-width: max(22em, 20vw);
@@ -69,21 +70,30 @@ body {
     overflow: auto;
 }
 
+#purple_text{
+    color: var(--text-color-purple);
+}
+#purple_text_background{
+    background-color: var(--text-color-purple);
+}
+
+#scroll{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    box-sizing: "content-box";
+}
 #scroll::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
     background-color: var(--background-color);
-    overflow-x: 'hidden';
-    overflow-y: "scroll";
 }
 
 #scroll::-webkit-scrollbar
 {
-	width: 6px;
-	background-color: #ffffff;
+	width: 5px;
+    background-color: var(--text-color-purple);
 }
 
 #scroll::-webkit-scrollbar-thumb
 {
-	background-color: #ffffff;
+	background-color: var(--text-color-purple);
 }
