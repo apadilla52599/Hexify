@@ -4,13 +4,17 @@ import Button from '@material-ui/core/Button'
 
 class ArtistEditor extends React.Component {
     render() {
-        var json = require('./DummyData/DummyArtists.json');
-        var artist = json.artists[0];
+        var artist = this.props.selected;
+        if(artist == null){
+            return(
+                <div id="playlist_editor" style = {{align: "center"}}/>
+            )
+        }else{
         return (
             <div id="playlist_editor" style = {{align: "center"}}>
                 <div style={{display: "flex", alignItems: "center" }}>
                     <div  style={{paddingTop: "1.5rem", display: "flex", justifyContent: "center", flexGrow: 1}}>
-					    <img style = {{width: "6rem", height: "6rem", borderRadius: "50%"}} src= {artist.images[2].url} className="img-responsive" alt=""/>
+					    <img style = {{width: "6rem", height: "6rem", borderRadius: "50%"}} src= {artist.images[0].url} className="img-responsive" alt=""/>
 				    </div>
                 </div>     
 				
@@ -26,7 +30,7 @@ class ArtistEditor extends React.Component {
                 <div  style = {{display: "flex", justifyContent: "center", flexGrow: 1, marginTop: "1rem"}}>
                     <input style = {{height: "2rem", width: "90%", fontSize: "1rem"}} type="text" placeholder="Search.." ></input>
                 </div>
-                <ArtistSongList />
+                <ArtistSongList selected = {artist}/>
                 <div style = {{display: "flex", justifyContent: "center", flexGrow: 1, marginTop: "1rem"}}>
                     <Button variant="contained" color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>
                         Remove Artist
@@ -34,6 +38,7 @@ class ArtistEditor extends React.Component {
 				</div>
             </div>
         );
+        }
       }
 }
 

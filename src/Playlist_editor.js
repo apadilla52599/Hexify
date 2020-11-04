@@ -13,7 +13,7 @@ class PlaylistEditor extends React.Component {
                     <input style = {{height: "1.5vw", width:"15vw", fontSize: ".75vw", marginTop: 0}} type="text" placeholder="Search.." ></input>
                 </div>                    
                 <div>
-                    <Playlist />
+                    <Playlist nodes = {this.props.nodes}/>
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", margin: "5%"}}>
 

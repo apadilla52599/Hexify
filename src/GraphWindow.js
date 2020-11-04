@@ -314,11 +314,12 @@ class GraphWindow extends React.Component {
             var flag = false;
             this.adjacentRecommendedArtists.forEach((node) => {
                 if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
+                    this.selectedNode = node;
                     //this.nodes.push(node);
                     const receipt = this.transactionStack.addNode(node)
                     if (receipt.update)
                         this.setState({ nodes: receipt.nodes });
-                    this.selectedNode = node;
+                    
                     this.adjacentRecommendedArtists = [];
                     this.draw();
                     flag = true;
@@ -328,6 +329,7 @@ class GraphWindow extends React.Component {
                 this.state.nodes.forEach((node) => {
                     if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
                         this.selectedNode = node;
+                        this.setState({ nodes: this.state.nodes });
                         this.adjacentRecommendedArtists = [];
                         this.draw();
                         flag = true;
@@ -417,9 +419,9 @@ class GraphWindow extends React.Component {
                             <ArrowBackIosIcon style = {{width: "1.5vw", height: "1.5vw" }}></ArrowBackIosIcon>
                     </IconButton>
                     {this.state.displayed === 'Playlist_editor' ? (
-                        <PlaylistEditor />
+                        <PlaylistEditor nodes = {this.state.nodes}/>
                     ) : this.state.displayed  === 'Artist_editor' ? (
-                        <ArtistEditor />
+                        <ArtistEditor selected = {this.selectedNode}/>
                     ) : null}
                     <div id="playback">
                     <SpotifyPlayer

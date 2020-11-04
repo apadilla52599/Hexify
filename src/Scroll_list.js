@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 
 
 
-export default function ArtistSongList() {
+export default function ArtistSongList(props) {
   const [checked, setChecked] = React.useState([-1]);
   const handleToggle = (index) => () => {
     const currentIndex = checked.indexOf(index);
@@ -24,8 +24,7 @@ export default function ArtistSongList() {
 
     setChecked(newChecked);
   };
-  var json = require('./DummyData/DummyArtists.json');
-  var songs = json.artists[0].tracks;
+  var songs = props.selected.tracks;
   return (
   <div style = {{overflow: 'hidden', height: "calc(100% - 18rem)", position: "relative"}}>
     <List style = {{overflowY: "scroll", width:"100%", height: "100%", paddingRight: "3rem", boxSizing: "content-box"}}>
