@@ -26,7 +26,7 @@ export default function ArtistSongList(props) {
   };
   var songs = props.selected.tracks;
   return (
-    <List id="scroll" style = {{overflowY: "scroll", width:"100%", height: "calc(100% - 18rem)", boxSizing: "content-box"}}>
+    <List id="scroll" style = {{height: "calc(100% - 18rem)"}}>
       {songs.map(({uri, name, album}) => {
         const labelId = `checkbox-list-secondary-label-${uri}`;
         return (

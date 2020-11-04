@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 export default function Playlist(props) {
   var artists = props.nodes;
   return (
-          <List id="scroll" style = {{overflowY: "scroll", width:"100%", height: "75%", paddingRight: "0vw", boxSizing: "content-box"}}>
+          <List id="scroll" style = {{height: "75%"}}>
             {artists.map((artistNode) => {
               return (
               artistNode.tracks.map(({name, album}) => {

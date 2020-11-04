@@ -19,7 +19,7 @@ class ArtistEditor extends React.Component {
                 </div>     
 				
 				<div style ={{textAlign: "center", marginTop: ".5rem"}}>
-					<div style = {{color: "B19CD9", fontSize: "1.5rem",fontWeight: "600", marginBottom: ".25rem", fontFamily: "monospace"}}>
+					<div id = "purple_text" style = {{fontSize: "1.5rem",fontWeight: "600", marginBottom: ".25rem", fontFamily: "monospace"}}>
 						{artist.name}
 					</div>
 					<div style= {{color: "white",fontSize: "1rem", fontWeight: "200",marginbottom: "1rem", fontFamily: "monospace"}}>

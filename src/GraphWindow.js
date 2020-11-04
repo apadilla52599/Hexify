@@ -9,7 +9,7 @@ import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
 
 const cartesianToPixel = 20;
-const selectedColor = "#7ae15e";
+const selectedColor = "#B19CD9";
 const hexRadius = cartesianToPixel;
 const imageRadius = cartesianToPixel * .6;
 const nodeBackground = "#d0d0d0";
