@@ -29,7 +29,7 @@ class GraphWindow extends React.Component {
                     image: null
                 }
             ],
-            displayed: "Playlist_editor",
+            selectedNode: null,
             selectedQuickArtist: null
         };
         this.transactionStack = new TransactionStack(this.state.nodes);
@@ -37,7 +37,6 @@ class GraphWindow extends React.Component {
         this.canvas = null;
         this.ctx = null;
         this.mouseCoord = null;
-        this.selectedNode = null;
         this.adjacentRecommendedArtists = [];
         this.topRecommendedArtists = DummyData.artists.slice(0, 6);
     }
@@ -223,32 +222,32 @@ class GraphWindow extends React.Component {
         this.ctx.scale(this.transform.k, this.transform.k);
 
         var selectedNeighbors = [];
-        if (this.selectedNode != null) {
+        if (this.state.selectedNode != null) {
             if (this.adjacentRecommendedArtists.length === 0) {
                 selectedNeighbors = [
                     {
-                        q: this.selectedNode.coords.q + 1,
-                        r: this.selectedNode.coords.r
+                        q: this.state.selectedNode.coords.q + 1,
+                        r: this.state.selectedNode.coords.r
                     },
                     {
-                        q: this.selectedNode.coords.q + 1,
-                        r: this.selectedNode.coords.r - 1
+                        q: this.state.selectedNode.coords.q + 1,
+                        r: this.state.selectedNode.coords.r - 1
                     },
                     {
-                        q: this.selectedNode.coords.q,
-                        r: this.selectedNode.coords.r + 1
+                        q: this.state.selectedNode.coords.q,
+                        r: this.state.selectedNode.coords.r + 1
                     },
                     {
-                        q: this.selectedNode.coords.q - 1,
-                        r: this.selectedNode.coords.r
+                        q: this.state.selectedNode.coords.q - 1,
+                        r: this.state.selectedNode.coords.r
                     },
                     {
-                        q: this.selectedNode.coords.q - 1,
-                        r: this.selectedNode.coords.r + 1
+                        q: this.state.selectedNode.coords.q - 1,
+                        r: this.state.selectedNode.coords.r + 1
                     },
                     {
-                        q: this.selectedNode.coords.q,
-                        r: this.selectedNode.coords.r - 1
+                        q: this.state.selectedNode.coords.q,
+                        r: this.state.selectedNode.coords.r - 1
                     }
                 ];
             }
@@ -260,9 +259,9 @@ class GraphWindow extends React.Component {
         }
 
         this.state.nodes.forEach((node) => {
-            if (this.selectedNode != null &&
-                this.selectedNode.coords.q === node.coords.q &&
-                this.selectedNode.coords.r === node.coords.r)
+            if (this.state.selectedNode != null &&
+                this.state.selectedNode.coords.q === node.coords.q &&
+                this.state.selectedNode.coords.r === node.coords.r)
                 this.drawHex(node, selectedColor);
             else
                 this.drawHex(node, nodeBackground);
@@ -343,22 +342,21 @@ class GraphWindow extends React.Component {
             var flag = false;
             this.adjacentRecommendedArtists.forEach((node) => {
                 if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
-                    this.selectedNode = node;
-                    //this.nodes.push(node);
                     const receipt = this.transactionStack.addNode(node)
-                    if (receipt.update)
-                        this.setState({displayed: 'Artist_editor', nodes: receipt.nodes });
-                    
-                    this.adjacentRecommendedArtists = [];
-                    this.draw();
+                    if (receipt.update) {
+                        this.setState({
+                            selectedNode: node
+                        });
+                        this.adjacentRecommendedArtists = [];
+                        this.draw();
+                    }
                     flag = true;
                 }
             });
             if (flag === false) {
                 this.state.nodes.forEach((node) => {
                     if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
-                        this.selectedNode = node;
-                        this.setState({displayed: 'Artist_editor', nodes: this.state.nodes });
+                        this.setState({ selectedNode: node });
                         this.adjacentRecommendedArtists = [];
                         this.draw();
                         flag = true;
@@ -366,8 +364,7 @@ class GraphWindow extends React.Component {
                 });
             }
             if (flag === false) {
-                this.selectedNode = null;
-                this.setState({ displayed: 'Playlist_editor', nodes: this.state.nodes });
+                this.setState({ selectedNode: null });
                 this.adjacentRecommendedArtists = [];
                 this.draw();
             }
@@ -378,26 +375,32 @@ class GraphWindow extends React.Component {
                 if (e.key === 'z') {
                     const receipt = this.transactionStack.undo();
                     if (receipt.update) {
-                        this.selectedNode = null;
                         this.adjacentRecommendedArtists = [];
-                        this.setState({ nodes: receipt.nodes }, this.draw);
+                        this.setState({
+                            nodes: receipt.nodes,
+                            selectedNode: null
+                        }, this.draw);
                     }
                 }
                 else if (e.key === 'y') {
                     const receipt = this.transactionStack.redo();
                     if (receipt.update) {
-                        this.selectedNode = null;
                         this.adjacentRecommendedArtists = [];
-                        this.setState({ nodes: receipt.nodes }, this.draw);
+                        this.setState({
+                            nodes: receipt.nodes,
+                            selectedNode: null
+                        }, this.draw);
                     }
                 }
             }
-            if (e.key === "Delete" && this.selectedNode != null) {
-                const receipt = this.transactionStack.removeNode(this.selectedNode);
+            if (e.key === "Delete" && this.state.selectedNode != null) {
+                const receipt = this.transactionStack.removeNode(this.state.selectedNode);
                 if (receipt.update) {
-                    this.selectedNode = null;
                     this.adjacentRecommendedArtists = [];
-                    this.setState({ nodes: receipt.nodes }, this.draw);
+                    this.setState({
+                        nodes: receipt.nodes,
+                        selectedNode: null
+                    }, this.draw);
                 }
             }
         });
@@ -411,7 +414,7 @@ class GraphWindow extends React.Component {
 
     showPlaylist = () => {
         this.setState({
-            displayed: 'Playlist_editor'
+            selectedNode: null
         });
     }
 
@@ -454,10 +457,13 @@ class GraphWindow extends React.Component {
                 selectedTracks: [],
                 image: artist.image
             }
-            this.selectedNode = node;
             const receipt = this.transactionStack.addNode(node);
             if (receipt.update)
-                this.setState({displayed: 'Artist_editor', nodes: receipt.nodes, selectedQuickArtist: null})
+                this.setState({
+                    nodes: receipt.nodes,
+                    selectedQuickArtist: null,
+                    selectedNode: node
+                })
             this.adjacentRecommendedArtists = [];
             this.draw();
             document.onmouseup = null;
@@ -469,16 +475,16 @@ class GraphWindow extends React.Component {
         return (
             <div id="graph_window">
                 <div id="playlist_column">
-                    {this.state.displayed === 'Playlist_editor' ? (
+                    {this.state.selectedNode === null ? (
                         <PlaylistEditor nodes = {this.state.nodes}/>
-                    ) : this.state.displayed  === 'Artist_editor' ? (
+                    ) : (
                         <div>
                         <IconButton edge="end" onClick = {this.showPlaylist} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
                             <ArrowBackIosIcon style = {{width: "2.5vh", height: "2.5vh" }}></ArrowBackIosIcon>
                         </IconButton>
-                        <ArtistEditor selected = {this.selectedNode}/>
+                        <ArtistEditor selected = {this.state.selectedNode}/>
                         </div>
-                    ) : null}
+                    )}
                     <div id="playback">
                     <SpotifyPlayer
                         token="BQAOP1_rHvOwVYs4uVlqywfYA3JFHIS2vrDG2ppAvjE3HSA_vUx_9y8VkL5B2AWg9jvUWXLiF1W3UL3UEmiqckVUBZIvDi4cOfTFNdkDRUS-ZdYTdCQcicy27rG11DiXt-zkYWEMTpvSO_xX2SXak_rSpDadfCkP0RF4LTXwt_MLzmSnIm3oZy02oZs"
