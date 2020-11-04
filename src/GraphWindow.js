@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
+import { mouse } from "d3";
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -28,7 +29,8 @@ class GraphWindow extends React.Component {
                     image: null
                 }
             ],
-            displayed: "Playlist_editor"
+            displayed: "Playlist_editor",
+            selectedQuickArtist: null
         };
         this.transactionStack = new TransactionStack(this.state.nodes);
         this.transform = null;
@@ -187,6 +189,30 @@ class GraphWindow extends React.Component {
         }
     }
 
+    drawQuickArtist() {
+        this.drawCursor();
+        const {x, y} = this.axialToCart(this.mouseCoord);
+        const drawLoadedImage = () => {
+            this.ctx.save();
+            this.ctx.beginPath();
+            this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
+            this.ctx.clip();
+            this.ctx.drawImage(this.state.selectedQuickArtist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
+            this.ctx.restore();
+        }
+        if (this.state.selectedQuickArtist.image == null) {
+            var img = new Image();
+            img.addEventListener('load', () => {
+                this.state.selectedQuickArtist.image = img;
+                drawLoadedImage();
+            }, true);
+            img.src = this.state.selectedQuickArtist.images[0].url;
+        }
+        else {
+            drawLoadedImage();
+        }
+    }
+
     draw() {
         // Correct the canvas dimensions if the window has been resized
         this.canvas.width = this.canvas.offsetWidth;
@@ -302,6 +328,9 @@ class GraphWindow extends React.Component {
         this.canvas.onmousemove = (e) => {
             this.mouseCoord = this.pixelToAxial(e.clientX, e.clientY);
             this.draw();
+            if(this.state.selectedQuickArtist !== null){
+                this.drawQuickArtist();
+            }
         };
 
         this.canvas.onmouseleave = (e) => {
@@ -413,6 +442,28 @@ class GraphWindow extends React.Component {
             };
     }
 
+    handleQuickAddDrag = (artist, e) => {
+        console.log(artist.name, e.clientX);
+        // this.selectedQuickArtist = artist;
+        this.setState({selectedQuickArtist: artist});
+        document.onmouseup =  (e) => {
+            const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
+            var node = {
+                ...artist,
+                coords: {q: mouseCoords.q, r: mouseCoords.r},
+                selectedTracks: [],
+                image: artist.image
+            }
+            this.selectedNode = node;
+            const receipt = this.transactionStack.addNode(node);
+            if (receipt.update)
+                this.setState({displayed: 'Artist_editor', nodes: receipt.nodes, selectedQuickArtist: null})
+            this.adjacentRecommendedArtists = [];
+            this.draw();
+            document.onmouseup = null;
+        }
+    }
+
     render() {
         var index = 0;
         return (
@@ -448,6 +499,8 @@ class GraphWindow extends React.Component {
                         return (
                             <div
                                 key={ index }
+                                onMouseDown = { this.handleQuickAddDrag.bind(this, DummyData.artists[index - 1]) }
+
                                 style={ this.quickAddStyle(index, DummyData.artists[index - 1].images[0].url) }
                             />
                         );
