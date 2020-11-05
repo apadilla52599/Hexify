@@ -31,7 +31,6 @@ class HamburgerMenu extends React.Component {
     componentDidMount(){
         var json = require('./DummyData/DummyArtists.json');
         var graphList = json.graphicalPlaylists.map(playlist => ({name: playlist.name}));
-        // console.log(graphList);
         var otherList = [img1,img2,img3,img4,img5,img6,img7,img8];
         for(let i = 0; i < otherList.length;i++){
             graphList[i].thumbnail = otherList[i];

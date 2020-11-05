@@ -31,7 +31,6 @@ class Browse extends React.Component {
         for(let i = 0; i < otherList.length;i++){
             graphList[i].src = otherList[i];
         }
-        console.log(graphList);
         this.setState({photos: graphList});
     }
     
