@@ -445,6 +445,7 @@ class GraphWindow extends React.Component {
     }
 
     handleQuickAddDrag = (artist, e) => {
+        e.preventDefault();
         console.log(artist.name, e.clientX);
         // this.selectedQuickArtist = artist;
         this.setState({selectedQuickArtist: artist});
