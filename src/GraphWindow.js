@@ -305,7 +305,7 @@ class GraphWindow extends React.Component {
             d3.zoom()
             .scaleExtent([1, 8])
             .wheelDelta((event) => {
-              return -event.deltaY * (event.deltaMode === 1 ? .05 : event.deltaMode ? 1 : .002) ;
+                return -event.deltaY * (event.deltaMode ? 120 : 1) / 500;
             })
             .clickDistance(4)
             .on("zoom", ({transform}) => {
