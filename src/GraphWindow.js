@@ -2,7 +2,6 @@ import React from "react";
 import PlaylistEditor from './Playlist_editor.js';
 import ArtistEditor from './Artist_editor.js';
 import * as d3 from "d3";
-import SpotifyPlayer from 'react-spotify-web-playback';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DummyData from "./DummyData/DummyArtists.json";
@@ -485,12 +484,6 @@ class GraphWindow extends React.Component {
                         <ArtistEditor selected = {this.state.selectedNode}/>
                         </div>
                     )}
-                    <div id="playback">
-                    <SpotifyPlayer
-                        token="BQAOP1_rHvOwVYs4uVlqywfYA3JFHIS2vrDG2ppAvjE3HSA_vUx_9y8VkL5B2AWg9jvUWXLiF1W3UL3UEmiqckVUBZIvDi4cOfTFNdkDRUS-ZdYTdCQcicy27rG11DiXt-zkYWEMTpvSO_xX2SXak_rSpDadfCkP0RF4LTXwt_MLzmSnIm3oZy02oZs"
-                        uris={['spotify:album:7H814Cg8HV0qpoMheYbhNn']}
-                        />
-                     </div>
                 </div>
                 <div id="sidebar_column">
                     <div
