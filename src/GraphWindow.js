@@ -29,9 +29,9 @@ class GraphWindow extends React.Component {
                     image: null
                 }
             ],
-            displayed: "Playlist_editor",
-            selectedQuickArtist: null
+            displayed: "Playlist_editor"
         };
+        this.selectedQuickArtist = null;
         this.transactionStack = new TransactionStack(this.state.nodes);
         this.transform = null;
         this.canvas = null;
@@ -197,16 +197,16 @@ class GraphWindow extends React.Component {
             this.ctx.beginPath();
             this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
             this.ctx.clip();
-            this.ctx.drawImage(this.state.selectedQuickArtist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
+            this.ctx.drawImage(this.selectedQuickArtist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
             this.ctx.restore();
         }
-        if (this.state.selectedQuickArtist.image == null) {
+        if (this.selectedQuickArtist.image === null || this.selectedQuickArtist.image === undefined) {
             var img = new Image();
             img.addEventListener('load', () => {
-                this.state.selectedQuickArtist.image = img;
+                this.selectedQuickArtist.image = img;
                 drawLoadedImage();
             }, true);
-            img.src = this.state.selectedQuickArtist.images[0].url;
+            img.src = this.selectedQuickArtist.images[0].url;
         }
         else {
             drawLoadedImage();
@@ -307,7 +307,7 @@ class GraphWindow extends React.Component {
             d3.zoom()
             .scaleExtent([1, 8])
             .wheelDelta((event) => {
-              return -event.deltaY * (event.deltaMode ? 120 : 1) / 500;
+              return -event.deltaY * (event.deltaMode === 1 ? .05 : event.deltaMode ? 1 : .002) ;
             })
             .clickDistance(4)
             .on("zoom", ({transform}) => {
@@ -328,7 +328,7 @@ class GraphWindow extends React.Component {
         this.canvas.onmousemove = (e) => {
             this.mouseCoord = this.pixelToAxial(e.clientX, e.clientY);
             this.draw();
-            if(this.state.selectedQuickArtist !== null){
+            if(this.selectedQuickArtist !== null){
                 this.drawQuickArtist();
             }
         };
@@ -443,9 +443,8 @@ class GraphWindow extends React.Component {
     }
 
     handleQuickAddDrag = (artist, e) => {
-        console.log(artist.name, e.clientX);
-        // this.selectedQuickArtist = artist;
-        this.setState({selectedQuickArtist: artist});
+        e.preventDefault();
+        this.selectedQuickArtist = artist;
         document.onmouseup =  (e) => {
             const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
             var node = {
@@ -456,8 +455,10 @@ class GraphWindow extends React.Component {
             }
             this.selectedNode = node;
             const receipt = this.transactionStack.addNode(node);
-            if (receipt.update)
-                this.setState({displayed: 'Artist_editor', nodes: receipt.nodes, selectedQuickArtist: null})
+            if (receipt.update){
+                this.setState({displayed: 'Artist_editor', nodes: receipt.nodes})
+                this.selectedQuickArtist = null;
+            }
             this.adjacentRecommendedArtists = [];
             this.draw();
             document.onmouseup = null;
