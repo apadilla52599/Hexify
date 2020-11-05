@@ -26,7 +26,6 @@ class GraphWindow extends React.Component {
             selectedNode: null,
         };
         this.selectedQuickArtist = null;
-        this.lastLoadedQuickArtist = null;
         this.transactionStack = new TransactionStack(this.state.nodes);
         this.transform = null;
         this.canvas = null;
@@ -183,30 +182,6 @@ class GraphWindow extends React.Component {
         }
     }
 
-    drawQuickArtist() {
-        this.drawCursor();
-        const {x, y} = this.axialToCart(this.mouseCoord);
-        const drawLoadedImage = () => {
-            this.ctx.save();
-            this.ctx.beginPath();
-            this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
-            this.ctx.clip();
-            this.ctx.drawImage(this.lastLoadedQuickArtist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
-            this.ctx.restore();
-        }
-        if (this.selectedQuickArtist.image === null || this.selectedQuickArtist.image === undefined) {
-            var img = new Image();
-            img.addEventListener('load', () => {
-                this.lastLoadedQuickArtist.image = img;
-                drawLoadedImage();
-            }, true);
-            img.src = this.selectedQuickArtist.images[0].url;
-        }
-        else {
-            drawLoadedImage();
-        }
-    }
-
     draw() {
         // Correct the canvas dimensions if the window has been resized
         this.canvas.width = this.canvas.offsetWidth;
@@ -328,7 +303,8 @@ class GraphWindow extends React.Component {
             this.mouseCoord = this.pixelToAxial(e.clientX, e.clientY);
             this.draw();
             if(this.selectedQuickArtist !== null){
-                this.drawQuickArtist();
+                this.selectedQuickArtist.coords = this.mouseCoord;
+                this.drawNodeImage(this.selectedQuickArtist);
             }
         };
 
@@ -447,16 +423,15 @@ class GraphWindow extends React.Component {
 
     handleQuickAddDrag = (artist, e) => {
         e.preventDefault();
-        this.selectedQuickArtist = artist;
-        this.lastLoadedQuickArtist = artist;
+        const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
+        var node = {
+            ...artist,
+            coords: {q: mouseCoords.q, r: mouseCoords.r},
+            selectedTracks: [],
+            image: artist.image
+        }
+        this.selectedQuickArtist = node;
         document.onmouseup =  (e) => {
-            const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
-            var node = {
-                ...artist,
-                coords: {q: mouseCoords.q, r: mouseCoords.r},
-                selectedTracks: [],
-                image: artist.image
-            }
             const receipt = this.transactionStack.addNode(node);
             if (receipt.update){
                 this.setState({
