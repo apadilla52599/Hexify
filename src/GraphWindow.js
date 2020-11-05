@@ -271,22 +271,26 @@ class GraphWindow extends React.Component {
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
         this.ctx = this.canvas.getContext("2d");
-        this.transform = d3.zoomIdentity.translate(this.canvas.offsetWidth / 2, this.canvas.offsetHeight / 2);
+        this.transform = d3.zoomIdentity;
         selection.call(
             d3.zoom()
-            .scaleExtent([1, 8])
+            //.extent([[0, 0], [1900, 1000]])
             .wheelDelta((event) => {
-                if(Math.abs(event.deltaY) < 5){
-                    return -event.deltaY *  1 / 10;
-                }else{
-                    return -event.deltaY *  1 / 500;
+                if ((this.transform.k < 1 && event.deltaY > 0) || (this.transform.k > 8 && event.deltaY < 0)) {
+                    event.preventDefault();
+                    return 0;
                 }
-                
+                else {
+                    if(Math.abs(event.deltaY) < 5){
+                        return -event.deltaY *  1 / 10;
+                    }else{
+                        return -event.deltaY *  1 / 500;
+                    }
+                }
             })
             .clickDistance(4)
             .on("zoom", ({transform}) => {
                 this.transform = transform;
-                this.transform = this.transform.translate(this.canvas.offsetWidth / 2, this.canvas.offsetHeight / 2);
                 this.draw();
             })
         );
