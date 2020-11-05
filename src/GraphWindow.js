@@ -33,6 +33,7 @@ class GraphWindow extends React.Component {
         this.mouseCoord = null;
         this.adjacentRecommendedArtists = [];
         this.topRecommendedArtists = DummyData.artists.slice(0, 6);
+        this.removeSelectedNode = this.removeSelectedNode.bind(this);
     }
 
     axialToCart(coord) {
@@ -374,16 +375,20 @@ class GraphWindow extends React.Component {
                 }
             }
             if (e.key === "Delete" && this.state.selectedNode != null) {
-                const receipt = this.transactionStack.removeNode(this.state.selectedNode);
-                if (receipt.update) {
-                    this.adjacentRecommendedArtists = [];
-                    this.setState({
-                        nodes: receipt.nodes,
-                        selectedNode: null
-                    }, this.draw);
-                }
+                this.removeSelectedNode();
             }
         });
+    }
+
+    removeSelectedNode() {
+        const receipt = this.transactionStack.removeNode(this.state.selectedNode);
+        if (receipt.update) {
+            this.adjacentRecommendedArtists = [];
+            this.setState({
+                nodes: receipt.nodes,
+                selectedNode: null
+            }, this.draw);
+        }
     }
 
     componentWillUnmount() {
@@ -462,7 +467,7 @@ class GraphWindow extends React.Component {
                         <IconButton edge="end" onClick = {this.showPlaylist} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
                             <ArrowBackIosIcon style = {{width: "2.5vh", height: "2.5vh" }}></ArrowBackIosIcon>
                         </IconButton>
-                        <ArtistEditor selected = {this.state.selectedNode}/>
+                        <ArtistEditor selected = {this.state.selectedNode} removeNodeCallback={this.removeSelectedNode}/>
                         </div>
                     )}
                 </div>
