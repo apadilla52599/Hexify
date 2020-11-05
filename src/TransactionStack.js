@@ -14,11 +14,28 @@ class TransactionStack {
     }
 
     addNode(node) {
-        this.stackPush({
-            type: "add",
-            data: node
-        });
-        this.nodes.push(node);
+        var flag = false;
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (this.nodes[i].coords.q === node.coords.q &&
+                this.nodes[i].coords.r === node.coords.r) {
+                this.stackPush({
+                    type: "swap",
+                    data: {
+                        oldNode: this.nodes[i],
+                        newNode: node
+                    }
+                });
+                this.nodes[i] = node;
+                flag = true;
+            }
+        }
+        if (flag === false) {
+            this.stackPush({
+                type: "add",
+                data: node
+            });
+            this.nodes.push(node);
+        }
         return {
             update: true,
             nodes: this.nodes
@@ -28,7 +45,8 @@ class TransactionStack {
     removeNode(node) {
         var update = false;
         for (let i = 0; i < this.nodes.length; i++) {
-            if (this.nodes[i].coords === node.coords) {
+            if (this.nodes[i].coords.q === node.coords.q &&
+                this.nodes[i].coords.r === node.coords.r) {
                 this.stackPush({
                     type: "remove",
                     data: node
@@ -49,7 +67,8 @@ class TransactionStack {
             const transaction = this.stack[this.topIndex - 1];
             if (transaction.type === "add") {
                 for (let i = 0; i < this.nodes.length; i++) {
-                    if (this.nodes[i].coords === transaction.data.coords) {
+                    if (this.nodes[i].coords.q === transaction.data.coords.q &&
+                        this.nodes[i].coords.r === transaction.data.coords.r) {
                         this.nodes.splice(i, 1);
                         this.topIndex -= 1;
                         update = true;
@@ -60,6 +79,16 @@ class TransactionStack {
                 this.nodes.push(transaction.data);
                 this.topIndex -= 1;
                 update = true;
+            }
+            else if (transaction.type === "swap") {
+                for (let i = 0; i < this.nodes.length; i++) {
+                    if (this.nodes[i].coords.q === transaction.data.oldNode.coords.q &&
+                        this.nodes[i].coords.r === transaction.data.oldNode.coords.r) {
+                        this.nodes[i] = transaction.data.oldNode;
+                        this.topIndex -= 1;
+                        update = true;
+                    }
+                }
             }
         }
         return {
@@ -79,8 +108,19 @@ class TransactionStack {
             }
             else if (transaction.type === "remove") {
                 for (let i = 0; i < this.nodes.length; i++) {
-                    if (this.nodes[i].coords === transaction.data.coords) {
+                    if (this.nodes[i].coords.q === transaction.data.coords.q &&
+                        this.nodes[i].coords.r === transaction.data.coords.r) {
                         this.nodes.splice(i, 1);
+                        this.topIndex += 1;
+                        update = true;
+                    }
+                }
+            }
+            else if (transaction.type === "swap") {
+                for (let i = 0; i < this.nodes.length; i++) {
+                    if (this.nodes[i].coords.q === transaction.data.oldNode.coords.q &&
+                        this.nodes[i].coords.r === transaction.data.oldNode.coords.r) {
+                        this.nodes[i] = transaction.data.newNode;
                         this.topIndex += 1;
                         update = true;
                     }
