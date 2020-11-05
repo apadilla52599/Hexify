@@ -21,16 +21,12 @@ class GraphWindow extends React.Component {
         let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
         this.state = {
             nodes: [
-                {
-                    ...randomArtist,
-                    coords: { q: 0, r: 0},
-                    selectedTracks: [],
-                    image: null
-                }
+                
             ],
             selectedNode: null,
         };
         this.selectedQuickArtist = null;
+        this.lastLoadedQuickArtist = null;
         this.transactionStack = new TransactionStack(this.state.nodes);
         this.transform = null;
         this.canvas = null;
@@ -195,13 +191,13 @@ class GraphWindow extends React.Component {
             this.ctx.beginPath();
             this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
             this.ctx.clip();
-            this.ctx.drawImage(this.selectedQuickArtist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
+            this.ctx.drawImage(this.lastLoadedQuickArtist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
             this.ctx.restore();
         }
         if (this.selectedQuickArtist.image === null || this.selectedQuickArtist.image === undefined) {
             var img = new Image();
             img.addEventListener('load', () => {
-                this.selectedQuickArtist.image = img;
+                this.lastLoadedQuickArtist.image = img;
                 drawLoadedImage();
             }, true);
             img.src = this.selectedQuickArtist.images[0].url;
@@ -447,6 +443,7 @@ class GraphWindow extends React.Component {
     handleQuickAddDrag = (artist, e) => {
         e.preventDefault();
         this.selectedQuickArtist = artist;
+        this.lastLoadedQuickArtist = artist;
         document.onmouseup =  (e) => {
             const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
             var node = {
