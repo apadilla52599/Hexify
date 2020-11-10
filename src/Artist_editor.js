@@ -32,7 +32,7 @@ class ArtistEditor extends React.Component {
                 </div>
                 <ArtistSongList selected = {artist}/>
                 <div style = {{display: "flex", justifyContent: "center", flexGrow: 1, marginTop: "1rem"}}>
-                    <Button variant="contained" color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>
+                    <Button variant="contained" onClick={this.props.removeNodeCallback} color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>
                         Remove Artist
                     </Button>
 				</div>
