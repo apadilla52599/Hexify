@@ -1,12 +1,13 @@
 import React from "react";
-import PlaylistEditor from './Playlist_editor.js';
-import ArtistEditor from './Artist_editor.js';
 import * as d3 from "d3";
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
 import { mouse } from "d3";
+
+import PlaylistEditor from './PlaylistEditor.js';
+import ArtistEditor from './ArtistEditor.js';
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -18,10 +19,12 @@ class GraphWindow extends React.Component {
 
     constructor() {
         super();
-        let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
+        DummyData.artists.forEach((artist) => {
+            artist.selectedTracks = []
+            artist.image = null;
+        });
         this.state = {
             nodes: [
-                
             ],
             selectedNode: null,
         };
@@ -167,16 +170,16 @@ class GraphWindow extends React.Component {
             this.ctx.beginPath();
             this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
             this.ctx.clip();
-            this.ctx.drawImage(node.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
+            this.ctx.drawImage(node.artist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
             this.ctx.restore();
         }
-        if (node.image == null) {
+        if (node.artist.image == null) {
             var img = new Image();
             img.addEventListener('load', () => {
-                node.image = img;
+                node.artist.image = img;
                 drawLoadedImage();
             }, true);
-            img.src = node.images[0].url;
+            img.src = node.artist.images[0].url;
         }
         else {
             drawLoadedImage();
@@ -254,9 +257,8 @@ class GraphWindow extends React.Component {
             selectedNeighbors.forEach((neighborCoords) => {
                 let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
                 const length = this.adjacentRecommendedArtists.push({
-                    ...randomArtist,
+                    artist: randomArtist,
                     coords: neighborCoords,
-                    selectedTracks: [],
                     image: null
                 });
                 this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
@@ -434,9 +436,8 @@ class GraphWindow extends React.Component {
         e.preventDefault();
         const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
         var node = {
-            ...artist,
+            artist: artist,
             coords: {q: mouseCoords.q, r: mouseCoords.r},
-            selectedTracks: [],
             image: artist.image
         }
         this.selectedQuickArtist = node;
@@ -455,20 +456,35 @@ class GraphWindow extends React.Component {
         }
     }
 
+    selectTrack = (track) => {
+        const selectedNode = {...this.state.selectedNode};
+        selectedNode.artist.selectedTracks.push(track);
+        selectedNode.artist.tracks = selectedNode.artist.tracks.filter((unselected) => {
+            return unselected.uri !== track.uri;
+        });
+        this.setState({ selectedNode: selectedNode });
+    }
+
+    deselectTrack = (track) => {
+        const selectedNode = {...this.state.selectedNode};
+        selectedNode.artist.tracks.push(track);
+        selectedNode.artist.selectedTracks = selectedNode.selectedTracks.filter((unselected) => {
+            return unselected.uri !== track.uri;
+        });
+        this.setState({ selectedNode: selectedNode });
+    }
+
     render() {
         var index = 0;
+        const selectedTracks = [];
+        DummyData.artists.forEach((artist) => selectedTracks.push(...artist.selectedTracks));
         return (
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor nodes = {this.state.nodes}/>
+                        <PlaylistEditor tracks={selectedTracks} />
                     ) : (
-                        <div>
-                        <IconButton edge="end" onClick = {this.showPlaylist} style ={{marginLeft:30, marginTop:30, position: "absolute", display: "inline"}}>
-                            <ArrowBackIosIcon style = {{width: "2.5vh", height: "2.5vh" }}></ArrowBackIosIcon>
-                        </IconButton>
-                        <ArtistEditor selected = {this.state.selectedNode} removeNodeCallback={this.removeSelectedNode}/>
-                        </div>
+                        <ArtistEditor artist={this.state.selectedNode.artist} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} />
                     )}
                 </div>
                 <div id="sidebar_column">

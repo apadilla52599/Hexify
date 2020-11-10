@@ -7,9 +7,10 @@
     --playlist-column-margin: 1rem;
     --playlist-column-width: max(22em, 20vw);
     --sidebar-width: 3rem;
-    --playback-height: 3rem;
+    --playback-height: 7rem;
     --sidebar-margin: .5rem;
     --sidebar-offset: 40%;
+    scrollbar-color: #444444 black;
 }
 
 body {
@@ -44,7 +45,7 @@ body {
 
 #playlist_editor {
     width: calc(100% - 3 * var(--playlist-column-padding));
-    height: max(25rem, calc(100% - 3 * var(--playlist-column-margin) - 48px));
+    height: max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)));
     background-color: var(--background-color);
     border-color: black;
     border-width: 1;
