@@ -468,7 +468,7 @@ class GraphWindow extends React.Component {
     deselectTrack = (track) => {
         const selectedNode = {...this.state.selectedNode};
         selectedNode.artist.tracks.push(track);
-        selectedNode.artist.selectedTracks = selectedNode.selectedTracks.filter((unselected) => {
+        selectedNode.artist.selectedTracks = selectedNode.artist.selectedTracks.filter((unselected) => {
             return unselected.uri !== track.uri;
         });
         this.setState({ selectedNode: selectedNode });
