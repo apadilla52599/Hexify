@@ -466,6 +466,7 @@ class GraphWindow extends React.Component {
                         </div>
                     )}
                 </div>
+                
                 <div id="sidebar_column">
                     <div
                         key={ index }
