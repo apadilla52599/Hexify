@@ -42,12 +42,10 @@ app.get(
 );
 
 app.get('/ping', function (req, res) {
- return res.send('pong');
+    return res.send('pong');
 });
 
 app.get('/v1*', function (req, res) {
-    //console.log("token: " + token);
-    console.log("https://api.spotify.com" + req.originalUrl);
     const options = {
         headers: {
             "Accept": "application/json",
@@ -55,18 +53,25 @@ app.get('/v1*', function (req, res) {
             "Authorization": "Bearer " + token
         }
     };
-    https.get("https://api.spotify.com" + req.originalUrl, options, (res) => {
-      console.log('statusCode:', res.statusCode);
-      console.log('headers:', res.headers);
 
-      res.on('data', (d) => {
-        process.stdout.write(d);
-      });
+    /*https.request("https://api.spotify.com" + req.originalUrl, options).on('response', (response) => {
+        console.log(response.statusCode);
+        response.pipe(res);
+    });*/
+    https.get("https://api.spotify.com" + req.originalUrl, options, (spotifyRes) => {
+        console.log('statusCode:', spotifyRes.statusCode);
+        console.log('headers:', spotifyRes.headers);
+            spotifyRes.pipe(res);
+
+        /*spotifyRes.on('data', (d) => {
+            //return res.send(d);
+            spotifyRes.pipe(res);
+        });*/
     });
 });
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(process.env.PORT || 8080);
