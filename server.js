@@ -46,6 +46,7 @@ app.get('/ping', function (req, res) {
 });
 
 app.get('/v1*', function (req, res) {
+    console.log(req.originalUrl);
     const options = {
         headers: {
             "Accept": "application/json",

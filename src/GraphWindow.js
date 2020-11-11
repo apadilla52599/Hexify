@@ -252,16 +252,24 @@ class GraphWindow extends React.Component {
             }
         });
 
-        if (this.adjacentRecommendedArtists.length === 0) {
+        if (this.state.selectedNode != null && this.adjacentRecommendedArtists.length === 0) {
             // Draw the recommended artists
-            selectedNeighbors.forEach((neighborCoords) => {
-                let randomArtist = DummyData.artists[Math.floor(DummyData.artists.length * Math.random())];
-                const length = this.adjacentRecommendedArtists.push({
-                    artist: randomArtist,
-                    coords: neighborCoords,
-                    image: null
+            fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/related-artists").then((response) => {
+                response.json().then(d => {
+                    var i = 0;
+                    selectedNeighbors.forEach((neighborCoords) => {
+                        let artist = d.artists[i];
+                        artist.selectedTracks = [];
+                        DummyData.artists.push(artist);
+                        const length = this.adjacentRecommendedArtists.push({
+                            artist: artist,
+                            coords: neighborCoords,
+                            image: null
+                        });
+                        this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
+                        i++;
+                    });
                 });
-                this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
             });
         }
 
@@ -477,7 +485,23 @@ class GraphWindow extends React.Component {
     render() {
         var index = 0;
         const selectedTracks = [];
-        DummyData.artists.forEach((artist) => selectedTracks.push(...artist.selectedTracks));
+        DummyData.artists.forEach((artist) => {
+            if (artist.selectedTracks !== undefined) {
+                selectedTracks.push(...artist.selectedTracks);
+            }
+        });
+        if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
+            fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
+                response.json().then(d => {
+                    console.log(d);
+                    const selectedNode = {
+                        ...this.state.selectedNode,
+                    }
+                    selectedNode.artist.tracks = d.tracks;
+                    this.setState({selectedNode: selectedNode});
+                });
+            });
+        }
         return (
             <div id="graph_window">
                 <div id="playlist_column">

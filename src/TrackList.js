@@ -6,7 +6,7 @@ function TrackList(props) {
     var i = -1;
     return (
         <List id="scroll" style={{width: "90%", height: "100%", padding: "0px", backgroundColor: "#202020"}}>
-            {
+            { props.tracks !== undefined &&
                 props.tracks.map((track) => {
                     i++;
                     return (
