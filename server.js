@@ -8,19 +8,6 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const https = require('https');
 var token = "";
 
-// const mongoose = require('mongoose')
-// mongoose.connect(mongoUrl, {
-//   useNewUrlParser:true,
-//   useUnifiedTopology:true
-// })
-
-// mongoose.connection.on("connected", () => {
-//     console.log("Connection to MongoDB Atlas server successful.")
-// })
-// mongoose.connection.on("error", (err) => {
-//   console.log("Failed to connect to MongoDB Atlas server", err)
-// })
-
 const {mongoUrl} = require('./keys') //This uses admin cluster key
 const { MongoClient } = require("mongodb");
 const client = new MongoClient(mongoUrl);
@@ -32,11 +19,8 @@ const dbName = "Hexify";
          await client.connect();
          console.log("Connected correctly to server");
          const db = client.db(dbName);
-
-         // Use the collection "people"
          const col = db.collection("data");
-
-         // Construct a document                                                                                                                                                              
+                                                                                                                                                          
          let graphicalPlaylist = {
           "spotifyUserId": "wizzler",
           "graphicalPlaylists": [
@@ -139,13 +123,9 @@ const dbName = "Hexify";
           ]
          }
 
-         // Insert a single document, wait for promise so we can read it back
          const p = await col.insertOne(graphicalPlaylist);
-         // Find one document
-         const myDoc = await col.findOne();
-         // Print to the console
-         console.log(myDoc);
-
+         const myUser = await col.findOne();
+         console.log(myUser);
         } catch (err) {
          console.log(err.stack);
      }
