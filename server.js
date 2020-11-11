@@ -5,6 +5,8 @@ const app = express();
 
 const passport = require('passport')
 const SpotifyStrategy = require('passport-spotify').Strategy;
+const https = require('https');
+var token = "";
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -16,6 +18,7 @@ passport.use(
       callbackURL: 'http://localhost:8080/auth/spotify/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
+        token = accessToken;
         console.log(accessToken);
       /*User.findOrCreate({ spotifyId: profile.id }, function(err, user) {
       });*/
@@ -40,6 +43,26 @@ app.get(
 
 app.get('/ping', function (req, res) {
  return res.send('pong');
+});
+
+app.get('/v1*', function (req, res) {
+    //console.log("token: " + token);
+    console.log("https://api.spotify.com" + req.originalUrl);
+    const options = {
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+        }
+    };
+    https.get("https://api.spotify.com" + req.originalUrl, options, (res) => {
+      console.log('statusCode:', res.statusCode);
+      console.log('headers:', res.headers);
+
+      res.on('data', (d) => {
+        process.stdout.write(d);
+      });
+    });
 });
 
 app.get('*', function (req, res) {
