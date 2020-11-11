@@ -11,7 +11,7 @@ function ArtistEditor(props) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        backgroundImage: "url(" + props.artist.images[0].url + ")",
+        backgroundImage: "url(" + props.node.artist.images[0].url + ")",
         backgroundSize: "contain"
     };
     return (
@@ -20,16 +20,16 @@ function ArtistEditor(props) {
                 <div style={imgStyle} />
             </div>
             <div style={{display: "flex", height: "64px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{props.artist.name}</p>
+                <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{props.node.artist.name}</p>
             </div>
             <div style={{display: "flex", height: "calc(50% - 90px - 5vh)", marginBottom: "16px", justifyContent: "center", flexGrow: 1 }}>
-                <TrackList tracks={props.artist.selectedTracks} icon="fas fa-times" handleClick={props.deselectTrack} />
+                <TrackList tracks={props.node.artist.selectedTracks} icon="fas fa-times" handleClick={props.deselectTrack} />
             </div>
             <div style={{display: "flex", height: "calc(50% - 72px - 5vh)", justifyContent: "center", flexGrow: 1 }}>
-                <TrackList tracks={props.artist.tracks} icon="fas fa-plus" handleClick={props.selectTrack} />
+                <TrackList tracks={props.node.artist.tracks} icon="fas fa-plus" handleClick={props.selectTrack} />
             </div>
             <div style={{display: "flex", height: "64px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                <Button variant="contained" color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>
+                <Button variant="contained" onClick={() => props.removeNode(props.node)} color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>
                     <p style={{ color: "white" }} >Delete Node</p>
                 </Button>
             </div>
