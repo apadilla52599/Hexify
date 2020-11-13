@@ -47,7 +47,7 @@ class Titlebar extends React.Component {
                         <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
                     </IconButton>
                 }
-                <Button id = "purple_text_background" variant="contained" color="default" style = {{marginRight: "1vw", marginLeft: "1vw", height: "2rem", fontSize: ".75rem"}}>
+                <Button id="purple_text_background" href="/auth/spotify" variant="contained" color="default" style = {{marginRight: "1vw", marginLeft: "1vw", height: "2rem", fontSize: ".75rem"}}>
                     Log In
                 </Button>
             </div>

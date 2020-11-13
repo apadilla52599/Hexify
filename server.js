@@ -96,19 +96,12 @@ app.get('/v1*', function (req, res) {
         }
     };
 
-    /*https.request("https://api.spotify.com" + req.originalUrl, options).on('response', (response) => {
-        console.log(response.statusCode);
-        response.pipe(res);
-    });*/
     https.get("https://api.spotify.com" + req.originalUrl, options, (spotifyRes) => {
-        console.log('statusCode:', spotifyRes.statusCode);
-        console.log('headers:', spotifyRes.headers);
-            spotifyRes.pipe(res);
-
-        /*spotifyRes.on('data', (d) => {
-            //return res.send(d);
-            spotifyRes.pipe(res);
-        });*/
+        console.log('url: ', req.originalUrl);
+        console.log('statusCode: ', spotifyRes.statusCode);
+        if (spotifyRes.statusCode === 429)
+            console.log(spotifyRes);
+        spotifyRes.pipe(res);
     });
 });
 
