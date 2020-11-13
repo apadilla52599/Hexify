@@ -385,7 +385,6 @@ class GraphWindow extends React.Component {
                 if (e.key === 'z') {
                     const receipt = this.transactionStack.undo();
                     if (receipt.update) {
-                        console.log(this.transactionStack.stack);
                         this.adjacentRecommendedArtists = [];
                         this.setState({
                             nodes: receipt.nodes,
@@ -420,6 +419,12 @@ class GraphWindow extends React.Component {
         this.setState({
             selectedNode: null
         });
+    }
+
+    deselectNode = () => {
+        this.adjacentRecommendedArtists = [];
+        this.setState({ selectedNode: null });
+        this.draw();
     }
 
     quickAddStyle(index, image) {
@@ -529,12 +534,18 @@ class GraphWindow extends React.Component {
     render() {
         var index = 0;
         const selectedTracks = [];
-        DummyData.artists.forEach((artist) => {
-            if (artist.selectedTracks !== undefined) {
-                //selectedTracks.push(...artist.selectedTracks);
-                artist.selectedTracks.forEach((track) => {
-                    selectedTracks.push({...track, artist: artist});
+        this.state.nodes.forEach((node) => {
+            if (node.artist.selectedTracks !== undefined) {
+                let flag = false;
+                selectedTracks.forEach((track) => {
+                    if (track.artist.id === node.artist.id)
+                        flag = true;
                 });
+                if (flag === false) {
+                    node.artist.selectedTracks.forEach((track) => {
+                        selectedTracks.push({...track, artist: node.artist});
+                    });
+                }
             }
         });
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
@@ -554,7 +565,7 @@ class GraphWindow extends React.Component {
                     {this.state.selectedNode === null ? (
                         <PlaylistEditor tracks={selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks}/>
                     ) : (
-                        <ArtistEditor node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} />
+                        <ArtistEditor node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
                     )}
                 </div>
                 
