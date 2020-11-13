@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 
+
 class Titlebar extends React.Component {
     handleClick = () => {
         const menu = document.getElementById("hamburger_menu");
