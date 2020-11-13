@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser')
 const path = require('path');
 const app = express();
 
@@ -35,15 +34,17 @@ app.get('/auth/spotify', passport.authenticate('spotify'), function(req, res) {
 
 app.get(
   '/auth/spotify/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
+  passport.authenticate('spotify', { failureRedirect: '/' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
   }
 );
 
-app.get('/ping', function (req, res) {
-    return res.send('pong');
+app.get('/auth/temp', function (req, res) {
+    console.log(req.query.token);
+    token = req.query.token;
+    return res.redirect('/');
 });
 
 app.get('/v1*', function (req, res) {
