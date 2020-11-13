@@ -29,7 +29,7 @@ class ArtistEditor extends React.Component{
         };
         return (
             <div id="playlist_editor">
-                <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "8vh", height: "8vh", position: "absolute", marginLeft: "10%", marginTop: "calc(16px + 1vh)"}}>
+                <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "6vh", height: "6vh", position: "absolute", marginLeft: "10%", marginTop: "calc(16px + 2vh)"}}>
                     <i className="fas fa-chevron-left"></i>
                 </div>
                 <div style={{display: "flex", height: "min-content", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
