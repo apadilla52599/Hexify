@@ -8,7 +8,7 @@ import { mouse } from "d3";
 
 // import PlaylistEditor from './PlaylistEditor.js';
 import ArtistEditor from './ArtistEditor.js';
-import PlaylistEditor from './Playlist_Editor.js';
+import PlaylistEditor from './Playlist_editor.js';
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";

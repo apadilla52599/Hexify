@@ -23,7 +23,7 @@ export default function Playlist(props){
                   disableTypography
                   primary={<div>
                     <Typography style={{color: '#FFFFFF', fontSize: "70%"}}>{track.name.length > 40 ? (track.name.substring(0,40)+"...") : (track.name)}</Typography>
-                    <i className="fas fa-user-circle" style={{display:"inline-block", color: 'black', fontSize: ".6vw"}}></i>
+                    <i className="fas fa-user-circle" style={{display:"inline-block", color: 'black', fontSize: "70%"}}></i>
                     <Typography style={{display:"inline-block", color: '#EABFB9', fontSize: "70%"}}>{track.artist.name}</Typography>
                   </div>}
                   secondary={<div>
