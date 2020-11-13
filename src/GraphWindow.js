@@ -6,8 +6,9 @@ import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
 import { mouse } from "d3";
 
-import PlaylistEditor from './PlaylistEditor.js';
+// import PlaylistEditor from './PlaylistEditor.js';
 import ArtistEditor from './ArtistEditor.js';
+import PlaylistEditor from './Playlist_Editor.js';
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";

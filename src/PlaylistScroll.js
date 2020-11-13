@@ -7,39 +7,40 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 import Typography from '@material-ui/core/Typography'
 
-export default function Playlist(props) {
-  var artists = props.nodes;
+export default function Playlist(props){
+  var tracks = props.tracks;
+  console.log(tracks);
   return (
-          <List id="scroll" style = {{height: "75%"}}>
-            {artists.map((artistNode) => {
+          <List id="scroll" style = {{height: "100%"}}>
+            {tracks.map((track) => {
               return (
-              artistNode.tracks.map(({name, album}) => {
-              return (
-                <ListItem button key = {name} style={{margin:0, paddingTop: ".5vh", paddingBottom: ".5vh"}} >
+                <ListItem button key = {track.name} style={{margin:0}} >
                   <div>
-                    <img alt="Album Cover" style = {{height: "2vw", width: "2vw", marginRight: ".5vw"}} src={artistNode.images[0].url}/>
+                    <img alt="Album Cover" style = {{height: "2vw", width: "2vw", marginRight: ".5vw"}} src={track.album.images[0].url}/>
                   </div>
                   <ListItemText 
                   disableTypography
                   primary={<div>
-                    <Typography style={{display:"inline-block", color: '#FFFFFF', fontSize: "70%" }}>{name +"--"}</Typography>
-                    <Typography style={{display:"inline-block", color: '#EABFB9', fontSize: "50%" }}>{artistNode.name}</Typography>
+                    <Typography style={{display:"inline-block", color: '#FFFFFF', fontSize: "70%"}}>{track.name.length > 30 ? (track.name.substring(0,30)+"...") : (track.name + "-")}</Typography>
+                    <Typography style={{display:"inline-block", color: '#EABFB9', fontSize: "50%"}}>{" ♫"+track.artist.name}</Typography>
                   </div>}
                   secondary={<div>
                         <i className="fas fa-record-vinyl" style={{display:"inline-block", color: 'purple', fontSize: ".6vw"}}></i>
-                        <Typography style={{display:"inline-block", color: 'gray', fontSize: ".6vw"}}>{album.name}</Typography>
+                        <Typography style={{display:"inline-block", color: 'gray', fontSize: ".6vw"}}>
+                          {track.album.name.length > 25 ? (track.album.name.substring(0,25)+"...") : (track.album.name)}
+                        </Typography>
                   </div>}>
                     
                   </ListItemText>
                 
                     <ListItemSecondaryAction>
-                       <IconButton edge="end" aria-label="delete" style = {{padding:"1vh"}}>
+                       <IconButton onClick={() => props.delete(track)} edge="end" aria-label="delete" style = {{padding:"1vh"}}>
                           <DeleteIcon style = {{width: "1.5vw", height: "1.5vw" }}/>
                       </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>
               );
-              }));})}
+              })}
           </List>
   );
 }
