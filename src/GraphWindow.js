@@ -384,7 +384,6 @@ class GraphWindow extends React.Component {
                 if (e.key === 'z') {
                     const receipt = this.transactionStack.undo();
                     if (receipt.update) {
-                        console.log(this.transactionStack.stack);
                         this.adjacentRecommendedArtists = [];
                         this.setState({
                             nodes: receipt.nodes,
