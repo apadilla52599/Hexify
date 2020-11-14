@@ -98,3 +98,17 @@ body {
 {
 	background-color: var(--text-color-purple);
 }
+
+#ScrollPaper{
+    -ms-overflow-style: none;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#ScrollPaper::-webkit-scrollbar{
+    display: none;
+}
+
+.ListItemHover:hover {
+    background-color: var(--background-color);
+}

@@ -1,6 +1,6 @@
 import React from "react";
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
+import MuiListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -18,6 +18,15 @@ import img6 from "./DummyData/p6.JPG";
 import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
 import { Divider } from "@material-ui/core";
+import {withStyles} from "@material-ui/core/styles";
+
+const ListItem = withStyles({
+    root: {
+      "&:hover": {
+        backgroundColor: "rgb(56,56,56)",
+      }
+    }
+  })(MuiListItem);
 
 class HamburgerMenu extends React.Component {
     constructor(){
@@ -40,18 +49,16 @@ class HamburgerMenu extends React.Component {
     
     render() {
         return (
-            <div id="hamburger_menu" style={{ display: "flex", width: "0%", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
-                 <div>
-                    <List style={{overflowY: "scroll", width: "100%", height: "100%"}}>
-                    <ListItem key="create-new">
-                        <ListItem button={true}>
+            <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
+                 <div id="scroll">
+                    <List style={{ width: "100%", height: "auto"}}>
+                    <ListItem className="ListItemHover" key="create-new" button={true}>
                         <ListItemAvatar style={{color: "white"}}>
                             <AddCircleIcon fontSize="large"/>
                         </ListItemAvatar>
                         <ListItemText style={{color: "white"}}>
                             Create new graph
                         </ListItemText>
-                        </ListItem>
                     </ListItem>
                     <Divider/>
                     <Typography variant="h6" style={{color:"black", backgroundColor: "blueviolet"}}>
@@ -59,7 +66,7 @@ class HamburgerMenu extends React.Component {
                     </Typography>
                     <Divider/>
                     {this.state.graphList.map( (graph, index) => (
-                        <ListItem button={true} key={index}>
+                        <ListItem className="ListItemHover" button={true} key={index}>
                         <ListItemAvatar>
                             <Avatar sizes="large" src={graph.thumbnail}></Avatar>
                         </ListItemAvatar>
