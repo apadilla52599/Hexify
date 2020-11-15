@@ -3,7 +3,9 @@ const path = require('path');
 const mongoose = require('mongoose');
 const app = express();
 const session = require('express-session')
-var schema = require('./graphql/hexifySchemas');
+const schema = require('./graphql/hexifySchemas');
+const userSchema = require('./models/User.js').schema;
+const UserModel = mongoose.model('User', userSchema);
 const { graphqlHTTP } = require('express-graphql');
 
 const passport = require('passport')
@@ -47,10 +49,24 @@ passport.use(
       callbackURL: 'http://localhost:8080/auth/spotify/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
-        token = accessToken;
-        //signIn(profile);
-      /*User.findOrCreate({ spotifyId: profile.id }, function(err, graphicalPlaylist) {
-      });*/
+      console.log(profile.id);
+      UserModel.findOne({ SpotifyUserID: profile.id }, function(err, obj) {
+        if (obj === null) {
+          console.log("user did not exist");
+          const newUser = new UserModel({
+            SpotifyUserID: profile.id,
+            graphicalPlaylists: []
+          });
+          newUser.save(function (err) {
+            if (err) console.error(err);
+              console.log("saved!");
+          });
+        }
+        else {
+          console.log("user already exists");
+          console.log(obj);
+        }
+      });
       return done(null, { id: profile.id, accessToken: accessToken });
     }
   )
