@@ -8,7 +8,6 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
 function App() {
-    //test2
     return (
         <Router>
             <div className="App" style={{ display: "flex", width: "100%", height: "100%" }}>
