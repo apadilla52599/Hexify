@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 var GraphicalPlaylistSchema = require("./GraphicalPlaylist").schema;
 
 var UserSchema = new mongoose.Schema({
-  _ID: {type: String,required: nonEmpty()},
-  SpotifyUserID: {type: String,required: nonEmpty()},
+  SpotifyUserID: { type: String, required: nonEmpty() },
   graphicalPlaylists: [GraphicalPlaylistSchema],
 });
 

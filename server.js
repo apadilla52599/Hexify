@@ -1,53 +1,43 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
 const app = express();
-
+const session = require('express-session')
 var schema = require('./graphql/hexifySchemas');
 const { graphqlHTTP } = require('express-graphql');
 
 const passport = require('passport')
 const SpotifyStrategy = require('passport-spotify').Strategy;
 const https = require('https');
-var token = "";
 
-const {mongoUrl} = require('./keys') //This uses admin cluster key
-const { MongoClient } = require("mongodb");
-const { parseConfigFileTextToJson } = require('typescript');
-const client = new MongoClient(mongoUrl);
+mongoose.set("useUnifiedTopology", true);
+mongoose.connect("mongodb+srv://hexify_admin:DVX0kU3D8VlFKGwC@hexify.cxa7e.mongodb.net/test?retryWrites=true&w=majority", { promiseLibrary: require('bluebird'), useNewUrlParser: true })
+  .then(() =>  console.log('connection successful'))
+  .catch((err) => console.error(err));
 
-const dbName = "Hexify";
-                      
-async function signIn(profile) {
-    try {
-        await client.connect();
-        console.log("Connected correctly to server");
-        const db = client.db(dbName);
-        const col = db.collection("users");
-        var user= await col.findOne({ "spotifyUserId": profile.id });
-        if(user==null){//creates new user
-          let newUser = {"spotifyUserId":  profile.id,"graphicalPlaylists": []}
-          user = await (await col.insertOne(newUser)).ops;
-          console.log("User Created: ",user);
-        }else{
-          console.log("User Found: ",user);
-        }
-        
-      } catch (err) {
-        console.log(err.stack);
-    }
-    finally {
-      await client.close();
-  }
-}
-
+/* Middleware */
 app.use(express.static(path.join(__dirname, 'build')));
-
+app.use(session({
+  resave: false,
+  saveUninitialized: true,
+  secret: 'HMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/graphql', graphqlHTTP({
   schema: schema,
   rootValue: global,
   graphiql: true,
 }));
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
 
 passport.use(
   new SpotifyStrategy(
@@ -58,15 +48,15 @@ passport.use(
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
         token = accessToken;
-        console.log(accessToken);
-        signIn(profile);
+        //signIn(profile);
       /*User.findOrCreate({ spotifyId: profile.id }, function(err, graphicalPlaylist) {
       });*/
-      return done();
+      return done(null, { id: profile.id, accessToken: accessToken });
     }
   )
 );
 
+/* Routes */
 app.get('/auth/spotify', passport.authenticate('spotify'), function(req, res) {
   // The request will be redirected to spotify for authentication, so this
   // function will not be called.
@@ -74,39 +64,43 @@ app.get('/auth/spotify', passport.authenticate('spotify'), function(req, res) {
 
 app.get(
   '/auth/spotify/callback',
-  passport.authenticate('spotify', { failureRedirect: '/' }),
+  passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
     res.redirect('/');
   }
 );
 
+// TODO: This no longer works
 app.get('/auth/temp', function (req, res) {
-    console.log(req.query.token);
     token = req.query.token;
     return res.redirect('/');
 });
 
 app.get('/v1*', function (req, res) {
-    console.log(req.originalUrl);
-    const options = {
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-        }
-    };
+  console.log("hello");
+  console.log(req.user);
+  console.log(req.user.accessToken);
+  const options = {
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + req.user.accessToken
+    }
+  };
 
-    https.get("https://api.spotify.com" + req.originalUrl, options, (spotifyRes) => {
-        console.log('url: ', req.originalUrl);
-        console.log('statusCode: ', spotifyRes.statusCode);
-        if (spotifyRes.statusCode === 429)
-            console.log(spotifyRes);
-        spotifyRes.pipe(res);
-    });
+  https.get("https://api.spotify.com" + req.originalUrl, options, (spotifyRes) => {
+    console.log('url: ', req.originalUrl);
+      console.log('statusCode: ', spotifyRes.statusCode);
+      if (spotifyRes.statusCode === 429)
+        console.log(spotifyRes);
+      spotifyRes.pipe(res);
+  });
 });
 
 app.get('*', function (req, res) {
+    //console.log(req.user);
+    //console.log(req.session);
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
