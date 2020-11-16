@@ -49,7 +49,6 @@ passport.use(
       callbackURL: 'http://localhost:8080/auth/spotify/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
-      console.log(profile.id);
       UserModel.findOne({ SpotifyUserID: profile.id }, function(err, obj) {
         if (obj === null) {
           console.log("user did not exist");
@@ -59,12 +58,10 @@ passport.use(
           });
           newUser.save(function (err) {
             if (err) console.error(err);
-              console.log("saved!");
           });
         }
         else {
           console.log("user already exists");
-          console.log(obj);
         }
       });
       return done(null, { id: profile.id, accessToken: accessToken });
@@ -89,35 +86,38 @@ app.get(
 
 // TODO: This no longer works
 app.get('/auth/temp', function (req, res) {
-    token = req.query.token;
-    return res.redirect('/');
+  return res.redirect('/');
 });
 
 app.get('/v1*', function (req, res) {
-  console.log("hello");
-  console.log(req.user);
-  console.log(req.user.accessToken);
-  const options = {
+  let options = {
     headers: {
       "Accept": "application/json",
       "Content-Type": "application/json",
       "Authorization": "Bearer " + req.user.accessToken
     }
   };
+  console.log("url: " + req.originalUrl);
+  let sendReq = () => https.get("https://api.spotify.com" + req.originalUrl, options, (spotifyRes) => {
+    if (spotifyRes.statusCode === 429) {
+      console.log("Too many requests, try again in " + spotifyRes.headers['retry-after']);
+      setTimeout(sendReq, parseInt(spotifyRes.headers['retry-after']));
+    }
+    else {
+      spotifyRes.setEncoding('utf8');
+      let rawData = '';
+      spotifyRes.on('data', (chunk) => { rawData += chunk; });
 
-  https.get("https://api.spotify.com" + req.originalUrl, options, (spotifyRes) => {
-    console.log('url: ', req.originalUrl);
-      console.log('statusCode: ', spotifyRes.statusCode);
-      if (spotifyRes.statusCode === 429)
-        console.log(spotifyRes);
-      spotifyRes.pipe(res);
+      spotifyRes.on('end', () => {
+        res.json(JSON.parse(rawData));
+      });
+    }
   });
+  sendReq();
 });
 
 app.get('*', function (req, res) {
-    //console.log(req.user);
-    //console.log(req.session);
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.listen(process.env.PORT || 8080);
