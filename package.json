@@ -19,6 +19,7 @@
     "express-session": "^1.17.1",
     "graphql": "^15.4.0",
     "graphql-date": "^1.0.3",
+    "graphql-request": "^3.3.0",
     "jquery": "^3.5.0",
     "masonry-layout": "^4.2.2",
     "mongoose": "^5.10.13",

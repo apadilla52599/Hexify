@@ -18,7 +18,7 @@ mongoose.connect("mongodb+srv://hexify_admin:DVX0kU3D8VlFKGwC@hexify.cxa7e.mongo
   .catch((err) => console.error(err));
 
 /* Middleware */
-app.use(express.static(path.join(__dirname, 'build')));
+app.use('/static', express.static(path.join(__dirname, '/build/static')));
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -27,11 +27,17 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: global,
-  graphiql: true,
-}));
+app.use('/graphql', function(req, res, next) {
+    let id = "";
+    if (req.user !== undefined)
+        id = req.user.id;
+    graphqlHTTP({
+      schema: schema,
+      rootValue: global,
+      graphiql: true,
+      context: id
+    })(req, res);
+});
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -80,7 +86,7 @@ app.get(
   passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/');
+    res.redirect('/edit');
   }
 );
 
@@ -117,7 +123,12 @@ app.get('/v1*', function (req, res) {
 });
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  if (req.user === undefined) {
+    res.redirect('/auth/spotify');
+  }
+  else {
+    res.sendFile(path.join(__dirname, '/build/index.html'));
+  }
 });
 
 app.listen(process.env.PORT || 8080);

@@ -6,6 +6,7 @@ import Titlebar from './Titlebar.js';
 import Browse from './Browse.js';
 import '@fortawesome/fontawesome-free/js/all.js';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import './style.css';
 
 function App() {
     return (
@@ -15,7 +16,7 @@ function App() {
                 <div style={{ flexGrow: 1 }}>
                     <Titlebar />
                     <Switch>
-                        <Route path="/" exact component={GraphWindow} />
+                        <Route path="/edit" exact component={GraphWindow} />
                         <Route path="/browse" exact component={Browse}/>
                     </Switch>
                 </div>

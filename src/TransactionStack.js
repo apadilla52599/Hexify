@@ -1,3 +1,22 @@
+import { request, gql } from 'graphql-request'
+
+const endpoint = "/graphql";
+
+const UPDATE_NODE = gql`
+  mutation UpdateNode($id: String!, $q: Int!, $r: Int!, $artistId: $String) {
+    updateNode(id: $id, q: $q, r: $r, artistId: $artistId) {
+        _id
+    }
+  }
+`
+const CREATE_PLAYLIST = gql`
+  mutation CreatePlaylist($name: String!, $playlists: [String!], $privacyStatus: String!) {
+    createGraphicalPlaylist(name: $name, playlists: $playlists, privacyStatus: $privacyStatus) {
+        _id
+    }
+  }
+`
+
 class TransactionStack {
     constructor(nodes) {
         this.nodes = nodes;
@@ -14,6 +33,8 @@ class TransactionStack {
     }
 
     addNode(node) {
+        //request(endpoint, UPDATE_NODE, { id: "123", q: node.coords.q, r: node.coords.r, artistId: node.artist.id });
+        request(endpoint, CREATE_PLAYLIST, { name: "helloo", playlists: [], privacyStatus: "public" });
         var flag = false;
         for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].coords.q === node.coords.q &&

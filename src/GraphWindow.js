@@ -1,12 +1,8 @@
 import React from "react";
 import * as d3 from "d3";
-import IconButton from '@material-ui/core/IconButton';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
-import { mouse } from "d3";
 
-// import PlaylistEditor from './PlaylistEditor.js';
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
 
