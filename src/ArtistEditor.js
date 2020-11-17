@@ -1,7 +1,6 @@
 import React from "react";
 import TrackList from "./TrackList.js";
 import Button from '@material-ui/core/Button';
-import { render } from "@testing-library/react";
 import { Input } from "@material-ui/core";
 
 class ArtistEditor extends React.Component{
@@ -39,7 +38,7 @@ class ArtistEditor extends React.Component{
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{this.props.node.artist.name}</p>
                 </div>
                 <div style={{display: "flex", height: "calc(50% - 100px - 5vh)", marginBottom: "16px", justifyContent: "center", flexGrow: 1 }}>
-                    <TrackList tracks={this.props.node.artist.selectedTracks} icon="fas fa-times" handleClick={this.props.deselectTrack} />
+                    <TrackList player={this.props.player} tracks={this.props.node.artist.selectedTracks} icon="fas fa-times" handleClick={this.props.deselectTrack} />
                 </div>
                 <div style ={{display: "flex", height: "32px", justifyContent: "center", marginBottom: ""}}>
                     <Input onChange={this.handleSearch} style={{height: "28px", color: "white", width: "80%", fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>

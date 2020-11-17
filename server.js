@@ -76,7 +76,9 @@ passport.use(
 );
 
 /* Routes */
-app.get('/auth/spotify', passport.authenticate('spotify'), function(req, res) {
+app.get('/auth/spotify', passport.authenticate('spotify', {
+    scope: ['streaming', 'user-read-email', 'user-read-private']
+  }), function(req, res) {
   // The request will be redirected to spotify for authentication, so this
   // function will not be called.
 });
@@ -86,7 +88,7 @@ app.get(
   passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/edit');
+    res.redirect('/edit?token=' + req.user.accessToken);
   }
 );
 

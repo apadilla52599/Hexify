@@ -34,7 +34,7 @@ class TransactionStack {
 
     addNode(node) {
         //request(endpoint, UPDATE_NODE, { id: "123", q: node.coords.q, r: node.coords.r, artistId: node.artist.id });
-        request(endpoint, CREATE_PLAYLIST, { name: "helloo", playlists: [], privacyStatus: "public" });
+        //request(endpoint, CREATE_PLAYLIST, { name: "helloo", playlists: [], privacyStatus: "public" });
         var flag = false;
         for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].coords.q === node.coords.q &&

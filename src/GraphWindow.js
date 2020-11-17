@@ -559,10 +559,12 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor tracks={selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks}/>
+                        <PlaylistEditor player={this.props.player} tracks={selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks}/>
                     ) : (
-                        <ArtistEditor node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
+                        <ArtistEditor player={this.props.player} node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
                     )}
+                    <div style={ { backgroundColor: "var(--background-color)", height: "var(--playback-height)", margin: "var(--playlist-column-margin)", borderRadius: "1em" } }>
+                    </div>
                 </div>
                 
                 <div id="sidebar_column">
