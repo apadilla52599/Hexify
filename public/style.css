@@ -58,10 +58,14 @@ body {
 
 
 #playback {
-    width: calc(100%);
+    /* width: calc(100%);
     height: var(--playback-height);
     background-color: var(--background-color);
+    margin: var(--playlist-column-margin); */
+    background-color: var(--background-color);
+    height: var(--playback-height);
     margin: var(--playlist-column-margin);
+    border-radius: 1em;
 }
     
 #scroll_list {
@@ -98,3 +102,9 @@ body {
 {
 	background-color: var(--text-color-purple);
 }
+
+.playbackimage {
+    animation:spin 10s linear infinite;
+}
+
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }

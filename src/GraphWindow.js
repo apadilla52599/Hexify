@@ -9,6 +9,7 @@ import { mouse } from "d3";
 // import PlaylistEditor from './PlaylistEditor.js';
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
+import Playback from './Playback.js'
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -567,6 +568,7 @@ class GraphWindow extends React.Component {
                     ) : (
                         <ArtistEditor node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
                     )}
+                        <Playback tracks={selectedTracks}/>
                 </div>
                 
                 <div id="sidebar_column">
