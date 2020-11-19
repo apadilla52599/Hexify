@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
-var ArtistSchema = require("./Artist").schema;
 
 var GraphicalPlaylistSchema = new mongoose.Schema({
-  _ID: {type: String,required: nonEmpty()},
   name: String,
+  owner: String,
   playlists: [String],
-  artists: [ArtistSchema],
-  lastModified: Date,
+  artists: [Object],
+  nodes: [Object],
+  lastModified: { type: Date, default: Date.now },
   privacyStatus: String
 });
 
