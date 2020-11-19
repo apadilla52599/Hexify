@@ -6,6 +6,7 @@ import Drawer from "@material-ui/core/Drawer";
 
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
+import Playback from './Playback.js'
 import Input from '@material-ui/core/Input';
 import { List, ListItem } from "@material-ui/core";
 
@@ -604,8 +605,10 @@ class GraphWindow extends React.Component {
                     ) : (
                         <ArtistEditor player={this.props.player} node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
                     )}
-                    <div style={ { backgroundColor: "var(--background-color)", height: "var(--playback-height)", margin: "var(--playlist-column-margin)", borderRadius: "1em" } }>
-                    </div>
+                      {selectedTracks == null ? (
+                        <Playback/>
+                       ) : (
+                        <Playback track={selectedTracks[0]}/>)}
                 </div>
                 
                 <div id="sidebar_column">
