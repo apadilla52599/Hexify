@@ -8,7 +8,8 @@ import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
 import Playback from './Playback.js'
 import Input from '@material-ui/core/Input';
-import { List, ListItem } from "@material-ui/core";
+import { List, ListItem, ListItemAvatar} from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -637,6 +638,9 @@ class GraphWindow extends React.Component {
                     <List style={{width: "20vw"}}>
                         {this.state.quickAddSearchResults.map(artist =>
                             <ListItem onMouseDown={this.endDrawer.bind(this, artist)}>
+                                <ListItemAvatar>
+                                    <Avatar sizes="large" src={artist.images[0].url}></Avatar>
+                                </ListItemAvatar>
                                 {artist.name}
                             </ListItem>)}
                     </List>
