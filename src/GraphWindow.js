@@ -5,6 +5,7 @@ import TransactionStack from "./TransactionStack.js";
 
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
+import Playback from './Playback.js'
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -563,8 +564,15 @@ class GraphWindow extends React.Component {
                     ) : (
                         <ArtistEditor player={this.props.player} node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
                     )}
+<<<<<<< HEAD
                     <div style={ { backgroundColor: "var(--background-color)", height: "var(--playback-height)", margin: "var(--playlist-column-margin)", borderRadius: "1em" } }>
                     </div>
+=======
+                      {selectedTracks == null ? (
+                        <Playback/>
+                       ) : (
+                        <Playback track={selectedTracks[0]}/>)}
+>>>>>>> player
                 </div>
                 
                 <div id="sidebar_column">
