@@ -103,7 +103,6 @@ body {
 	background-color: var(--text-color-purple);
 }
 
-<<<<<<< HEAD:src/style.css
 #ScrollPaper{
     -ms-overflow-style: none;
     height: 100%;
@@ -117,10 +116,8 @@ body {
 .ListItemHover:hover {
     background-color: var(--background-color);
 }
-=======
 .playbackimage {
     animation:spin 10s linear infinite;
 }
 
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
->>>>>>> player:public/style.css
