@@ -568,7 +568,10 @@ class GraphWindow extends React.Component {
                     ) : (
                         <ArtistEditor node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
                     )}
-                        <Playback tracks={selectedTracks}/>
+                      {selectedTracks == null ? (
+                        <Playback/>
+                       ) : (
+                        <Playback track={selectedTracks[0]}/>)}
                 </div>
                 
                 <div id="sidebar_column">
