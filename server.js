@@ -39,6 +39,14 @@ app.use('/graphql', function(req, res, next) {
     })(req, res);
 });
 
+app.use(function (req, res, next) {
+  if (req.user === undefined && req.session.tempToken) {
+    req.user = { accessToken: req.session.tempToken };
+  }
+  console.log(req.user);
+  next()
+})
+
 passport.serializeUser(function(user, done) {
   done(null, user);
 });
@@ -93,8 +101,10 @@ app.get(
 );
 
 // TODO: This no longer works
-app.get('/auth/temp', function (req, res) {
-  return res.redirect('/');
+app.get('/auth/temp/:token', function (req, res) {
+  console.log(req.params.token);
+  req.session.tempToken = req.params.token;
+  return res.redirect('/edit?token=' + req.session.tempToken);
 });
 
 app.get('/v1*', function (req, res) {
