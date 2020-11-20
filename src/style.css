@@ -45,10 +45,10 @@ body {
 
 #playlist_editor {
     width: calc(100% - 3 * var(--playlist-column-padding));
-    height: max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)));
+    /*height: max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)));*/
     background-color: var(--background-color);
     border-color: black;
-    border-width: 1;
+    border-width: 0;
     border-style: solid;
     border-radius: 1rem;
     overflow: hidden;

@@ -15,15 +15,16 @@ const nodeBackground = "#d0d0d0";
 
 class GraphWindow extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         DummyData.artists.forEach((artist) => {
-            artist.selectedTracks = []
             artist.image = null;
         });
         this.state = {
-            nodes: [
-            ],
+            trackIndex: 0,
+            paused: true,
+            selectedTracks: [],
+            nodes: [],
             selectedNode: null,
         };
         this.selectedQuickArtist = null;
@@ -35,6 +36,9 @@ class GraphWindow extends React.Component {
         this.adjacentRecommendedArtists = [];
         this.topRecommendedArtists = DummyData.artists.slice(0, 6);
         this.queryingSimilar = false;
+        this.playerLoaded = false;
+        this.neverStarted = true;
+        this.trackEnded = false;
     }
 
     axialToCart(coord) {
@@ -267,7 +271,6 @@ class GraphWindow extends React.Component {
                         }
                         if (flag === false) {
                             DummyData.artists.push(artist);
-                            artist.selectedTracks = [];
                         }
                         const length = this.adjacentRecommendedArtists.push({
                             artist: artist,
@@ -420,8 +423,7 @@ class GraphWindow extends React.Component {
 
     deselectNode = () => {
         this.adjacentRecommendedArtists = [];
-        this.setState({ selectedNode: null });
-        this.draw();
+        this.setState({ selectedNode: null }, this.draw);
     }
 
     quickAddStyle(index, image) {
@@ -476,42 +478,26 @@ class GraphWindow extends React.Component {
     }
 
     selectTrack = (track) => {
-        const selectedNode = {...this.state.selectedNode};
-        selectedNode.artist.selectedTracks.push(track);
-        selectedNode.artist.tracks = selectedNode.artist.tracks.filter((unselected) => {
-            return unselected.uri !== track.uri;
-        });
-        this.setState({ selectedNode: selectedNode });
+        const oldSelected = [...this.state.selectedTracks];
+        oldSelected.push(track);
+        if (this.state.currentTrack)
+            this.setState({ selectedTracks: oldSelected });
+        else
+            this.setState({ selectedTracks: oldSelected, currentTrack: track });
     }
 
     deselectTrack = (track) => {
-        if (this.state.selectedNode === null) {
-            const artist = track.artist;
-            delete track.artist;
-            artist.selectedTracks = artist.selectedTracks.filter((unselected) => {
-                return unselected.uri !== track.uri;
-            });
-            artist.tracks.push(track);
-            this.setState({});
-        }
-        else {
-            const selectedNode = {...this.state.selectedNode};
-            selectedNode.artist.tracks.push(track);
-            selectedNode.artist.selectedTracks = selectedNode.artist.selectedTracks.filter((unselected) => {
-                return unselected.uri !== track.uri;
-            });
-            this.setState({ selectedNode: selectedNode });
-        }
+        const index = this.state.selectedTracks.findIndex(selectedTrack => selectedTrack.id === track.id);
+        const oldSelected = [...this.state.selectedTracks];
+        oldSelected.splice(index, 1);
+        if (index < this.state.trackIndex)
+            this.setState({ selectedTracks: oldSelected, trackIndex: this.state.trackIndex - 1 });
+        else
+            this.setState({ selectedTracks: oldSelected });
     }
 
     clearTracks = () => {
-        DummyData.artists.forEach((artist) => {
-            if (artist.tracks !== undefined && artist.selectedTracks !== undefined) {
-                artist.tracks.push(...artist.selectedTracks.splice(0, artist.selectedTracks.length));
-                console.log(artist);
-            }
-        });
-        this.setState({});
+        this.setState({ selectedTracks: [] });
     }
 
     removeNode = (node) => {
@@ -528,23 +514,46 @@ class GraphWindow extends React.Component {
         }
     }
 
+    play = ({
+      spotify_uri,
+      playerInstance: {
+        _options: {
+          getOAuthToken,
+          id
+        }
+      }
+    }) => {
+      getOAuthToken(access_token => {
+        fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
+          method: 'PUT',
+          body: JSON.stringify({ uris: [spotify_uri] }),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}`
+          },
+        });
+      });
+    };
+
+    playTrack(track) {
+        console.log("hwy");
+        console.log(track);
+        this.play({ spotify_uri: track.uri, playerInstance: this.props.player });
+        this.setState({ currentTrack: track, paused: false });
+    }
+
+    playNextTrack(prev) {
+        if (this.state.selectedTracks.length === 0)
+            return;
+        let nextIndex = (this.state.trackIndex + ((prev !== undefined) ? -1 : 1)) % this.state.selectedTracks.length;
+        if (nextIndex < 0)
+            nextIndex += this.state.selectedTracks.length;
+        this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player });
+        this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false });
+    }
+
     render() {
         var index = 0;
-        const selectedTracks = [];
-        this.state.nodes.forEach((node) => {
-            if (node.artist.selectedTracks !== undefined) {
-                let flag = false;
-                selectedTracks.forEach((track) => {
-                    if (track.artist.id === node.artist.id)
-                        flag = true;
-                });
-                if (flag === false) {
-                    node.artist.selectedTracks.forEach((track) => {
-                        selectedTracks.push({...track, artist: node.artist});
-                    });
-                }
-            }
-        });
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
             fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
                 response.json().then(d => {
@@ -556,18 +565,41 @@ class GraphWindow extends React.Component {
                 });
             });
         }
+        if (this.playerLoaded === false && this.props.player) {
+            this.playerLoaded = true;
+            this.props.player.addListener('player_state_changed', (playerState) => {
+                if (playerState.position === 0 && playerState.paused && !this.state.paused && this.state.selectedTracks.length > 1 && !this.trackEnded) {
+                    this.trackEnded = true;
+                    this.playNextTrack();
+                }
+                else if (this.trackEnded && !playerState.paused)
+                    this.trackEnded = false;
+            });
+        }
         return (
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor player={this.props.player} tracks={selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks}/>
+                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={() => this.playTrack()} />
                     ) : (
-                        <ArtistEditor player={this.props.player} node={this.state.selectedNode} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} />
+                        <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}
-                      {selectedTracks == null ? (
-                        <Playback/>
-                       ) : (
-                        <Playback track={selectedTracks[0]}/>)}
+                    {this.state.selectedTracks.length > 0 && this.props.player &&
+                        <Playback
+                            paused={this.state.paused}
+                            play={() => {
+                                if (this.neverStarted) {
+                                    this.play({ spotify_uri: this.state.selectedTracks[0].uri, playerInstance: this.props.player });
+                                    this.neverStarted = false;
+                                }
+                                this.props.player.resume();
+                                this.setState({ currentTrack: this.state.selectedTracks[0], paused: false });
+                            }}
+                            pause={() => {this.props.player.pause(); this.setState({ paused: true });}}
+                            setVolume={(volume) => this.props.player.setVolume(volume)}
+                            skip={() => this.playNextTrack()}
+                            prev={() => this.playNextTrack(true)}
+                            track={this.state.currentTrack}/>}
                 </div>
                 
                 <div id="sidebar_column">

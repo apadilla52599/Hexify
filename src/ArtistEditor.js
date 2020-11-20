@@ -26,8 +26,14 @@ class ArtistEditor extends React.Component{
             backgroundImage: "url(" + this.props.node.artist.images[0].url + ")",
             backgroundSize: "contain"
         };
+        const tracks = this.props.node.artist.tracks === undefined ? [] : [...this.props.node.artist.tracks];
+        const selectedTracks = [];
+        this.props.selectedTracks.filter(selectedTrack => selectedTrack.artist.id === this.props.node.artist.id).forEach(selectedTrack => {
+            selectedTracks.push(selectedTrack);
+            tracks.splice(tracks.findIndex(track => track.id === selectedTrack.id), 1);
+        });
         return (
-            <div id="playlist_editor">
+            <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "6vh", height: "6vh", position: "absolute", marginLeft: "10%", marginTop: "calc(16px + 2vh)"}}>
                     <i className="fas fa-chevron-left"></i>
                 </div>
@@ -38,13 +44,13 @@ class ArtistEditor extends React.Component{
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{this.props.node.artist.name}</p>
                 </div>
                 <div style={{display: "flex", height: "calc(50% - 100px - 5vh)", marginBottom: "16px", justifyContent: "center", flexGrow: 1 }}>
-                    <TrackList player={this.props.player} tracks={this.props.node.artist.selectedTracks} icon="fas fa-times" handleClick={this.props.deselectTrack} />
+                    <TrackList player={this.props.player} tracks={selectedTracks} icon="fas fa-times" handleClick={this.props.deselectTrack} playTrack={this.props.playTrack} />
                 </div>
                 <div style ={{display: "flex", height: "32px", justifyContent: "center", marginBottom: ""}}>
                     <Input onChange={this.handleSearch} style={{height: "28px", color: "white", width: "80%", fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
                 </div>
                 <div style={{display: "flex", height: "calc(50% - 90px - 5vh)", justifyContent: "center", flexGrow: 1 }}>
-                    <TrackList tracks={this.props.node.artist.tracks === undefined ? [] : this.props.node.artist.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} icon="fas fa-plus" handleClick={this.props.selectTrack} />
+                    <TrackList tracks={tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} icon="fas fa-plus" handleClick={track => {track.artist = this.props.node.artist; this.props.selectTrack(track);}} playTrack={this.props.playTrack} />
                 </div>
                 <div style={{display: "flex", height: "64px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <Button variant="contained" onClick={() => this.props.removeNode(this.props.node)} color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>

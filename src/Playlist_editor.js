@@ -13,7 +13,7 @@ class PlaylistEditor extends React.Component {
     }
     render() {
         return (
-            <div id="playlist_editor">
+            <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div style={{display: "flex", alignItems: "center", height: "7.5%"}}>
                         <p id = "purple_text" style={{fontFamily: "monospace", fontSize: "2.5vh",  display: "flex", justifyContent: "center", flexGrow: 1}}>Playlist Editor</p>
                 </div>

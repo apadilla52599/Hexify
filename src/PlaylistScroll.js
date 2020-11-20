@@ -10,7 +10,6 @@ import PersonIcon from '@material-ui/icons/Person';
 
 export default function Playlist(props){
   var tracks = props.tracks;
-  console.log(tracks);
     var play = () => {};
     if (props.player !== undefined) {
         play = ({

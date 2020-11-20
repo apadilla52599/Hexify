@@ -13,13 +13,7 @@ import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 class Playback extends React.Component {
     constructor(props){
         super(props);
-        this.state = {paused: true};
     }
-    updatePlay = (e) => {
-        this.setState({
-          paused: !this.state.paused,
-        });
-      };
     
     render() {
         var playing = this.props.track;
@@ -83,24 +77,24 @@ class Playback extends React.Component {
                         {/* Center Controls (Previous, Pause, Play, Next) */}
                         <div style={{position: "relative", padding: 0, margin: 0, left: "40%", top: "25"}}>
                             {/* Previous Button */}
-                            <IconButton style = {{position: "absolute", left:"-40", top:"10", padding:0}}>
+                            <IconButton style = {{position: "absolute", left:"-40", top:"10", padding:0}} onClick={this.props.prev}>
                                 <SkipPreviousIcon style = {{color: "gray",width: "40", height: "40"}}/>
                             </IconButton>
                             {/* Next Button */}
-                            <IconButton style = {{position: "absolute",left:"60", top:"10", padding:0}}>
+                            <IconButton style = {{position: "absolute",left:"60", top:"10", padding:0}} onClick={this.props.skip}>
                                 <SkipNextIcon style = {{color: "gray",width: "40", height: "40"}}/>
                             </IconButton> 
                             {/* Album Image Spinning */}
-                            <img className = {this.state.paused == false ? ("playbackimage") :("")}
+                            <img className = {this.props.paused == false ? ("playbackimage") :("")}
                             alt="playbackImg" 
                             style = {{position: "absolute",opacity: ".25", width: "60", height: "60", borderRadius: "100%"}} 
                             src= {playing.album.images[0].url}/>
                             {/* Play Button */}{/* Pause Button */}
-                            <IconButton id = "player button" onClick = {this.updatePlay}  style = {{position: "absolute", padding: 0}}>
-                                {this.state.paused == true ? (
-                                    <PlayCircleOutlineIcon style = {{width: "60", height: "60"}}/>
+                            <IconButton id = "player button" style = {{position: "absolute", padding: 0}}>
+                                {this.props.paused == true ? (
+                                    <PlayCircleOutlineIcon onClick={this.props.play} style = {{width: "60", height: "60"}}/>
                                     ) : (   
-                                    <PauseCircleOutlineIcon style = {{width: "60", height: "60"}}/>)}
+                                    <PauseCircleOutlineIcon onClick={this.props.pause} style = {{width: "60", height: "60"}}/>)}
                             </IconButton>
                             
 
@@ -116,6 +110,7 @@ class Playback extends React.Component {
                         
                         {/* Volume Slider*/}
                         <Slider style = {{height:"50%", marginTop: "15", float: "right", color:"white"}}
+                        onChange={(e, val) => this.props.setVolume(val / 100)}
                         orientation="vertical"
                         getAriaValueText={getVolume}
                         defaultValue={30}
