@@ -18,8 +18,9 @@ const CREATE_PLAYLIST = gql`
 `
 
 class TransactionStack {
-    constructor(nodes) {
+    constructor(nodes, selectedTracks) {
         this.nodes = nodes;
+        this.selectedTracks = selectedTracks;
         if (nodes === undefined || nodes === null)
             this.nodes = [];
         this.stack = [];
@@ -59,17 +60,22 @@ class TransactionStack {
         }
         return {
             update: true,
-            nodes: this.nodes
+            nodes: this.nodes,
         }
     }
 
     removeNode(node) {
         var update = false;
+        var removedTracks = [];
         for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].coords.q === node.coords.q &&
                 this.nodes[i].coords.r === node.coords.r) {
+                for (let i = 0; i < this.selectedTracks.length; i++)
+                    if (this.selectedTracks[i].artist.id === node.artist.id)
+                        removedTracks.push({ index: i, track: this.selectedTracks[i] });
                 this.stackPush({
                     type: "remove",
+                    removedTracks: removedTracks,
                     data: node
                 });
                 this.nodes.splice(i, 1);
@@ -78,12 +84,15 @@ class TransactionStack {
         }
         return {
             update: update,
-            nodes: this.nodes
+            nodes: this.nodes,
+            removedTracks: removedTracks
         }
     }
 
     undo() {
         var update = false;
+        var addedTracks = [];
+        var removedTracks = [];
         if (this.topIndex > 0) {
             const transaction = this.stack[this.topIndex - 1];
             if (transaction.type === "add") {
@@ -95,11 +104,16 @@ class TransactionStack {
                         update = true;
                     }
                 }
+                for (let i = 0; i < this.selectedTracks.length; i++)
+                    if (this.selectedTracks[i].artist.id === transaction.data.artist.id)
+                        removedTracks.push({ index: i, track: this.selectedTracks[i] });
+                transaction.removedTracks = removedTracks;
             }
             else if (transaction.type === "remove") {
                 this.nodes.push(transaction.data);
                 this.topIndex -= 1;
                 update = true;
+                addedTracks = transaction.removedTracks;
             }
             else if (transaction.type === "swap") {
                 for (let i = 0; i < this.nodes.length; i++) {
@@ -114,16 +128,22 @@ class TransactionStack {
         }
         return {
             update: update,
-            nodes: this.nodes
+            nodes: this.nodes,
+            addedTracks: addedTracks,
+            removedTracks: removedTracks,
         }
     }
 
     redo() {
         var update = false;
+        var addedTracks = [];
+        var removedTracks = [];
         if (this.topIndex < this.stack.length) {
             const transaction = this.stack[this.topIndex];
             if (transaction.type === "add") {
+                console.log(this.stack);
                 this.nodes.push(transaction.data);
+                addedTracks = transaction.removedTracks;
                 this.topIndex += 1;
                 update = true;
             }
@@ -131,6 +151,7 @@ class TransactionStack {
                 for (let i = 0; i < this.nodes.length; i++) {
                     if (this.nodes[i].coords.q === transaction.data.coords.q &&
                         this.nodes[i].coords.r === transaction.data.coords.r) {
+                        removedTracks = transaction.removedTracks;
                         this.nodes.splice(i, 1);
                         this.topIndex += 1;
                         update = true;
@@ -150,7 +171,9 @@ class TransactionStack {
         }
         return {
             update: update,
-            nodes: this.nodes
+            nodes: this.nodes,
+            addedTracks: addedTracks,
+            removedTracks: removedTracks
         }
     }
 }

@@ -32,7 +32,7 @@ class GraphWindow extends React.Component {
             selectedNode: null,
         };
         this.selectedQuickArtist = null;
-        this.transactionStack = new TransactionStack(this.state.nodes);
+        this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks);
         this.transform = null;
         this.canvas = null;
         this.ctx = null;
@@ -392,8 +392,23 @@ class GraphWindow extends React.Component {
                     const receipt = this.transactionStack.undo();
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
+                        let newIndex = this.state.trackIndex;
+                        console.log(receipt.addedTracks);
+                        console.log(receipt.removedTracks);
+                        receipt.addedTracks.forEach(({index, track}) => {
+                            this.state.selectedTracks.splice(index, 0, track);
+                            if (index < this.state.trackIndex)
+                                newIndex++;
+                        });
+                        [...receipt.removedTracks].reverse().forEach(({index, track}) => {
+                            if (index < this.state.trackIndex)
+                                newIndex--;
+                            this.state.selectedTracks.splice(index, 1);
+                        });
                         this.setState({
                             nodes: receipt.nodes,
+                            selectedTracks: this.state.selectedTracks,
+                            trackIndex: newIndex,
                             selectedNode: null
                         }, this.draw);
                     }
@@ -402,8 +417,23 @@ class GraphWindow extends React.Component {
                     const receipt = this.transactionStack.redo();
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
+                        let newIndex = this.state.trackIndex;
+                        console.log(receipt.addedTracks);
+                        console.log(receipt.removedTracks);
+                        receipt.addedTracks.forEach(({index, track}) => {
+                            this.state.selectedTracks.splice(index, 0, track);
+                            if (index < this.state.trackIndex)
+                                newIndex++;
+                        });
+                        [...receipt.removedTracks].reverse().forEach(({index, track}) => {
+                            if (index < this.state.trackIndex)
+                                newIndex--;
+                            this.state.selectedTracks.splice(index, 1);
+                        });
                         this.setState({
                             nodes: receipt.nodes,
+                            selectedTracks: this.state.selectedTracks,
+                            trackIndex: newIndex,
                             selectedNode: null
                         }, this.draw);
                     }
@@ -484,22 +514,20 @@ class GraphWindow extends React.Component {
     }
 
     selectTrack = (track) => {
-        const oldSelected = [...this.state.selectedTracks];
-        oldSelected.push(track);
+        this.state.selectedTracks.push(track);
         if (this.state.currentTrack)
-            this.setState({ selectedTracks: oldSelected });
+            this.setState({ selectedTracks: this.state.selectedTracks });
         else
-            this.setState({ selectedTracks: oldSelected, currentTrack: track });
+            this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
     }
 
     deselectTrack = (track) => {
         const index = this.state.selectedTracks.findIndex(selectedTrack => selectedTrack.id === track.id);
-        const oldSelected = [...this.state.selectedTracks];
-        oldSelected.splice(index, 1);
+        this.state.selectedTracks.splice(index, 1);
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: oldSelected, trackIndex: this.state.trackIndex - 1 });
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
         else
-            this.setState({ selectedTracks: oldSelected });
+            this.setState({ selectedTracks: this.state.selectedTracks});
     }
 
     clearTracks = () => {
@@ -510,11 +538,20 @@ class GraphWindow extends React.Component {
         const receipt = this.transactionStack.removeNode(this.state.selectedNode);
         if (receipt.update) {
             this.adjacentRecommendedArtists = [];
+            var newIndex = this.state.trackIndex;
+            console.log(receipt.removedTracks);
+            [...receipt.removedTracks].reverse().forEach(({index, track}) => {
+                if (index < this.state.trackIndex)
+                    newIndex--;
+                this.state.selectedTracks.splice(index, 1);
+            });
+            console.log(receipt.removedTracks);
             var selectedNode = this.state.selectedNode;
             if (selectedNode.coords.q === node.coords.q && selectedNode.coords.r === node.coords.r)
                 selectedNode = null;
             this.setState({
                 nodes: receipt.nodes,
+                trackIndex: newIndex,
                 selectedNode: selectedNode
             }, this.draw);
         }
@@ -542,8 +579,6 @@ class GraphWindow extends React.Component {
     };
 
     playTrack(track) {
-        console.log("hwy");
-        console.log(track);
         this.play({ spotify_uri: track.uri, playerInstance: this.props.player });
         this.setState({ currentTrack: track, paused: false });
     }
