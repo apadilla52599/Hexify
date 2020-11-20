@@ -50,7 +50,7 @@ class ArtistEditor extends React.Component{
                     <Input onChange={this.handleSearch} style={{height: "28px", color: "white", width: "80%", fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
                 </div>
                 <div style={{display: "flex", height: "calc(50% - 90px - 5vh)", justifyContent: "center", flexGrow: 1 }}>
-                    <TrackList tracks={tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} icon="fas fa-plus" handleClick={track => {track.artist = this.props.node.artist; this.props.selectTrack(track);}} playTrack={this.props.playTrack} />
+                    <TrackList tracks={tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} icon="fas fa-plus" handleClick={track => {track.artist = this.props.node.artist; this.props.selectTrack(track);}} />
                 </div>
                 <div style={{display: "flex", height: "64px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <Button variant="contained" onClick={() => this.props.removeNode(this.props.node)} color="default" style = {{backgroundColor: "#c43636", width: "90%", height: "2rem", fontSize: ".75rem"}}>

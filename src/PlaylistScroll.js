@@ -10,34 +10,11 @@ import PersonIcon from '@material-ui/icons/Person';
 
 export default function Playlist(props){
   var tracks = props.tracks;
-    var play = () => {};
-    if (props.player !== undefined) {
-        play = ({
-          spotify_uri,
-          playerInstance: {
-            _options: {
-              getOAuthToken,
-              id
-            }
-          }
-        }) => {
-          getOAuthToken(access_token => {
-            fetch(`https://api.spotify.com/v1/me/player/play?device_id=${id}`, {
-              method: 'PUT',
-              body: JSON.stringify({ uris: [spotify_uri] }),
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-              },
-            });
-          });
-        };
-    }
   return (
           <List id="scroll" style = {{height: "100%"}}>
             {tracks.map((track) => {
               return (
-                <ListItem onClick={() => play({ spotify_uri: track.uri, playerInstance: props.player })} button key = {track.name} style={{margin:"0", paddingTop:"0", paddingBottom: "0"}} >
+                <ListItem onClick={() => props.playTrack(track)} button key = {track.name} style={{margin:"0", paddingTop:"0", paddingBottom: "0"}} >
                   <div>
                     <img alt="Album Cover" style = {{height: "2vw", width: "2vw", marginRight: ".5vw"}} src={track.album.images[0].url}/>
                   </div>

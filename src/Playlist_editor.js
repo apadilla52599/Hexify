@@ -21,7 +21,7 @@ class PlaylistEditor extends React.Component {
                     <Input onChange={this.handleSearch} style={{height: "80%", width:"80%",color: "white",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
                 </div>                  
                 <div style ={{height: "75%"}}>
-                    <Playlist player={this.props.player} tracks = {this.props.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} delete = {this.props.deselectTrack} />
+                    <Playlist player={this.props.player} tracks = {this.props.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} delete = {this.props.deselectTrack} playTrack={this.props.playTrack} />
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", height: "10%", padding: "2%"}}>
                     <Button variant="contained" color="primary"style = {{top: "40%",width: "30%", height: "1vw", fontSize: ".5vw"}}>

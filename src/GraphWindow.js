@@ -657,7 +657,7 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={() => this.playTrack()} />
+                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}
