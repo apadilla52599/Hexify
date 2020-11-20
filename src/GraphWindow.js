@@ -2,10 +2,14 @@ import React from "react";
 import * as d3 from "d3";
 import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
+import Drawer from "@material-ui/core/Drawer";
 
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
 import Playback from './Playback.js'
+import Input from '@material-ui/core/Input';
+import { List, ListItem, ListItemAvatar} from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -39,6 +43,8 @@ class GraphWindow extends React.Component {
         this.playerLoaded = false;
         this.neverStarted = true;
         this.trackEnded = false;
+        this.state.drawer = false;
+        this.state.quickAddSearchResults = [];
     }
 
     axialToCart(coord) {
@@ -552,6 +558,32 @@ class GraphWindow extends React.Component {
         this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false });
     }
 
+    openQuickAddSearchDrawer = () => {
+        if (this.state.drawer === true){
+            this.setState({drawer: false, quickAddSearchResults: []});
+        }
+        else{
+            this.setState({drawer: true});
+            this.setState({quickAddSearchText: ""});
+        }
+    }
+
+    handleQuickAddSearch = (e) => {
+        if(e.target.value !== ""){
+            fetch("/v1/search?q=" + e.target.value + "&type=artist&limit=6").then((response) => {
+                response.json().then(res => {
+                    res.artists.items = res.artists.items.filter(item => item.images.length > 0);
+                    this.setState({quickAddSearchResults: res.artists.items})
+                });
+            });
+        }
+    }
+
+    endDrawer = (artist, e) => {
+        this.setState({drawer: false, quickAddSearchResults: []});
+        this.handleQuickAddDrag(artist, e)
+    }
+
     render() {
         var index = 0;
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
@@ -561,6 +593,16 @@ class GraphWindow extends React.Component {
                         ...this.state.selectedNode,
                     }
                     selectedNode.artist.tracks = d.tracks;
+                    var flag = false;
+                    for(let i = 0; i < this.state.nodes.length - 1; i++){
+                        if(selectedNode.artist.id === this.state.nodes[i].artist.id){
+                            flag = true;
+                            selectedNode.artist = this.state.nodes[i].artist;
+                        }
+                    }
+                    if(flag === false){
+                        selectedNode.artist.selectedTracks = [];
+                    }
                     this.setState({selectedNode: selectedNode});
                 });
             });
@@ -606,6 +648,7 @@ class GraphWindow extends React.Component {
                     <div
                         key={ index }
                         style={ this.quickAddStyle(index) }
+                        onClick= {this.openQuickAddSearchDrawer}
                     >
                         <i className="fas fa-search" style={ { fontSize: "1.5rem" } }></i>
                     </div>
@@ -622,6 +665,18 @@ class GraphWindow extends React.Component {
                         );
                     })
                 }
+                <Drawer anchor='right' open={this.state.drawer}  onClose={this.openQuickAddSearchDrawer}>
+                    <Input onChange={this.handleQuickAddSearch} style={{height: "28px", color: "black", width: "100%", fontFamily: "monospace"}} placeholder= "Search for An Artist"></Input>
+                    <List style={{width: "20vw"}}>
+                        {this.state.quickAddSearchResults.map(artist =>
+                            <ListItem onMouseDown={this.endDrawer.bind(this, artist)}>
+                                <ListItemAvatar>
+                                    <Avatar sizes="large" src={artist.images[0].url}></Avatar>
+                                </ListItemAvatar>
+                                {artist.name}
+                            </ListItem>)}
+                    </List>
+                </Drawer>
                 </div>
                 <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
             </div>
