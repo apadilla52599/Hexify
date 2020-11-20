@@ -87,7 +87,7 @@ class Playback extends React.Component {
                             {/* Album Image Spinning */}
                             <img className = {this.props.paused == false ? ("playbackimage") :("")}
                             alt="playbackImg" 
-                            style = {{position: "absolute",opacity: ".25", width: "60", height: "60", borderRadius: "100%"}} 
+                            style = {{position: "absolute",opacity: ".5", width: "60", height: "60", borderRadius: "100%"}} 
                             src= {playing.album.images[0].url}/>
                             {/* Play Button */}{/* Pause Button */}
                             <IconButton id = "player button" style = {{position: "absolute", padding: 0}}>
@@ -120,7 +120,7 @@ class Playback extends React.Component {
                         {/* Time Slider + labels  */}
                         <TimeSlider 
                             valueLabelDisplay="auto" 
-                            defaultValue={10}
+                            defaultValue={0}
                             marks={[
                                 {value: 5,label: '0:00'},
                                 {value: 95,label: getDuration(playing.duration_ms)},
