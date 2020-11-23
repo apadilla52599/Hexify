@@ -9,15 +9,53 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography'
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
+import VolumeOffIcon from '@material-ui/icons/VolumeOff';
 
 class Playback extends React.Component {
     constructor(props){
         super(props);
+        this.state = {
+            time: this.props.songPosition,
+            dragPosition: false,
+            volume: 30,
+            muted: false,
+        };
+        this.timeslider = React.createRef();
     }
-    
+    componentDidMount(){
+        this.interval = setInterval(() =>{
+            this.timeslider.current.addEventListener('click', function(){ 
+                console.log("pressed slider"); //this currently does not work
+                this.setState({dragPosition:true});
+            });
+            if(this.props.paused==false && this.state.dragPosition == false){ 
+                this.setState({time: this.state.time + 1000});   
+            }
+            if(this.state.dragPosition == true){
+                console.log("should clear")
+                clearInterval(this.interval);
+            }
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
+    }
+    mute = () => {
+        if(this.state.muted == false){
+            this.props.setVolume(0);
+            this.setState({muted: true});
+        }else{
+            this.props.setVolume(this.state.volume/100);
+            this.setState({muted: false});
+        }
+    }
     render() {
+        if(this.props.updatePosition){
+            this.setState({time: this.props.songPosition, dragPosition:false});
+            this.props.updatePosition = false;
+        }
         var playing = this.props.track;
-        console.log(playing);
         function getVolume(value) {
             return `${value}`;
         }
@@ -27,6 +65,8 @@ class Playback extends React.Component {
             var seconds = ((mil % 60000) / 1000).toFixed(0);
             return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
         }
+
+
         const TimeSlider = withStyles({
             root: {
                 color: '#B19CD9',
@@ -110,26 +150,41 @@ class Playback extends React.Component {
                         
                         {/* Volume Slider*/}
                         <Slider style = {{height:"50%", marginTop: "15", float: "right", color:"white"}}
-                        onChange={(e, val) => this.props.setVolume(val / 100)}
+                        onChange={(e, val) => 
+                            {this.props.setVolume(val / 100);
+                            if(val == 0){
+                                this.setState({volume: val, muted: true});
+                            }else{
+                                this.setState({volume: val, muted:false});
+                            }
+                            }}
                         orientation="vertical"
                         getAriaValueText={getVolume}
-                        defaultValue={30}
+                        defaultValue={this.state.volume}
                         aria-labelledby="vertical-slider"
                         />
 
                         {/* Time Slider + labels  */}
-                        <TimeSlider 
-                            valueLabelDisplay="auto" 
-                            defaultValue={0}
+                        <TimeSlider ref = {this.timeslider}
+                            valueLabelDisplay="auto"
+                            onChangeCommitted ={ (e, val) =>  
+                                {this.setState({time:val*this.props.track.duration_ms/100,dragPosition: true});
+                                this.props.seekPosition(val*this.props.track.duration_ms/100)}} 
+                            defaultValue={100*this.state.time/this.props.track.duration_ms}
                             marks={[
-                                {value: 5,label: '0:00'},
+                                {value: 5,label: getDuration(this.state.time)},
                                 {value: 95,label: getDuration(playing.duration_ms)},
                               ]}
                             valueLabelFormat= {(x) => getDuration(x/100 * playing.duration_ms)}
                         />
+
+
                         {/* Volume Button*/}
                         <IconButton  style = {{position: "absolute",margin:"0", padding: "0",float: "right", marginTop:"80", marginLeft:"8"}}>
-                                <VolumeUpIcon style = {{width: "20", height: "20", color: "white"}}/>
+                            {this.state.muted == true ? (
+                                <VolumeOffIcon onClick = {() =>this.mute()} style = {{width: "20", height: "20", color: "white"}}/>
+                                ) : (   
+                                <VolumeUpIcon onClick = {() =>this.mute()} style = {{width: "20", height: "20", color: "white"}}/>)}
                         </IconButton> 
 
 
