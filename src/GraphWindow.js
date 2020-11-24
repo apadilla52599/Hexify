@@ -99,7 +99,7 @@ class GraphWindow extends React.Component {
     pixelToCart(u, v) {
         return {
             x: (u - this.canvas.parentElement.offsetLeft - this.transform.x) / this.transform.k,
-            y: (v - this.canvas.parentElement.offsetTop - this.transform.y) / this.transform.k,
+            y: (v - this.canvas.parentElement.offsetTop  - this.transform.y) / this.transform.k,
         }
     }
 
@@ -196,12 +196,12 @@ class GraphWindow extends React.Component {
 
     draw() {
         // Correct the canvas dimensions if the window has been resized
-        this.canvas.width = this.canvas.offsetWidth;
-        this.canvas.height = this.canvas.offsetHeight;
+        this.canvas.width = this.canvas.offsetWidth * window.devicePixelRatio;
+        this.canvas.height = this.canvas.offsetHeight * window.devicePixelRatio;
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.transform.x, this.transform.y);
-        this.ctx.scale(this.transform.k, this.transform.k);
+        this.ctx.translate(this.transform.x * window.devicePixelRatio, this.transform.y * window.devicePixelRatio);
+        this.ctx.scale(this.transform.k * window.devicePixelRatio, this.transform.k * window.devicePixelRatio);
 
         var selectedNeighbors = [];
         if (this.state.selectedNode != null) {
@@ -299,6 +299,9 @@ class GraphWindow extends React.Component {
     componentDidMount() {
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
+        /*selection
+            .attr('width', this.canvas.offsetWidth * window.devicePixelRatio)
+            .attr('height', this.canvas.offsetHeight * window.devicePixelRatio)*/
         this.ctx = this.canvas.getContext("2d");
         this.transform = d3.zoomIdentity;
         selection.call(
@@ -320,6 +323,9 @@ class GraphWindow extends React.Component {
             .clickDistance(4)
             .on("zoom", ({transform}) => {
                 this.transform = transform;
+                /*this.transform.x *= window.devicePixelRatio;
+                this.transform.y *= window.devicePixelRatio;
+                this.transform.k *= window.devicePixelRatio;*/
                 this.draw();
             })
         );
