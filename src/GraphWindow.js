@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import React, { useState, useEffect } from 'react';
 import * as d3 from "d3";
 import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
@@ -30,6 +31,8 @@ class GraphWindow extends React.Component {
             selectedTracks: [],
             nodes: [],
             selectedNode: null,
+            songPosition: 0,
+            updatePosition: true,
         };
         this.selectedQuickArtist = null;
         this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks);
@@ -297,6 +300,12 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
+        //Removes hash from url
+        if(this.props.redirect == true){
+            window.history.pushState("", document.title, window.location.pathname + window.location.search);
+            this.props.redirect = false;
+        }
+       
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
         /*selection
@@ -399,8 +408,8 @@ class GraphWindow extends React.Component {
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
                         let newIndex = this.state.trackIndex;
-                        console.log(receipt.addedTracks);
-                        console.log(receipt.removedTracks);
+                        // console.log(receipt.addedTracks);
+                        // console.log(receipt.removedTracks);
                         receipt.addedTracks.forEach(({index, track}) => {
                             this.state.selectedTracks.splice(index, 0, track);
                             if (index < this.state.trackIndex)
@@ -424,8 +433,8 @@ class GraphWindow extends React.Component {
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
                         let newIndex = this.state.trackIndex;
-                        console.log(receipt.addedTracks);
-                        console.log(receipt.removedTracks);
+                        // console.log(receipt.addedTracks);
+                        // console.log(receipt.removedTracks);
                         receipt.addedTracks.forEach(({index, track}) => {
                             this.state.selectedTracks.splice(index, 0, track);
                             if (index < this.state.trackIndex)
@@ -545,13 +554,13 @@ class GraphWindow extends React.Component {
         if (receipt.update) {
             this.adjacentRecommendedArtists = [];
             var newIndex = this.state.trackIndex;
-            console.log(receipt.removedTracks);
+            // console.log(receipt.removedTracks);
             [...receipt.removedTracks].reverse().forEach(({index, track}) => {
                 if (index < this.state.trackIndex)
                     newIndex--;
                 this.state.selectedTracks.splice(index, 1);
             });
-            console.log(receipt.removedTracks);
+            // console.log(receipt.removedTracks);
             var selectedNode = this.state.selectedNode;
             if (selectedNode.coords.q === node.coords.q && selectedNode.coords.r === node.coords.r)
                 selectedNode = null;
@@ -625,6 +634,13 @@ class GraphWindow extends React.Component {
         this.handleQuickAddDrag(artist, e)
     }
 
+    seekPositionSong = (position) => {
+        console.log("position");
+        console.log(position)
+        this.props.player.seek(position);
+        this.setState({songPosition: position, updatePosition:true});  
+    }
+
     render() {
         var index = 0;
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
@@ -651,6 +667,9 @@ class GraphWindow extends React.Component {
         if (this.playerLoaded === false && this.props.player) {
             this.playerLoaded = true;
             this.props.player.addListener('player_state_changed', (playerState) => {
+                console.log(playerState);
+                var progress = playerState.position;
+                this.setState({songPosition: progress, updatePosition:true});
                 if (playerState.position === 0 && playerState.paused && !this.state.paused && this.state.selectedTracks.length > 1 && !this.trackEnded) {
                     this.trackEnded = true;
                     this.playNextTrack();
@@ -659,6 +678,7 @@ class GraphWindow extends React.Component {
                     this.trackEnded = false;
             });
         }
+        
         return (
             <div id="graph_window">
                 <div id="playlist_column">
@@ -669,6 +689,8 @@ class GraphWindow extends React.Component {
                     )}
                     {this.state.selectedTracks.length > 0 && this.props.player &&
                         <Playback
+                            songPosition = {this.state.songPosition}
+                            updatePosition = {this.state.updatePosition}
                             paused={this.state.paused}
                             play={() => {
                                 if (this.neverStarted) {
@@ -680,6 +702,7 @@ class GraphWindow extends React.Component {
                             }}
                             pause={() => {this.props.player.pause(); this.setState({ paused: true });}}
                             setVolume={(volume) => this.props.player.setVolume(volume)}
+                            seekPosition={(position) => this.seekPositionSong(position)}
                             skip={() => this.playNextTrack()}
                             prev={() => this.playNextTrack(true)}
                             track={this.state.currentTrack}/>}

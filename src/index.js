@@ -12,42 +12,46 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            player: undefined
+            player: undefined,
+            redirect: false,
+            signedIn:false,
         }
         window.onSpotifyWebPlaybackSDKReady = () => {
-            console.log(window.location.search);
-            if (window.location.search === undefined)
-                window.location = window.location.origin + "/auth/spotify";
-            const token = window.location.search.split("=")[1];
-            console.log(token);
-            const player = new window.Spotify.Player({
-                name: 'Web Playback SDK Quick Start Player',
-                getOAuthToken: cb => { cb(token); }
-            });
+                console.log(window.location.hash);
+                if (window.location.hash === undefined)
+                    window.location = window.location.origin + "/auth/spotify";
+                const token = window.location.hash.split("=")[1];
+                const player = new window.Spotify.Player({
+                    name: 'Web Playback SDK Quick Start Player',
+                    getOAuthToken: cb => { cb(token); }
+                });
+                console.log(token)
+                // Error handling
+                player.addListener('initialization_error', ({ message }) => { console.error(message);});
+                player.addListener('authentication_error', ({ message }) => {console.error(message);});
+                player.addListener('account_error', ({ message }) => { console.error(message); });
+                player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-            // Error handling
-            player.addListener('initialization_error', ({ message }) => { console.error(message); });
-            player.addListener('authentication_error', ({ message }) => { console.error(message); });
-            player.addListener('account_error', ({ message }) => { console.error(message); });
-            player.addListener('playback_error', ({ message }) => { console.error(message); });
+                // Playback status updates
+                //player.addListener('player_state_changed', state => { console.log(state); });
 
-            // Playback status updates
-            //player.addListener('player_state_changed', state => { console.log(state); });
+                // Ready
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
+                    this.setState({ player: player, redirect: true, signedIn:true });
+                });
 
-            // Ready
-            player.addListener('ready', ({ device_id }) => {
-                console.log('Ready with Device ID', device_id);
-            });
+                // Not Ready
+                player.addListener('not_ready', ({ device_id }) => {
+                    console.log('Device ID has gone offline', device_id);
+                });
 
-            // Not Ready
-            player.addListener('not_ready', ({ device_id }) => {
-                console.log('Device ID has gone offline', device_id);
-            });
-
-            // Connect to the player!
-            player.connect();
-            this.setState({ player: player });
+                // Connect to the player!
+                player.connect();
+                this.setState({ player: player });
+                
         };
+        
     }
 
     componentDidMount() {
@@ -60,8 +64,8 @@ class App extends Component {
                     <HamburgerMenu />
                     <div style={{ flexGrow: 1 }}>
                         <Titlebar />
-                        <Switch>
-                            <Route path="/edit" exact component={() => <GraphWindow player={this.state.player} />} />
+                        <Switch signedIn = {this.state.signedIn}>
+                            <Route path="/edit" exact component={() => <GraphWindow player={this.state.player} redirect = {this.state.redirect} />} />
                             <Route path="/browse" exact component={Browse}/>
                         </Switch>
                     </div>
