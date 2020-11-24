@@ -609,10 +609,10 @@ class GraphWindow extends React.Component {
         setTimeout(() => {
             if (this.skips === 1) {
                 this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player });
-                this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false });
             }
             this.skips--;
         }, 500);
+        this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false });
     }
 
     openQuickAddSearchDrawer = () => {
@@ -705,7 +705,7 @@ class GraphWindow extends React.Component {
                                     this.neverStarted = false;
                                 }
                                 this.props.player.resume();
-                                this.setState({ currentTrack: this.currentTrack, paused: false });
+                                this.setState({ currentTrack: this.state.currentTrack, paused: false });
                             }}
                             pause={() => {this.props.player.pause(); this.setState({ paused: true });}}
                             setVolume={(volume) => this.props.player.setVolume(volume)}
