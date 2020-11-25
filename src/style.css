@@ -121,3 +121,8 @@ body {
 }
 
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.grid-item {
+  width: calc(33% - 10px);
+  margin-bottom: 10px;
+} 
