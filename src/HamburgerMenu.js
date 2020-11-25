@@ -19,7 +19,19 @@ import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
 import { Divider } from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
+import { request, gql } from 'graphql-request'
 
+const RETRIEVE_USER = gql`
+  query {
+    user {
+        id
+        graphicalPlaylists {
+            id
+            name
+        }
+    }
+  }
+` 
 const ListItem = withStyles({
     root: {
       "&:hover": {
@@ -34,17 +46,24 @@ class HamburgerMenu extends React.Component {
         // I added thumbnails for graphical playlists in the JSON object file
         this.inMutation = false;
         this.state = { 
-            graphList: [{name: null, thumbnail: null}]
+            graphList: []
         }
     }
     componentDidMount(){
-        var json = require('./DummyData/DummyArtists.json');
+        request('/graphql', RETRIEVE_USER).then((data) => {
+            console.log(data);
+            if (data && data.user) {
+                data.user.graphicalPlaylists.forEach(graph => graph.thumbnail = img1);
+                this.setState({ graphList: data.user.graphicalPlaylists });
+            }
+        });
+        /*var json = require('./DummyData/DummyArtists.json');
         var graphList = json.graphicalPlaylists.map(playlist => ({name: playlist.name}));
         var otherList = [img1,img2,img3,img4,img5,img6,img7,img8];
         for(let i = 0; i < otherList.length;i++){
             graphList[i].thumbnail = otherList[i];
         }
-        this.setState({graphList: graphList});
+        this.setState({graphList: graphList});*/
     }
     
     render() {

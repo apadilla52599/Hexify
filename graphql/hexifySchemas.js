@@ -16,7 +16,7 @@ var userType = new GraphQLObjectType({
   name: "user",
   fields: function () {
     return {
-      _id: {
+      id: {
         type: GraphQLString,
       },
       SpotifyUserID: {
@@ -148,6 +148,7 @@ var queryType = new GraphQLObjectType({
         },
         resolve: function (root, params, user_id) {
           const userDetails = UserModel.findOne({ SpotifyUserID: user_id }).exec();
+          userDetails.id = user_id;
           if (!userDetails) {
             throw new Error("Error");
           }
