@@ -2,7 +2,7 @@ import React from "react";
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import IconButton from '@material-ui/core/IconButton';
 import Slider from '@material-ui/core/Slider';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
@@ -15,7 +15,7 @@ class Playback extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            time: this.props.songPosition,
+            time: 0,
             dragPosition: false,
             volume: 30,
             muted: false,
@@ -24,16 +24,12 @@ class Playback extends React.Component {
     }
     componentDidMount(){
         this.interval = setInterval(() =>{
-            // this.timeslider.current.addEventListener('click', function(){ 
-            //     console.log("pressed slider"); //this currently does not work
-            //     this.setState({dragPosition:true});
-            // });
-            if(this.props.paused === false && this.state.dragPosition === false){ 
-                this.setState({time: this.state.time + 1000});   
-            }
-            if(this.state.dragPosition === true) {
-                console.log("should clear")
-                clearInterval(this.interval);
+            if (this.props.player && this.props.paused === false) {
+                this.props.player.getCurrentState().then(state => {
+                    if (state) {
+                        this.setState({ time: state.position });
+                    }
+                });
             }
         }, 1000);
     }
@@ -42,7 +38,7 @@ class Playback extends React.Component {
         clearInterval(this.interval);
     }
     mute = () => {
-        if(this.state.muted == false){
+        if(this.state.muted === false){
             this.props.setVolume(0);
             this.setState({muted: true});
         }else{
@@ -51,11 +47,6 @@ class Playback extends React.Component {
         }
     }
     render() {
-        console.log(this.props.updatePosition + " " + this.props.songPosition);
-        if(this.props.updatePosition) {
-            this.setState({time: this.props.songPosition, dragPosition:false});
-            this.props.updatePosition = false;
-        }
         var playing = this.props.track;
         function getVolume(value) {
             return `${value}`;
@@ -111,7 +102,7 @@ class Playback extends React.Component {
           })(Slider);
         return (
             <div id = 'playback'>
-                {playing == null ? (
+                {playing === null ? (
                     <div></div>
                 ) : (     
                     <div> 
@@ -126,13 +117,13 @@ class Playback extends React.Component {
                                 <SkipNextIcon style = {{color: "gray",width: "40", height: "40"}}/>
                             </IconButton> 
                             {/* Album Image Spinning */}
-                            <img className = {this.props.paused == false ? ("playbackimage") :("")}
+                            <img className = {this.props.paused === false ? ("playbackimage") :("")}
                             alt="playbackImg" 
                             style = {{position: "absolute",opacity: ".5", width: "60", height: "60", borderRadius: "100%"}} 
                             src= {playing.album.images[0].url}/>
                             {/* Play Button */}{/* Pause Button */}
                             <IconButton id = "player button" style = {{position: "absolute", padding: 0}}>
-                                {this.props.paused == true ? (
+                                {this.props.paused === true ? (
                                     <PlayCircleOutlineIcon onClick={this.props.play} style = {{width: "60", height: "60"}}/>
                                     ) : (   
                                     <PauseCircleOutlineIcon onClick={this.props.pause} style = {{width: "60", height: "60"}}/>)}
@@ -153,7 +144,7 @@ class Playback extends React.Component {
                         <Slider style = {{height:"50%", marginTop: "15", float: "right", color:"white"}}
                         onChange={(e, val) => 
                             {this.props.setVolume(val / 100);
-                            if(val == 0){
+                            if(val === 0){
                                 this.setState({volume: val, muted: true});
                             }else{
                                 this.setState({volume: val, muted:false});
@@ -182,7 +173,7 @@ class Playback extends React.Component {
 
                         {/* Volume Button*/}
                         <IconButton  style = {{position: "absolute",margin:"0", padding: "0",float: "right", marginTop:"80", marginLeft:"8"}}>
-                            {this.state.muted == true ? (
+                            {this.state.muted === true ? (
                                 <VolumeOffIcon onClick = {() =>this.mute()} style = {{width: "20", height: "20", color: "white"}}/>
                                 ) : (   
                                 <VolumeUpIcon onClick = {() =>this.mute()} style = {{width: "20", height: "20", color: "white"}}/>)}
