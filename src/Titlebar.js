@@ -25,6 +25,25 @@ class Titlebar extends React.Component {
         }
     }
 
+    handleBrowseSearch = () => {
+        const bss = document.getElementById("browse_search_section");
+        const bg = document.getElementById("browse_gallery");
+        if (bss !== undefined) {
+            if (bss.style.width === "0%") {
+                bss.style.width = "20%";
+                bg.style.width = "80%";
+                bss.style.visibility = "visible";
+            }
+            else {
+                bss.style.width = "0%";
+                bg.style.width = "100%";
+                bss.style.visibility = "hidden";
+            }
+            // TODO: replace this with a mutation observer in the graph window
+            window.dispatchEvent(new Event('resize'));
+        }
+    }
+
     render() {
         const browsing = (window.location.pathname === "/browse");
         return (
@@ -32,6 +51,11 @@ class Titlebar extends React.Component {
                 <div>
                     <p onClick={this.handleClick} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.2rem", paddingLeft: ".8rem" }}><i className="fas fa-bars"></i></p>
                 </div>
+                { browsing &&
+                    <div>
+                        <p onClick={this.handleBrowseSearch} style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.2rem", paddingLeft: ".8rem" }}><i className="fas fa-search"></i></p>
+                    </div>
+                }
                 { !browsing &&
                     <Input placeholder="Untitled Graph" style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
                 }
