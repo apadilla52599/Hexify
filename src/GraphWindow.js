@@ -32,7 +32,6 @@ class GraphWindow extends React.Component {
             nodes: [],
             selectedNode: null,
             songPosition: 0,
-            updatePosition: true,
         };
         this.selectedQuickArtist = null;
         this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks);
@@ -49,6 +48,8 @@ class GraphWindow extends React.Component {
         this.state.drawer = false;
         this.state.quickAddSearchResults = [];
         this.skips = 0;
+        this.position = 0;
+        this.updatePosition = false;
     }
 
     axialToCart(coord) {
@@ -595,8 +596,9 @@ class GraphWindow extends React.Component {
     };
 
     playTrack(track) {
+        this.updatePosition = true;
         this.play({ spotify_uri: track.uri, playerInstance: this.props.player });
-        this.setState({ currentTrack: track, paused: false });
+        this.setState({ currentTrack: track, paused: false, songPosition: 0 }, () => this.updatePosition = false);
     }
 
     playNextTrack(prev) {
@@ -608,11 +610,18 @@ class GraphWindow extends React.Component {
         this.skips++;
         setTimeout(() => {
             if (this.skips === 1) {
-                this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player });
+                if (this.state.paused) {
+                    this.neverStarted = true;
+                }
+                else {
+                    this.updatePosition = true;
+                    this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player, songPosition: 0 }, () => this.updatePosition = false);
+                }
             }
             this.skips--;
         }, 500);
-        this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false });
+        this.updatePosition = true;
+        this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false, songPosition: 0 }, () => this.updatePosition = false);
     }
 
     openQuickAddSearchDrawer = () => {
@@ -645,11 +654,21 @@ class GraphWindow extends React.Component {
         console.log("position");
         console.log(position)
         this.props.player.seek(position);
-        this.setState({songPosition: position, updatePosition:true});  
+        this.updatePosition = true;
+        this.setState({songPosition: position}, () => this.updatePosition = false);  
     }
 
     render() {
         var index = 0;
+        console.log(this.updatePosition + " " + this.state.songPosition);
+        if (this.props.player && this.updatePosition === false) {
+            this.props.player.getCurrentState().then(state => {
+                if (state) {
+                    this.updatePosition = true;
+                    this.setState({ songPosition: state.position}, () => this.updatePosition = false);
+                }
+            });
+        }
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
             fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
                 response.json().then(d => {
@@ -674,9 +693,10 @@ class GraphWindow extends React.Component {
         if (this.playerLoaded === false && this.props.player) {
             this.playerLoaded = true;
             this.props.player.addListener('player_state_changed', (playerState) => {
-                console.log(playerState);
+                //console.log(playerState);
                 var progress = playerState.position;
-                this.setState({songPosition: progress, updatePosition:true});
+                this.setState({songPosition: progress});
+                this.updatePosition = true;
                 if (playerState.position === 0 && playerState.paused && !this.state.paused && this.state.selectedTracks.length > 1 && !this.trackEnded) {
                     this.trackEnded = true;
                     this.playNextTrack();
@@ -697,15 +717,25 @@ class GraphWindow extends React.Component {
                     {this.state.selectedTracks.length > 0 && this.props.player &&
                         <Playback
                             songPosition = {this.state.songPosition}
-                            updatePosition = {this.state.updatePosition}
+                            updatePosition = {this.updatePosition}
                             paused={this.state.paused}
                             play={() => {
-                                if (this.neverStarted) {
-                                    this.play({ spotify_uri: this.state.selectedTracks[0].uri, playerInstance: this.props.player });
-                                    this.neverStarted = false;
+                                var currentTrack;
+                                if (this.state.selectedTracks.length > 0)
+                                    currentTrack = this.state.selectedTracks[0];
+                                if (this.state.currentTrack)
+                                    currentTrack = this.state.currentTrack;
+                                if (currentTrack) {
+                                    if (this.neverStarted) {
+                                        this.play({ spotify_uri: currentTrack.uri, playerInstance: this.props.player });
+                                        this.neverStarted = false;
+                                        this.setState({ paused: false, currentTrack: currentTrack });
+                                    }
+                                    else {
+                                        this.props.player.resume();
+                                        this.setState({ paused: false });
+                                    }
                                 }
-                                this.props.player.resume();
-                                this.setState({ currentTrack: this.state.currentTrack, paused: false });
                             }}
                             pause={() => {this.props.player.pause(); this.setState({ paused: true });}}
                             setVolume={(volume) => this.props.player.setVolume(volume)}

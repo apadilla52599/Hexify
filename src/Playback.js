@@ -28,10 +28,10 @@ class Playback extends React.Component {
             //     console.log("pressed slider"); //this currently does not work
             //     this.setState({dragPosition:true});
             // });
-            if(this.props.paused==false && this.state.dragPosition == false){ 
+            if(this.props.paused === false && this.state.dragPosition === false){ 
                 this.setState({time: this.state.time + 1000});   
             }
-            if(this.state.dragPosition == true){
+            if(this.state.dragPosition === true) {
                 console.log("should clear")
                 clearInterval(this.interval);
             }
@@ -51,7 +51,8 @@ class Playback extends React.Component {
         }
     }
     render() {
-        if(this.props.updatePosition){
+        console.log(this.props.updatePosition + " " + this.props.songPosition);
+        if(this.props.updatePosition) {
             this.setState({time: this.props.songPosition, dragPosition:false});
             this.props.updatePosition = false;
         }
