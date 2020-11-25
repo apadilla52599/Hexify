@@ -20,14 +20,14 @@ class Playback extends React.Component {
             volume: 30,
             muted: false,
         };
-        this.timeslider = React.createRef();
+        // this.timeslider = React.createRef();
     }
     componentDidMount(){
         this.interval = setInterval(() =>{
-            this.timeslider.current.addEventListener('click', function(){ 
-                console.log("pressed slider"); //this currently does not work
-                this.setState({dragPosition:true});
-            });
+            // this.timeslider.current.addEventListener('click', function(){ 
+            //     console.log("pressed slider"); //this currently does not work
+            //     this.setState({dragPosition:true});
+            // });
             if(this.props.paused==false && this.state.dragPosition == false){ 
                 this.setState({time: this.state.time + 1000});   
             }

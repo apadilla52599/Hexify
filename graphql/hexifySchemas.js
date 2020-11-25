@@ -12,6 +12,23 @@ var GraphQLDate = require("graphql-date");
 var UserModel = require("../models/User");
 var GraphicalPlaylistModel = require("../models/GraphicalPlaylist");
 
+var userType = new GraphQLObjectType({
+  name: "user",
+  fields: function () {
+    return {
+      _id: {
+        type: GraphQLString,
+      },
+      SpotifyUserID: {
+        type: GraphQLString,
+      },
+      graphicalPlaylists: {
+        type: new GraphQLList(graphicalPlaylistType),
+      },
+    };
+  },
+});
+
 var nodeType = new GraphQLObjectType({
   name: "node",
   fields: function() {
@@ -73,6 +90,9 @@ var graphicalPlaylistType = new GraphQLObjectType({
       name: {
         type: new GraphQLNonNull(GraphQLString),
       },
+      owner: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
       playlists: {
         type: new GraphQLList(GraphQLString),
       },
@@ -96,7 +116,7 @@ var queryType = new GraphQLObjectType({
   name: "Query",
   fields: function () {
     return {
-        graphicalPlaylists: {
+      graphicalPlaylists: {
         type: new GraphQLList(graphicalPlaylistType),
         resolve: function () {
           const graphicalPlaylists = GraphicalPlaylistModel.find().exec();
@@ -120,6 +140,18 @@ var queryType = new GraphQLObjectType({
             throw new Error("Error");
           }
           return graphicalPlaylistsDetails;
+        },
+      },
+      user: {
+        type: userType,
+        args: {
+        },
+        resolve: function (root, params, user_id) {
+          const userDetails = UserModel.findOne({ SpotifyUserID: user_id }).exec();
+          if (!userDetails) {
+            throw new Error("Error");
+          }
+          return userDetails;
         },
       },
     };
@@ -176,6 +208,9 @@ var mutation = new GraphQLObjectType({
           artistId: {
             type: new GraphQLNonNull(GraphQLString),
           },
+          artistName: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
         },
         resolve: async function(root, params) {
           graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
@@ -185,6 +220,7 @@ var mutation = new GraphQLObjectType({
           if (!graphicalPlaylist.artists.find(artist => artist.id === params.artistId)) {
             graphicalPlaylist.artists.push({
               id: params.artistId,
+              name: params.artistName,
               tracks: [],
             });
           }
@@ -192,23 +228,53 @@ var mutation = new GraphQLObjectType({
             q: params.q,
             r: params.r,
             artistId: params.artistId,
-            name,
           };
-          const index = graphicalPlaylist.nodes.findIndex(node => {
-            return node.q === newNode.q && node.r === newNode.r;
-          });
+          const index = graphicalPlaylist.nodes.findIndex(node => node.q === params.q && node.r === params.r);
           if (index >= 0) {
-            const oldArtistId = graphicalPlaylist.nodes[index].artistId;
-            graphicalPlaylist.nodes[index] = newNode;
-            if (!graphicalPlaylist.nodes.find(artist => artist.id === oldArtistId)) {
-              graphicalPlaylist.artists.slice(
-                graphicalPlaylist.artists.findIndex(artist => artist.id === oldArtistId),
+            const deletedArtistId = graphicalPlaylist.nodes[index].artistId;
+            graphicalPlaylist.nodes.splice(index, 1);
+            if (graphicalPlaylist.nodes.find(node => node.artistId === deletedArtistId) === undefined) {
+              graphicalPlaylist.artists.splice(
+                graphicalPlaylist.artists.findIndex(artist => artist.id === deletedArtistId),
                 1
               );
             }
           }
-          else
-            graphicalPlaylist.nodes.push(newNode);
+          graphicalPlaylist.nodes.push(newNode);
+          graphicalPlaylist.lastModified = Date.now();
+          graphicalPlaylist.save();
+          return graphicalPlaylist;
+        }
+      },
+      deleteNode: {
+        type: graphicalPlaylistType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          q: {
+            type: GraphQLInt,
+          },
+          r: {
+            type: GraphQLInt,
+          },
+        },
+        resolve: async function(root, params) {
+          graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          if (!graphicalPlaylist) {
+            throw new Error("Error");
+          }
+          const index = graphicalPlaylist.nodes.findIndex(node => node.q === params.q && node.r === params.r);
+          if (index >= 0) {
+            const deletedArtistId = graphicalPlaylist.nodes[index].artistId;
+            graphicalPlaylist.nodes.splice(index, 1);
+            if (graphicalPlaylist.nodes.find(node => node.artistId === deletedArtistId) === undefined) {
+              graphicalPlaylist.artists.splice(
+                graphicalPlaylist.artists.findIndex(artist => artist.id === deletedArtistId),
+                1
+              );
+            }
+          }
           graphicalPlaylist.lastModified = Date.now();
           graphicalPlaylist.save();
           return graphicalPlaylist;

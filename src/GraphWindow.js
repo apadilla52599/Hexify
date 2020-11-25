@@ -48,6 +48,7 @@ class GraphWindow extends React.Component {
         this.trackEnded = false;
         this.state.drawer = false;
         this.state.quickAddSearchResults = [];
+        this.skips = 0;
     }
 
     axialToCart(coord) {
@@ -604,7 +605,13 @@ class GraphWindow extends React.Component {
         let nextIndex = (this.state.trackIndex + ((prev !== undefined) ? -1 : 1)) % this.state.selectedTracks.length;
         if (nextIndex < 0)
             nextIndex += this.state.selectedTracks.length;
-        this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player });
+        this.skips++;
+        setTimeout(() => {
+            if (this.skips === 1) {
+                this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player });
+            }
+            this.skips--;
+        }, 500);
         this.setState({ currentTrack: this.state.selectedTracks[nextIndex], trackIndex: nextIndex, paused: false });
     }
 
@@ -698,7 +705,7 @@ class GraphWindow extends React.Component {
                                     this.neverStarted = false;
                                 }
                                 this.props.player.resume();
-                                this.setState({ currentTrack: this.state.selectedTracks[0], paused: false });
+                                this.setState({ currentTrack: this.state.currentTrack, paused: false });
                             }}
                             pause={() => {this.props.player.pause(); this.setState({ paused: true });}}
                             setVolume={(volume) => this.props.player.setVolume(volume)}
