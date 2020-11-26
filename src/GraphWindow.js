@@ -11,12 +11,38 @@ import Playback from './Playback.js'
 import Input from '@material-ui/core/Input';
 import { List, ListItem, ListItemAvatar} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+import { request, gql } from 'graphql-request'
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
 const hexRadius = cartesianToPixel;
 const imageRadius = cartesianToPixel * .6;
 const nodeBackground = "#d0d0d0";
+
+const RETREIVE_GRAPHICAL_PLAYLIST = gql`
+query RetreiveGraphicalPlaylist($id:String!){
+    retreiveGraphicalPlaylist(id: $id){
+      name
+      id
+      privacyStatus
+      owner
+      nodes{
+        artistId
+        q
+        r
+      }
+      artists{
+        id
+        tracks {
+          id
+          name
+          uri
+        }
+      }
+      lastModified
+    }
+  }
+`
 
 class GraphWindow extends React.Component {
 
@@ -458,6 +484,7 @@ class GraphWindow extends React.Component {
                 this.removeNode(this.state.selectedNode);
             }
         });
+        
     }
 
     componentWillUnmount() {
