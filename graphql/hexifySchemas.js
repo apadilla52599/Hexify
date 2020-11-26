@@ -184,6 +184,7 @@ var mutation = new GraphQLObjectType({
             playlists: [],
             artists: [],
             nodes: [],
+            privacyStatus: params.privacyStatus
           });
           graphicalPlaylist.save();
           user.graphicalPlaylists.push(graphicalPlaylist);
