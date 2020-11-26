@@ -326,11 +326,13 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
+        if (this.props.match && this.props.match.params)
+            console.log(this.props.match.params.id);
         //Removes hash from url
-        if(this.props.redirect == true){
+        /*if(this.props.redirect == true){
             window.history.pushState("", document.title, window.location.pathname + window.location.search);
             this.props.redirect = false;
-        }
+        }*/
        
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
