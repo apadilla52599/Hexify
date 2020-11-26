@@ -96,15 +96,22 @@ app.get(
   passport.authenticate('spotify', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
-    res.redirect('/edit#token=' + req.user.accessToken);
+    res.redirect('/');
   }
 );
 
 // TODO: This no longer works
 app.get('/auth/temp/:token', function (req, res) {
-  console.log(req.params.token);
+  //console.log(req.params.token);
   req.session.tempToken = req.params.token;
-  return res.redirect('/edit#token=' + req.session.tempToken);
+  return res.redirect('/');
+});
+
+app.get('/auth/token', function (req, res) {
+  if (req.user === undefined || req.user.accessToken === undefined)
+    res.json({ token: "" });
+  else
+    res.json({ token: req.user.accessToken });
 });
 
 app.get('/logout', function(req, res){

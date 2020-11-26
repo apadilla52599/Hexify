@@ -17,15 +17,12 @@ class App extends Component {
             signedIn:false,
         }
         window.onSpotifyWebPlaybackSDKReady = () => {
-                console.log(window.location.hash);
-                if (window.location.hash === undefined)
-                    window.location = window.location.origin + "/auth/spotify";
-                const token = window.location.hash.split("=")[1];
+            fetch('/auth/token').then(response => response.json()).then(data => {
                 const player = new window.Spotify.Player({
                     name: 'Web Playback SDK Quick Start Player',
-                    getOAuthToken: cb => { cb(token); }
+                    getOAuthToken: cb => { cb(data.token); }
                 });
-                console.log(token)
+                console.log(data.token)
                 // Error handling
                 player.addListener('initialization_error', ({ message }) => { console.error(message);});
                 player.addListener('authentication_error', ({ message }) => {console.error(message);});
@@ -48,13 +45,12 @@ class App extends Component {
 
                 // Connect to the player!
                 player.connect();
-                this.setState({ player: player });
-                
+                this.setState({ player: player }, () => {
+                    if (window.location.pathname === "/")
+                        window.location.pathname = "/edit"
+                });
+            });
         };
-        
-    }
-
-    componentDidMount() {
     }
 
     render() {
@@ -65,7 +61,8 @@ class App extends Component {
                     <div style={{ flexGrow: 1 }}>
                         <Titlebar />
                         <Switch signedIn = {this.state.signedIn}>
-                            <Route path="/edit" exact component={() => <GraphWindow player={this.state.player} redirect = {this.state.redirect} />} />
+                            <Route path="/edit" exact component={() => <GraphWindow player={this.state.player} />} />
+                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow {...routerprops} player={this.state.player} />} />
                             <Route path="/browse" exact component={Browse}/>
                         </Switch>
                     </div>

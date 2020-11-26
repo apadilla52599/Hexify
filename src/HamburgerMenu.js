@@ -69,7 +69,7 @@ class HamburgerMenu extends React.Component {
     render() {
         return (
             <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
-                 <div id="scroll">
+                 <div id="scroll" style={{width: "100%"}}>
                     <List style={{ width: "100%", height: "auto"}}>
                     <ListItem className="ListItemHover" key="create-new" button={true}>
                         <ListItemAvatar style={{color: "white"}}>
