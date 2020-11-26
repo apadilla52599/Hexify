@@ -16,15 +16,15 @@ class Playback extends React.Component {
         super(props);
         this.state = {
             time: 0,
-            dragPosition: false,
             volume: 30,
             muted: false,
         };
+        this.dragPosition = false;
         // this.timeslider = React.createRef();
     }
     componentDidMount(){
         this.interval = setInterval(() =>{
-            if (this.props.player && this.props.paused === false) {
+            if (this.dragPosition === false && this.props.player && this.props.paused === false) {
                 this.props.player.getCurrentState().then(state => {
                     if (state) {
                         this.setState({ time: state.position });
@@ -159,8 +159,12 @@ class Playback extends React.Component {
                         {/* Time Slider + labels  */}
                         <TimeSlider ref = {this.timeslider}
                             valueLabelDisplay="auto"
+                            onChange={(e, val) => {
+                                this.dragPosition = true;
+                            }}
                             onChangeCommitted ={ (e, val) =>  
-                                {this.setState({time:val*this.props.track.duration_ms/100,dragPosition: true});
+                                {this.setState({time:val*this.props.track.duration_ms/100});
+                                  this.dragPosition = false;
                                 this.props.seekPosition(val*this.props.track.duration_ms/100)}} 
                             defaultValue={100*this.state.time/this.props.track.duration_ms}
                             marks={[
