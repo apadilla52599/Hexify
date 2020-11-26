@@ -11,17 +11,6 @@ import img6 from "./DummyData/p6.JPG";
 import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
 
-window.onload = () => {
-    const grid = document.querySelector('.grid');
-    const masonry = new Masonry(grid, {
-        itemSelector: '.grid-item',
-        gutter: 10, 
-    });
-    imagesloaded(grid, function(){
-        masonry.layout();
-    })
-};
-
 
 class Browse extends React.Component {
     constructor(props){
@@ -47,6 +36,16 @@ class Browse extends React.Component {
             graphList.push({name: "fake", id: i, src: img7});
         }
         this.setState({photos: graphList});        
+        window.onload = () => {
+            const grid = document.querySelector('.grid');
+            const masonry = new Masonry(grid, {
+                itemSelector: '.grid-item',
+                gutter: 10, 
+            });
+            imagesloaded(grid, function(){
+                masonry.layout();
+            })
+        };
     }
     
     render() {
