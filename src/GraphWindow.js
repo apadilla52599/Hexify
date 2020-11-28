@@ -12,6 +12,8 @@ import Input from '@material-ui/core/Input';
 import { List, ListItem, ListItemAvatar} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
 import { request, gql } from 'graphql-request'
+import { disposeEmitNodes } from 'typescript';
+import { select } from 'd3';
 
 const cartesianToPixel = 20;
 const selectedColor = "#B19CD9";
@@ -74,6 +76,8 @@ class GraphWindow extends React.Component {
         this.state.quickAddSearchResults = [];
         this.skips = 0;
         this.position = 0;
+        if (this.props.match && this.props.match.params)
+            this.initGraph(this.props.match.params.id);
     }
 
     axialToCart(coord) {
@@ -326,8 +330,9 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.match && this.props.match.params)
-            console.log(this.props.match.params.id);
+        // console.log("in componentDidMount");
+        // if (this.props.match && this.props.match.params)
+        //     this.initGraph(this.props.match.params.id);
         //Removes hash from url
         /*if(this.props.redirect == true){
             window.history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -487,6 +492,50 @@ class GraphWindow extends React.Component {
             }
         });
         
+    }
+
+    initGraph(id){
+        request('/graphql', RETREIVE_GRAPHICAL_PLAYLIST, {id: id}).then((data) => {
+            var artistIds = data.retreiveGraphicalPlaylist.nodes.map(node => node.artistId);
+            var selectedTracks = data.retreiveGraphicalPlaylist.artists.map(artists => artists.tracks).flat().map(tracks=> tracks.id);
+            this.initSelectedTracks(selectedTracks);
+            this.initNodes(artistIds, data.retreiveGraphicalPlaylist.nodes);
+        });
+    }
+
+    initSelectedTracks(selectedTracks){
+        var tracks = [];
+        for(let i = 0; i < Math.ceil(selectedTracks.length/50); i++){
+            fetch("/v1/tracks?" + new URLSearchParams({'ids': selectedTracks.slice(i*50, (i+1)*50)})).then((response) => {
+                response.json().then(d=>{
+                    for(let j = 0; j < d.tracks.length; j++){
+                        d.tracks[i].artist = d.tracks[i].artists[0];
+                        tracks.push(d.tracks[i]);
+                    }
+                    console.log(tracks);
+                    this.setState({selectedTracks: tracks}); 
+                });
+            });
+        }
+    }
+
+    initNodes(artistIds, graphNodes){
+        var nodes = [];
+        for(let i = 0; i < Math.ceil(artistIds.length/50); i++){
+            fetch("/v1/artists?" + new URLSearchParams({'ids': artistIds.slice(i*50, (i+1)*50)})).then((response) => {
+                response.json().then(d=>{
+                    for(let j = 0; j < d.artists.length; j++){
+                        nodes.push({
+                            artist: d.artists[j],
+                            coords: {q: graphNodes[j + i*50].q, r: graphNodes[j + i*50].r},
+                            image: d.artists[j].images[0]
+                        });
+                    }
+                    this.setState({nodes: nodes}); 
+                    this.transactionStack = new TransactionStack(nodes, this.state.selectedTracks);
+                });
+            });
+        }
     }
 
     componentWillUnmount() {
@@ -685,6 +734,7 @@ class GraphWindow extends React.Component {
     }
 
     render() {
+        console.log(this.state.nodes);
         var index = 0;
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
             fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {

@@ -63,6 +63,23 @@ var trackType = new GraphQLObjectType({
   },
 });
 
+var trackInput = new GraphQLInputObjectType({
+  name: "trackInput",
+  fields: function() {
+    return {
+      id: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      name: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      uri: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+    };
+  },
+});
+
 var artistType = new GraphQLObjectType({
   name: "artist",
   fields: function() {
@@ -245,6 +262,53 @@ var mutation = new GraphQLObjectType({
           graphicalPlaylist.nodes.push(newNode);
           graphicalPlaylist.lastModified = Date.now();
           graphicalPlaylist.save();
+          return graphicalPlaylist;
+        }
+      },
+      updateTracks: {
+        type: graphicalPlaylistType,
+        args: {
+          id: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          artistId: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          artistName: {
+            type: new GraphQLNonNull(GraphQLString),
+          },
+          tracks: {
+            type: new GraphQLList(trackInput),
+          }
+        },
+        resolve: async function(root, params) {
+          graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          if (!graphicalPlaylist) {
+            throw new Error("Error");
+          }
+          if (!graphicalPlaylist.artists.find(artist => artist.id === params.artistId)) {
+            graphicalPlaylist.artists.push({
+              id: params.artistId,
+              name: params.artistName,
+              tracks: params.tracks,
+            });
+          }
+          else{
+            // var i = graphicalPlaylist.artists.findIndex(artist => artist.id === params.artistId);
+            // graphicalPlaylist.artists[i].tracks = params.tracks;
+            for(let i = 0; i < graphicalPlaylist.artists.length; i++){
+              if(graphicalPlaylist.artists[i].id === params.artistId){
+                const cp = {...graphicalPlaylist.artists[i]}; 
+                cp.tracks.push({id: params.tracks[0].id, name: params.tracks[0].name, uri: params.tracks[0].uri}); 
+                graphicalPlaylist.artists.set(i, cp);
+              }
+            }
+          }
+          graphicalPlaylist.lastModified = Date.now();
+          // console.log("save():", graphicalPlaylist.save());
+          console.log(graphicalPlaylist.artists[0].tracks);
+          console.log(graphicalPlaylist.artists[0].tracks.length)
+          graphicalPlaylist.save().then((res)=> console.log(res));
           return graphicalPlaylist;
         }
       },

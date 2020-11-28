@@ -102,7 +102,7 @@ class Playback extends React.Component {
           })(Slider);
         return (
             <div id = 'playback'>
-                {playing === null ? (
+                {playing === null || playing === undefined ? (
                     <div></div>
                 ) : (     
                     <div> 
