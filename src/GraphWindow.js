@@ -512,7 +512,6 @@ class GraphWindow extends React.Component {
                         d.tracks[i].artist = d.tracks[i].artists[0];
                         tracks.push(d.tracks[i]);
                     }
-                    console.log(tracks);
                     this.setState({selectedTracks: tracks}); 
                 });
             });
@@ -734,7 +733,6 @@ class GraphWindow extends React.Component {
     }
 
     render() {
-        console.log(this.state.nodes);
         var index = 0;
         if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
             fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
