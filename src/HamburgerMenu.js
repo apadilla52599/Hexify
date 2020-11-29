@@ -32,6 +32,23 @@ const RETRIEVE_USER = gql`
     }
   }
 ` 
+
+const CREATE_GRAPH = gql`
+    mutation CreateGraphicalPlaylist($name: String!, $privacyStatus: String!) {
+      createGraphicalPlaylist(name: $name, privacyStatus: $privacyStatus) {
+        id
+      }
+    }
+`
+
+const DELETE_GRAPH = gql`
+    mutation DeleteGraphicalPlaylist($id: String!) {
+      deleteGraphicalPlaylist(id: $id) {
+        id
+      }
+    }
+`
+
 const ListItem = withStyles({
     root: {
       "&:hover": {
@@ -65,13 +82,33 @@ class HamburgerMenu extends React.Component {
         }
         this.setState({graphList: graphList});*/
     }
+
+    createGraph() {
+        console.log("hello");
+        request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: "private" }).then((data) => {
+            console.log(data);
+            if (data && data.createGraphicalPlaylist) {
+                window.location.pathname = "/edit/" + data.createGraphicalPlaylist.id;
+            }
+        });
+    }
+
+    deleteGraph(id) {
+        console.log("2hello");
+        request('/graphql', DELETE_GRAPH, { id: id }).then((data) => {
+            console.log(data);
+            if (data && data.deleteGraphicalPlaylist) {
+                this.setState({ graphList: this.state.graphList.filter(graph => graph.id !== data.deleteGraphicalPlaylist.id) });
+            }
+        });
+    }
     
     render() {
         return (
             <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
                  <div id="scroll" style={{width: "100%"}}>
                     <List style={{ width: "100%", height: "auto"}}>
-                    <ListItem className="ListItemHover" key="create-new" button={true}>
+                    <ListItem className="ListItemHover" key="create-new" button={true} onClick={() => this.createGraph()}>
                         <ListItemAvatar style={{color: "white"}}>
                             <AddCircleIcon fontSize="large"/>
                         </ListItemAvatar>
@@ -85,7 +122,7 @@ class HamburgerMenu extends React.Component {
                     </Typography>
                     <Divider/>
                     {this.state.graphList.map( (graph, index) => (
-                        <ListItem className="ListItemHover" button={true} key={index}>
+                        <ListItem className="ListItemHover" button={true} key={index} onClick={() => window.location.pathname = "/edit/" + graph.id}>
                         <ListItemAvatar>
                             <Avatar sizes="large" src={graph.thumbnail}></Avatar>
                         </ListItemAvatar>
@@ -94,7 +131,7 @@ class HamburgerMenu extends React.Component {
                             secondary={graph.dateModified}
                         />
                         <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete">
+                            <IconButton edge="end" aria-label="delete" onClick={() => this.deleteGraph(graph.id)}>
                             <DeleteIcon style={{color:"white"}}/>
                             </IconButton>
                         </ListItemSecondaryAction>

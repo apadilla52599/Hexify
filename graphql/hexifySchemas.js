@@ -143,7 +143,7 @@ var queryType = new GraphQLObjectType({
           return graphicalPlaylists;
         },
       },
-      retreiveGraphicalPlaylist: {
+      retrieveGraphicalPlaylist: {
         type: graphicalPlaylistType,
         args: {
           id: {
@@ -194,7 +194,7 @@ var mutation = new GraphQLObjectType({
           if (user_id === "") {
             throw new Error("Log in first");
           }
-          const user = await UserModel.findOne({ SpotifyUserID: user_id });
+          const user = await UserModel.findOne({ SpotifyUserID: user_id }).exec();
           const graphicalPlaylist = new GraphicalPlaylistModel({
             owner: user_id,
             name: params.name,
@@ -232,7 +232,7 @@ var mutation = new GraphQLObjectType({
           },
         },
         resolve: async function(root, params) {
-          graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
           if (!graphicalPlaylist) {
             throw new Error("Error");
           }
@@ -282,7 +282,7 @@ var mutation = new GraphQLObjectType({
           }
         },
         resolve: async function(root, params) {
-          graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
           if (!graphicalPlaylist) {
             throw new Error("Error");
           }
@@ -326,7 +326,7 @@ var mutation = new GraphQLObjectType({
           },
         },
         resolve: async function(root, params) {
-          graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
           if (!graphicalPlaylist) {
             throw new Error("Error");
           }
@@ -363,19 +363,15 @@ var mutation = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
           },
         },
-        resolve(root, params) {
-          return GraphicalPlaylistModel.findByIdAndUpdate(
+        resolve: async function(root, params) {
+          return await GraphicalPlaylistModel.findByIdAndUpdate(
             params.id,
             {
                 name: params.name,
                 playlists: params.playlists, 
-                playlists: params.playlists,
                 privacyStatus: params.privacyStatus,
                 lastModified: Date.now(),
             },
-            function (err) {
-              if (err) return next(err);
-            }
           );
         },
       },
@@ -386,12 +382,21 @@ var mutation = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLString),
           },
         },
-        resolve(root, params) {
-          const remGraphicalPlaylist = GraphicalPlaylistModel.findByIdAndRemove(params.id).exec();
-          if (!remGraphicalPlaylist) {
-            throw new Error("Error");
+        resolve: async function(root, params, user_id) {
+          if (user_id === "") {
+            throw new Error("Log in first");
           }
-          return remGraphicalPlaylist;
+          const user = await UserModel.findOne({ SpotifyUserID: user_id });
+          if (user === null)
+            throw new Error("User not found");
+          const index = user.graphicalPlaylists.findIndex(graph => graph._id.toString() === params.id);
+          if (index >= 0) {
+            const ret = user.graphicalPlaylists.splice(index, 1)[0];
+            user.save();
+            await GraphicalPlaylistModel.deleteOne({_id: params.id});
+            return ret;
+          }
+          throw new Error("Desmond the moon bear");
         },
       }, 
     };

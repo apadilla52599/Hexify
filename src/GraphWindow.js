@@ -21,9 +21,9 @@ const hexRadius = cartesianToPixel;
 const imageRadius = cartesianToPixel * .6;
 const nodeBackground = "#d0d0d0";
 
-const RETREIVE_GRAPHICAL_PLAYLIST = gql`
-query RetreiveGraphicalPlaylist($id:String!){
-    retreiveGraphicalPlaylist(id: $id){
+const RETRIEVE_GRAPHICAL_PLAYLIST = gql`
+query RetrieveGraphicalPlaylist($id:String!){
+    retrieveGraphicalPlaylist(id: $id){
       name
       id
       privacyStatus
@@ -495,11 +495,11 @@ class GraphWindow extends React.Component {
     }
 
     initGraph(id){
-        request('/graphql', RETREIVE_GRAPHICAL_PLAYLIST, {id: id}).then((data) => {
-            var artistIds = data.retreiveGraphicalPlaylist.nodes.map(node => node.artistId);
-            var selectedTracks = data.retreiveGraphicalPlaylist.artists.map(artists => artists.tracks).flat().map(tracks=> tracks.id);
+        request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id}).then((data) => {
+            var artistIds = data.retrieveGraphicalPlaylist.nodes.map(node => node.artistId);
+            var selectedTracks = data.retrieveGraphicalPlaylist.artists.map(artists => artists.tracks).flat().map(tracks=> tracks.id);
             this.initSelectedTracks(selectedTracks);
-            this.initNodes(artistIds, data.retreiveGraphicalPlaylist.nodes);
+            this.initNodes(artistIds, data.retrieveGraphicalPlaylist.nodes);
         });
     }
 
