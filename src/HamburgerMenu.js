@@ -33,14 +33,6 @@ const RETRIEVE_USER = gql`
   }
 ` 
 
-const CREATE_GRAPH = gql`
-    mutation CreateGraphicalPlaylist($name: String!, $privacyStatus: String!) {
-      createGraphicalPlaylist(name: $name, privacyStatus: $privacyStatus) {
-        id
-      }
-    }
-`
-
 const DELETE_GRAPH = gql`
     mutation DeleteGraphicalPlaylist($id: String!) {
       deleteGraphicalPlaylist(id: $id) {
@@ -83,16 +75,6 @@ class HamburgerMenu extends React.Component {
         this.setState({graphList: graphList});*/
     }
 
-    createGraph() {
-        console.log("hello");
-        request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: "private" }).then((data) => {
-            console.log(data);
-            if (data && data.createGraphicalPlaylist) {
-                window.location.pathname = "/edit/" + data.createGraphicalPlaylist.id;
-            }
-        });
-    }
-
     deleteGraph(id) {
         console.log("2hello");
         request('/graphql', DELETE_GRAPH, { id: id }).then((data) => {
@@ -108,7 +90,7 @@ class HamburgerMenu extends React.Component {
             <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
                  <div id="scroll" style={{width: "100%"}}>
                     <List style={{ width: "100%", height: "auto"}}>
-                    <ListItem className="ListItemHover" key="create-new" button={true} onClick={() => this.createGraph()}>
+                    <ListItem className="ListItemHover" key="create-new" button={true} onClick={() => window.location.pathname = "/edit"}>
                         <ListItemAvatar style={{color: "white"}}>
                             <AddCircleIcon fontSize="large"/>
                         </ListItemAvatar>

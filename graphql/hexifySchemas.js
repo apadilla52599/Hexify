@@ -274,9 +274,6 @@ var mutation = new GraphQLObjectType({
           artistId: {
             type: new GraphQLNonNull(GraphQLString),
           },
-          artistName: {
-            type: new GraphQLNonNull(GraphQLString),
-          },
           tracks: {
             type: new GraphQLList(trackInput),
           }
@@ -286,29 +283,15 @@ var mutation = new GraphQLObjectType({
           if (!graphicalPlaylist) {
             throw new Error("Error");
           }
-          if (!graphicalPlaylist.artists.find(artist => artist.id === params.artistId)) {
-            graphicalPlaylist.artists.push({
-              id: params.artistId,
-              name: params.artistName,
-              tracks: params.tracks,
-            });
-          }
-          else{
-            // var i = graphicalPlaylist.artists.findIndex(artist => artist.id === params.artistId);
-            // graphicalPlaylist.artists[i].tracks = params.tracks;
-            for(let i = 0; i < graphicalPlaylist.artists.length; i++){
-              if(graphicalPlaylist.artists[i].id === params.artistId){
-                const cp = {...graphicalPlaylist.artists[i]}; 
-                cp.tracks.push({id: params.tracks[0].id, name: params.tracks[0].name, uri: params.tracks[0].uri}); 
-                graphicalPlaylist.artists.set(i, cp);
-              }
+          for(let i = 0; i < graphicalPlaylist.artists.length; i++){
+            if(graphicalPlaylist.artists[i].id === params.artistId){
+              const cp = {...graphicalPlaylist.artists[i]}; 
+              cp.tracks.push({id: params.tracks[0].id, name: params.tracks[0].name, uri: params.tracks[0].uri}); 
+              graphicalPlaylist.artists.set(i, cp);
             }
           }
           graphicalPlaylist.lastModified = Date.now();
-          // console.log("save():", graphicalPlaylist.save());
-          console.log(graphicalPlaylist.artists[0].tracks);
-          console.log(graphicalPlaylist.artists[0].tracks.length)
-          graphicalPlaylist.save().then((res)=> console.log(res));
+          graphicalPlaylist.save();
           return graphicalPlaylist;
         }
       },
