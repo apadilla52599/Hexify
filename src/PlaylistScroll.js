@@ -6,7 +6,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteForever';
 import Typography from '@material-ui/core/Typography'
-import PersonIcon from '@material-ui/icons/Person';
 
 export default function Playlist(props){
   var tracks = props.tracks;

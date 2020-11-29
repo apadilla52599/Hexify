@@ -59,7 +59,7 @@ class Browse extends React.Component {
                     <div id="ScrollPaper" style={{backgroundColor: "blueviolet", width: "100%"}}>
                         <Typography ></Typography>
                          <div className="grid" >
-                            {this.state.photos.map(img => (<div className="grid-item"><img src= {img.src} style={{width: "100%"}}/> </div>))}
+                            {this.state.photos.map(img => (<div className="grid-item"><img alt="graph thumbnail" src= {img.src} style={{width: "100%"}}/> </div>))}
                         </div>
                     </div>
                 </div>

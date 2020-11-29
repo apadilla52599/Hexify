@@ -335,6 +335,38 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
+        console.log("Graph Window mounted");
+        window.onSpotifyWebPlaybackSDKReady = () => {
+            fetch('/auth/token').then(response => response.json()).then(data => {
+                const player = new window.Spotify.Player({
+                    name: 'Web Playback SDK Quick Start Player',
+                    getOAuthToken: cb => { cb(data.token); }
+                });
+                console.log(data.token)
+                // Error handling
+                player.addListener('initialization_error', ({ message }) => { console.error(message);});
+                player.addListener('authentication_error', ({ message }) => {console.error(message);});
+                player.addListener('account_error', ({ message }) => { console.error(message); });
+                player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+                // Playback status updates
+                //player.addListener('player_state_changed', state => { console.log(state); });
+
+                // Ready
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
+                    this.setState({ player: player});
+                });
+
+                // Not Ready
+                player.addListener('not_ready', ({ device_id }) => {
+                    console.log('Device ID has gone offline', device_id);
+                });
+
+                // Connect to the player!
+                player.connect();
+            });
+        };
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
         this.ctx = this.canvas.getContext("2d");
@@ -610,8 +642,8 @@ class GraphWindow extends React.Component {
     }
 
     clearTracks = () => {
-        if (this.props.player)
-            this.props.player.pause();
+        if (this.state.player)
+            this.state.player.pause();
         this.neverStarted = true;
         this.setState({ currentTrack: undefined, selectedTracks: [], paused: true });
     }
@@ -663,7 +695,7 @@ class GraphWindow extends React.Component {
     };
 
     playTrack(track) {
-        this.play({ spotify_uri: track.uri, playerInstance: this.props.player });
+        this.play({ spotify_uri: track.uri, playerInstance: this.state.player });
         this.setState({ currentTrack: track, paused: false });
     }
 
@@ -680,7 +712,7 @@ class GraphWindow extends React.Component {
                     this.neverStarted = true;
                 }
                 else {
-                    this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.props.player });
+                    this.play({ spotify_uri: this.state.selectedTracks[nextIndex].uri, playerInstance: this.state.player });
                 }
             }
             this.skips--;
@@ -718,7 +750,7 @@ class GraphWindow extends React.Component {
     seekPositionSong = (position) => {
         console.log("position");
         console.log(position)
-        this.props.player.seek(position);
+        this.state.player.seek(position);
     }
 
     render() {
@@ -744,9 +776,9 @@ class GraphWindow extends React.Component {
                 });
             });
         }
-        if (this.playerLoaded === false && this.props.player) {
+        if (this.playerLoaded === false && this.state.player) {
             this.playerLoaded = true;
-            this.props.player.addListener('player_state_changed', (playerState) => {
+            this.state.player.addListener('player_state_changed', (playerState) => {
                 if (playerState.position === 0 && playerState.paused && !this.state.paused && this.state.selectedTracks.length > 1 && !this.trackEnded) {
                     this.trackEnded = true;
                     this.playNextTrack();
@@ -760,13 +792,13 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
+                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
                     ) : (
-                        <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.props.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
+                        <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}
-                    {this.state.selectedTracks.length > 0 && this.props.player &&
+                    {this.state.selectedTracks.length > 0 && this.state.player &&
                         <Playback
-                            player={this.props.player}
+                            player={this.state.player}
                             paused={this.state.paused}
                             play={() => {
                                 var currentTrack;
@@ -776,18 +808,18 @@ class GraphWindow extends React.Component {
                                     currentTrack = this.state.currentTrack;
                                 if (currentTrack) {
                                     if (this.neverStarted) {
-                                        this.play({ spotify_uri: currentTrack.uri, playerInstance: this.props.player });
+                                        this.play({ spotify_uri: currentTrack.uri, playerInstance: this.state.player });
                                         this.neverStarted = false;
                                         this.setState({ paused: false, currentTrack: currentTrack });
                                     }
                                     else {
-                                        this.props.player.resume();
+                                        this.state.player.resume();
                                         this.setState({ paused: false });
                                     }
                                 }
                             }}
-                            pause={() => {this.props.player.pause(); this.setState({ paused: true });}}
-                            setVolume={(volume) => this.props.player.setVolume(volume)}
+                            pause={() => {this.state.player.pause(); this.setState({ paused: true });}}
+                            setVolume={(volume) => this.state.player.setVolume(volume)}
                             seekPosition={(position) => this.seekPositionSong(position)}
                             skip={() => this.playNextTrack()}
                             prev={() => this.playNextTrack(true)}

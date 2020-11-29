@@ -10,13 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import img1 from "./DummyData/p1.JPG";
-import img2 from "./DummyData/p2.JPG";
-import img3 from "./DummyData/p3.JPG";
-import img4 from "./DummyData/p4.JPG";
-import img5 from "./DummyData/p5.JPG";
-import img6 from "./DummyData/p6.JPG";
-import img7 from "./DummyData/p7.JPG";
-import img8 from "./DummyData/p8.JPG";
 import { Divider } from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
 import { request, gql } from 'graphql-request'
