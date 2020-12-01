@@ -514,6 +514,7 @@ class GraphWindow extends React.Component {
             }
             if (e.key === "Delete" && this.state.selectedNode != null) {
                 this.removeNode(this.state.selectedNode);
+                this.deselectNode();
             }
         });
     }

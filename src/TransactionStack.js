@@ -7,6 +7,13 @@ const UPDATE_NODE = gql`
     }
   }
 `
+const DELETE_NODE = gql`
+  mutation DeleteNode($id: String!, $q: Int!, $r: Int!) {
+    deleteNode(id: $id, q: $q, r: $r) {
+        id
+    }
+  }
+`
 
 class TransactionStack {
     constructor(nodes, selectedTracks, id) {
@@ -33,6 +40,15 @@ class TransactionStack {
                 r: node.coords.r,
                 artistId: node.artist.id,
                 artistName: node.artist.name
+            });
+    }
+
+    async deleteNode(node) {
+        await request('/graphql', DELETE_NODE,
+            {
+                id: this.id,
+                q: node.coords.q,
+                r: node.coords.r,
             });
     }
 
@@ -67,7 +83,7 @@ class TransactionStack {
         }
     }
 
-    removeNode(node) {
+    async removeNode(node) {
         var update = false;
         var removedTracks = [];
         for (let i = 0; i < this.nodes.length; i++) {
@@ -81,6 +97,7 @@ class TransactionStack {
                     removedTracks: removedTracks,
                     data: node
                 });
+                await this.deleteNode(node);
                 this.nodes.splice(i, 1);
                 update = true;
             }
