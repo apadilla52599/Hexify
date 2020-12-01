@@ -80,6 +80,7 @@ class GraphWindow extends React.Component {
         this.state.quickAddSearchResults = [];
         this.skips = 0;
         this.position = 0;
+        console.log("constructor");
         if (this.props.match && this.props.match.params)
             this.loadGraph(this.props.match.params.id);
     }
@@ -232,7 +233,6 @@ class GraphWindow extends React.Component {
     }
 
     draw() {
-        console.log("draw");
         // Correct the canvas dimensions if the window has been resized
         this.canvas.width = this.canvas.offsetWidth * window.devicePixelRatio;
         this.canvas.height = this.canvas.offsetHeight * window.devicePixelRatio;
@@ -520,8 +520,10 @@ class GraphWindow extends React.Component {
 
     createGraph = async () => {
         let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: "private" });
-        if (data && data.createGraphicalPlaylist)
+        if (data && data.createGraphicalPlaylist) {
+            this.props.graphIdCallback(data.createGraphicalPlaylist.id);
             this.transactionStack = new TransactionStack(this.state.nodes, this.state.tracks, data.createGraphicalPlaylist.id);
+        }
     }
 
     async loadGraph(id) {
@@ -551,7 +553,10 @@ class GraphWindow extends React.Component {
             }
         }
         this.transactionStack = new TransactionStack(nodes, tracks, id);
-        this.setState({nodes: nodes, selectedTracks: tracks}, this.draw); 
+        this.setState({nodes: nodes, selectedTracks: tracks}, () => {
+            this.props.graphIdCallback(id);
+            this.draw();
+        }); 
     }
 
     componentWillUnmount() {
