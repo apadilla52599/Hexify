@@ -51,6 +51,14 @@ query RetrieveGraphicalPlaylist($id:String!){
   }
 `
 
+const UPDATE_TRACKS = gql`
+mutation($id:String!, $artistId: String!, $tracks: [trackInput]!){
+    updateTracks(id: $id, artistId: $artistId, tracks: $tracks){
+      id
+    } 
+  }
+`
+
 class GraphWindow extends React.Component {
 
     constructor(props) {
@@ -546,8 +554,10 @@ class GraphWindow extends React.Component {
             let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': selectedTracks.slice(i*50, (i+1)*50)}));
             let d = await response.json();
             for(let j = 0; j < d.tracks.length; j++){
-                d.tracks[i].artist = d.tracks[i].artists[0];
-                tracks.push(d.tracks[i]);
+                if(d.tracks[j] !== null && d.tracks[j] !== undefined ){
+                    d.tracks[j].artist = d.tracks[j].artists[0];
+                    tracks.push(d.tracks[j]);
+                }
             }
         }
         this.transactionStack = new TransactionStack(nodes, tracks, id);
@@ -626,6 +636,20 @@ class GraphWindow extends React.Component {
 
     selectTrack = (track) => {
         this.state.selectedTracks.push(track);
+        var selectedTracks = this.state.selectedTracks.map((track)=> 
+        {
+            let obj = {
+                id: track.id,
+                name: track.name,
+                uri: track.uri
+            };
+            return obj
+        });
+        request('/graphql', UPDATE_TRACKS, {
+            id: this.transactionStack.id,
+            artistId: track.artist.id,
+            tracks: selectedTracks
+        });
         if (this.state.currentTrack)
             this.setState({ selectedTracks: this.state.selectedTracks });
         else
@@ -635,6 +659,20 @@ class GraphWindow extends React.Component {
     deselectTrack = (track) => {
         const index = this.state.selectedTracks.findIndex(selectedTrack => selectedTrack.id === track.id);
         this.state.selectedTracks.splice(index, 1);
+        var selectedTracks = this.state.selectedTracks.map((track)=> 
+        {
+            let obj = {
+                id: track.id,
+                name: track.name,
+                uri: track.uri
+            };
+            return obj
+        });
+        request('/graphql', UPDATE_TRACKS, {
+            id: this.transactionStack.id,
+            artistId: track.artist.id,
+            tracks: selectedTracks
+        });
         if (index < this.state.trackIndex)
             this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
         else
