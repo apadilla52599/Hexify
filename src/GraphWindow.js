@@ -80,6 +80,7 @@ class GraphWindow extends React.Component {
             selectedTracks: [],
             nodes: [],
             selectedNode: null,
+            privacyStatus: "public",
         };
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -509,7 +510,7 @@ class GraphWindow extends React.Component {
                         name: "Untitled graph",
                         artists: artists,
                         nodes: nodes,
-                        privacyStatus: "private"
+                        privacyStatus: this.state.privacyStatus
                     });
                 }
                 if (e.key === 'z') {
@@ -567,7 +568,7 @@ class GraphWindow extends React.Component {
     }
 
     createGraph = async () => {
-        let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: "private" });
+        let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus });
         if (data && data.createGraphicalPlaylist) {
             this.id = data.createGraphicalPlaylist.id;
             this.props.graphIdCallback(data.createGraphicalPlaylist.id);
@@ -615,7 +616,12 @@ class GraphWindow extends React.Component {
 
         this.transactionStack = new TransactionStack(nodes, tracks, id);
         const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
-        this.setState({nodes: nodes, selectedTracks: selectedTracks, currentTrack: currentTrack}, () => {
+        this.setState({
+            nodes: nodes,
+            selectedTracks: selectedTracks,
+            currentTrack: currentTrack,
+            privacyStatus: data.retrieveGraphicalPlaylist.privacyStatus,
+        }, () => {
             this.props.graphIdCallback(id);
             this.draw();
         }); 
@@ -887,7 +893,7 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
+                        <PlaylistEditor privacyStatus={this.state.privacyStatus} privacyCallback={(privacyStatus) => this.setState({privacyStatus: privacyStatus})} player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}

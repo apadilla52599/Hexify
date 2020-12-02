@@ -9,7 +9,7 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MuiMenu from '@material-ui/core/Menu';
-import MuiMenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@material-ui/core/MenuItem';
 import DeleteIcon from '@material-ui/icons/Delete';
 import img1 from "./DummyData/p1.JPG";
 import { Divider } from "@material-ui/core";
@@ -63,13 +63,6 @@ const Menu = withStyles({
             {...props}
         />
 ));
-
-const MenuItem = withStyles((theme) => ({
-  root: {
-  },
-  background: "var(--background-color)",
-}))(MuiMenuItem);
-
 
 class HamburgerMenu extends React.Component {
     constructor(){
