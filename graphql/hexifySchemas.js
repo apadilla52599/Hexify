@@ -317,7 +317,7 @@ var mutation = new GraphQLObjectType({
           for(let i = 0; i < graphicalPlaylist.artists.length; i++){
             if(graphicalPlaylist.artists[i].id === params.artistId){
               const cp = {...graphicalPlaylist.artists[i]}; 
-              cp.tracks.push({id: params.tracks[0].id, name: params.tracks[0].name, uri: params.tracks[0].uri}); 
+              cp.tracks = params.tracks; 
               graphicalPlaylist.artists.set(i, cp);
             }
           }
