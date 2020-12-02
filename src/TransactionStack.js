@@ -1,20 +1,3 @@
-import { request, gql } from 'graphql-request'
-
-const UPDATE_NODE = gql`
-  mutation UpdateNode($id: String!, $q: Int!, $r: Int!, $artistId: String!, $artistName: String!) {
-    updateNode(id: $id, q: $q, r: $r, artistId: $artistId, artistName: $artistName) {
-        id
-    }
-  }
-`
-const DELETE_NODE = gql`
-  mutation DeleteNode($id: String!, $q: Int!, $r: Int!) {
-    deleteNode(id: $id, q: $q, r: $r) {
-        id
-    }
-  }
-`
-
 class TransactionStack {
     constructor(nodes, selectedTracks, id) {
         this.nodes = nodes;
@@ -32,27 +15,7 @@ class TransactionStack {
         this.topIndex += 1;
     }
 
-    async updateNode(node) {
-        await request('/graphql', UPDATE_NODE,
-            {
-                id: this.id,
-                q: node.coords.q,
-                r: node.coords.r,
-                artistId: node.artist.id,
-                artistName: node.artist.name
-            });
-    }
-
-    async deleteNode(node) {
-        await request('/graphql', DELETE_NODE,
-            {
-                id: this.id,
-                q: node.coords.q,
-                r: node.coords.r,
-            });
-    }
-
-    async addNode(node) {
+    addNode(node) {
         var flag = false;
         for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].coords.q === node.coords.q &&
@@ -65,7 +28,6 @@ class TransactionStack {
                     }
                 });
                 this.nodes[i] = node;
-                await this.updateNode(node);
                 flag = true;
             }
         }
@@ -75,7 +37,6 @@ class TransactionStack {
                 data: node
             });
             this.nodes.push(node);
-            await this.updateNode(node);
         }
         return {
             update: true,

@@ -1,11 +1,8 @@
 var GraphQLSchema = require("graphql").GraphQLSchema;
 var GraphQLObjectType = require("graphql").GraphQLObjectType;
 var GraphQLList = require("graphql").GraphQLList;
-var GraphQLObjectType = require("graphql").GraphQLObjectType;
-var GraphQLInputObjectType = require("graphql").GraphQLInputObjectType;
 var GraphQLInputObjectType = require("graphql").GraphQLInputObjectType;
 var GraphQLNonNull = require("graphql").GraphQLNonNull;
-var GraphQLID = require("graphql").GraphQLID;
 var GraphQLString = require("graphql").GraphQLString;
 var GraphQLInt = require("graphql").GraphQLInt;
 var GraphQLDate = require("graphql-date");
@@ -31,6 +28,23 @@ var userType = new GraphQLObjectType({
 
 var nodeType = new GraphQLObjectType({
   name: "node",
+  fields: function() {
+    return {
+      q: {
+        type: GraphQLInt,
+      },
+      r: {
+        type: GraphQLInt,
+      },
+      artistId: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+    };
+  },
+});
+
+var nodeInput = new GraphQLInputObjectType({
+  name: "nodeInput",
   fields: function() {
     return {
       q: {
@@ -92,6 +106,23 @@ var artistType = new GraphQLObjectType({
       },
       tracks: {
         type: new GraphQLList(trackType),
+      }
+    };
+  },
+});
+
+var artistInput = new GraphQLInputObjectType({
+  name: "artistInput",
+  fields: function() {
+    return {
+      id: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      name: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      tracks: {
+        type: new GraphQLList(trackInput),
       }
     };
   },
@@ -333,29 +364,32 @@ var mutation = new GraphQLObjectType({
         type: graphicalPlaylistType,
         args: {
           id: {
-            name: "id",
             type: new GraphQLNonNull(GraphQLString),
           },
           name: {
             type: new GraphQLNonNull(GraphQLString),
           },
-          playlists: {
-            type: new GraphQLList(GraphQLString),
+          artists: {
+            type: new GraphQLList(artistInput),
+          },
+          nodes: {
+            type: new GraphQLList(nodeInput),
           },
           privacyStatus: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: GraphQLString,
           },
         },
-        resolve: async function(root, params) {
-          return await GraphicalPlaylistModel.findByIdAndUpdate(
-            params.id,
-            {
-                name: params.name,
-                playlists: params.playlists, 
-                privacyStatus: params.privacyStatus,
-                lastModified: Date.now(),
-            },
-          );
+        resolve: async function(root, params, user_id) {
+          const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          if (graphicalPlaylist.owner === user_id) {
+              graphicalPlaylist.name = params.name;
+              graphicalPlaylist.artists = params.artists;
+              graphicalPlaylist.nodes = params.nodes;
+              graphicalPlaylist.privacyStatus = params.privacyStatus;
+              graphicalPlaylist.save();
+              return graphicalPlaylist;
+          }
+          throw new Error("Log in first");
         },
       },
       deleteGraphicalPlaylist: {

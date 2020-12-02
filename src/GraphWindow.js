@@ -26,6 +26,14 @@ const CREATE_GRAPH = gql`
     }
 `
 
+const UPDATE_GRAPH = gql`
+    mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $privacyStatus: String!) {
+    	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, privacyStatus: $privacyStatus) {
+    		id
+    	}
+    }
+`
+
 const RETRIEVE_GRAPHICAL_PLAYLIST = gql`
 query RetrieveGraphicalPlaylist($id:String!){
     retrieveGraphicalPlaylist(id: $id){
@@ -80,6 +88,7 @@ class GraphWindow extends React.Component {
         this.state.quickAddSearchResults = [];
         this.skips = 0;
         this.position = 0;
+        this.id = undefined;
         console.log("constructor");
         if (this.props.match && this.props.match.params)
             this.loadGraph(this.props.match.params.id);
@@ -219,7 +228,7 @@ class GraphWindow extends React.Component {
             this.ctx.drawImage(node.artist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
             this.ctx.restore();
         }
-        if (node.artist.image == null) {
+        if (node.artist.image == null || node.artist.image === undefined) {
             var img = new Image();
             img.addEventListener('load', () => {
                 node.artist.image = img;
@@ -435,9 +444,7 @@ class GraphWindow extends React.Component {
                     console.log("add node from recommended artists");
                     if (this.transactionStack === undefined)
                         await this.createGraph();
-                    const receipt = await this.transactionStack.addNode(node)
-                    console.log(receipt);
-                    console.log(node);
+                    const receipt = this.transactionStack.addNode(node)
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
                         this.setState({
@@ -465,6 +472,38 @@ class GraphWindow extends React.Component {
 
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && this.transactionStack) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    const artists = [];
+                    const nodes = this.state.nodes.map((node) => {
+                        const index = artists.indexOf(artist => artist.id === node.artist.id);
+                        if (index === -1)
+                            artists.push({
+                                id: node.artist.id,
+                                name: node.artist.name,
+                                tracks: this.state.selectedTracks.filter(track => track.artist.id === node.artist.id).map(track => {
+                                    return {
+                                        id: track.id,
+                                        name: track.name,
+                                        uri: track.uri
+                                    }
+                                })
+                            });
+                        return {
+                            q: node.coords.q,
+                            r: node.coords.r,
+                            artistId: node.artist.id
+                        }
+                    });
+                    request('/graphql', UPDATE_GRAPH,
+                    {
+                        id: this.id,
+                        name: "Untitled graph",
+                        artists: artists,
+                        nodes: nodes,
+                        privacyStatus: "private"
+                    });
+                }
                 if (e.key === 'z') {
                     const receipt = this.transactionStack.undo();
                     if (receipt.update) {
@@ -522,39 +561,53 @@ class GraphWindow extends React.Component {
     createGraph = async () => {
         let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: "private" });
         if (data && data.createGraphicalPlaylist) {
+            this.id = data.createGraphicalPlaylist.id;
             this.props.graphIdCallback(data.createGraphicalPlaylist.id);
-            this.transactionStack = new TransactionStack(this.state.nodes, this.state.tracks, data.createGraphicalPlaylist.id);
+            this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks, data.createGraphicalPlaylist.id);
         }
     }
 
     async loadGraph(id) {
+        this.id = id;
         let data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
-        var artistIds = data.retrieveGraphicalPlaylist.nodes.map(node => node.artistId);
-        var selectedTracks = data.retrieveGraphicalPlaylist.artists.map(artists => artists.tracks).flat().map(tracks=> tracks.id);
-        var graphNodes = data.retrieveGraphicalPlaylist.nodes;
-        var nodes = [];
-        for(let i = 0; i < Math.ceil(artistIds.length/50); i++){
+        var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
+        var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
+
+        var tracks = [];
+        for(let i = 0; i < Math.ceil(trackIds.length/50); i++){
+            let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': trackIds.slice(i*50, (i+1)*50)}));
+            let d = await response.json();
+            tracks.push(...d.tracks);
+        }
+
+        var artists = [];
+        for(let i = 0; i < Math.ceil(artistIds.length/50); i++) {
             let response = await fetch("/v1/artists?" + new URLSearchParams({'ids': artistIds.slice(i*50, (i+1)*50)}));
             let d = await response.json();
-            for(let j = 0; j < d.artists.length; j++){
-                nodes.push({
-                    artist: d.artists[j],
-                    coords: {q: graphNodes[j + i*50].q, r: graphNodes[j + i*50].r},
-                    image: d.artists[j].images[0]
-                });
-            }
+            artists.push(...d.artists);
         }
-        var tracks = [];
-        for(let i = 0; i < Math.ceil(selectedTracks.length/50); i++){
-            let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': selectedTracks.slice(i*50, (i+1)*50)}));
-            let d = await response.json();
-            for(let j = 0; j < d.tracks.length; j++){
-                d.tracks[i].artist = d.tracks[i].artists[0];
-                tracks.push(d.tracks[i]);
+
+        var selectedTracks = [];
+        artists.forEach(artist => {
+            data.retrieveGraphicalPlaylist.artists.find(savedArtist => artist.id === savedArtist.id)
+                .tracks.forEach(artistTrack => {
+                const trackIndex = tracks.findIndex(track => track.id === artistTrack.id);
+                tracks[trackIndex].artist = artist;
+                selectedTracks.push(...tracks.splice(trackIndex, 1));
+            });
+        });
+
+        var nodes = data.retrieveGraphicalPlaylist.nodes.map(node => {
+            const artist = artists.find(artist => artist.id === node.artistId);
+            return {
+                artist: artist,
+                coords: {q: node.q, r: node.r}
             }
-        }
+        });
+
         this.transactionStack = new TransactionStack(nodes, tracks, id);
-        this.setState({nodes: nodes, selectedTracks: tracks}, () => {
+        const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
+        this.setState({nodes: nodes, selectedTracks: selectedTracks, currentTrack: currentTrack}, () => {
             this.props.graphIdCallback(id);
             this.draw();
         }); 
@@ -616,7 +669,7 @@ class GraphWindow extends React.Component {
         document.onmouseup =  async (e) => {
             if (this.transactionStack === undefined)
                 await this.createGraph();
-            const receipt = await this.transactionStack.addNode(node);
+            const receipt = this.transactionStack.addNode(node);
             if (receipt.update){
                 this.setState({
                     nodes: receipt.nodes,
