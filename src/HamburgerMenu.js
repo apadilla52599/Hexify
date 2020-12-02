@@ -73,14 +73,19 @@ class HamburgerMenu extends React.Component {
             graphList: []
         }
     }
-    componentDidMount(){
+
+    poll = () => {
         request('/graphql', RETRIEVE_USER).then((data) => {
-            console.log(data);
             if (data && data.user) {
                 data.user.graphicalPlaylists.forEach(graph => graph.thumbnail = img1);
                 this.setState({ graphList: data.user.graphicalPlaylists });
             }
         });
+    }
+
+    componentDidMount(){
+        this.poll();
+        setInterval(this.poll, 1000);
     }
 
     deleteGraph(id) {
