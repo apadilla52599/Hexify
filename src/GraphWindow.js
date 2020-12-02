@@ -98,6 +98,7 @@ class GraphWindow extends React.Component {
         this.skips = 0;
         this.position = 0;
         this.id = undefined;
+        this.graphName = "Untitled Graph";
         console.log("constructor");
         if (this.props.match && this.props.match.params)
             this.loadGraph(this.props.match.params.id);
@@ -483,35 +484,7 @@ class GraphWindow extends React.Component {
             if (e.ctrlKey && this.transactionStack) {
                 if (e.key === 's') {
                     e.preventDefault();
-                    const artists = [];
-                    const nodes = this.state.nodes.map((node) => {
-                        const index = artists.indexOf(artist => artist.id === node.artist.id);
-                        if (index === -1)
-                            artists.push({
-                                id: node.artist.id,
-                                name: node.artist.name,
-                                tracks: this.state.selectedTracks.filter(track => track.artist.id === node.artist.id).map(track => {
-                                    return {
-                                        id: track.id,
-                                        name: track.name,
-                                        uri: track.uri
-                                    }
-                                })
-                            });
-                        return {
-                            q: node.coords.q,
-                            r: node.coords.r,
-                            artistId: node.artist.id
-                        }
-                    });
-                    request('/graphql', UPDATE_GRAPH,
-                    {
-                        id: this.id,
-                        name: "Untitled graph",
-                        artists: artists,
-                        nodes: nodes,
-                        privacyStatus: this.state.privacyStatus
-                    });
+                    this.save();
                 }
                 if (e.key === 'z') {
                     const receipt = this.transactionStack.undo();
@@ -565,6 +538,49 @@ class GraphWindow extends React.Component {
                 this.deselectNode();
             }
         });
+
+        this.nameInterval = setInterval(() => {
+            const newName = this.props.graphName();
+            if (newName !== undefined && newName !== "" && newName !== this.graphName) {
+                this.graphName = newName;
+                this.save();
+            }
+        }, 1000);
+    }
+
+    async save() {
+        if (this.transactionStack === undefined)
+            await this.createGraph();
+        const artists = [];
+        const nodes = this.state.nodes.map((node) => {
+            const index = artists.indexOf(artist => artist.id === node.artist.id);
+            if (index === -1)
+                artists.push({
+                    id: node.artist.id,
+                    name: node.artist.name,
+                    tracks: this.state.selectedTracks.filter(track => track.artist.id === node.artist.id).map(track => {
+                        return {
+                            id: track.id,
+                            name: track.name,
+                            uri: track.uri
+                        }
+                    })
+                });
+            return {
+                q: node.coords.q,
+                r: node.coords.r,
+                artistId: node.artist.id
+            }
+        });
+        console.log(this.graphName);
+        request('/graphql', UPDATE_GRAPH,
+        {
+            id: this.id,
+            name: this.graphName,
+            artists: artists,
+            nodes: nodes,
+            privacyStatus: this.state.privacyStatus
+        });
     }
 
     createGraph = async () => {
@@ -579,6 +595,7 @@ class GraphWindow extends React.Component {
     async loadGraph(id) {
         this.id = id;
         let data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
+        console.log(data);
         var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
         var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
 
@@ -616,6 +633,7 @@ class GraphWindow extends React.Component {
 
         this.transactionStack = new TransactionStack(nodes, tracks, id);
         const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
+        this.graphName = data.retrieveGraphicalPlaylist.name;
         this.setState({
             nodes: nodes,
             selectedTracks: selectedTracks,
@@ -631,6 +649,7 @@ class GraphWindow extends React.Component {
         this.canvas.onmousemove = null;
         this.canvas.onmouseleave = null;
         this.canvas.onclick = null;
+        clearInterval(this.nameInterval);
     }
 
     showPlaylist = () => {

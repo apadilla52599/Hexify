@@ -182,25 +182,46 @@ var queryType = new GraphQLObjectType({
             type: GraphQLString,
           },
         },
-        resolve: function (root, params) {
-          const graphicalPlaylistsDetails = GraphicalPlaylistModel.findById(params.id).exec();
-          if (!graphicalPlaylistsDetails) {
-            throw new Error("Error");
+        resolve: async function (root, params, user_id) {
+          const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
+          if (!graphicalPlaylist) {
+            throw new Error("Log in first");
           }
-          return graphicalPlaylistsDetails;
+          if (graphicalPlaylist.owner !== user_id) {
+              if (graphicalPlaylist.privacyStatus === "private")
+                throw new Error("Not your playlist");
+              else {
+                  const cp = {...graphicalPlaylist.toObject()};
+                  cp.owner = user_id;
+                  const newGraphicalPlaylist = new GraphicalPlaylistModel(cp);
+                  newGraphicalPlaylist.save();
+                  const user = await UserModel.findOne({ SpotifyUserID: user_id }).exec();
+                  user.raphicalPlaylists.push(newGraphicalPlaylist._id.toString());
+              }
+          }
+          return graphicalPlaylist;
         },
       },
       user: {
         type: userType,
         args: {
         },
-        resolve: function (root, params, user_id) {
-          const userDetails = UserModel.findOne({ SpotifyUserID: user_id }).exec();
-          userDetails.id = user_id;
-          if (!userDetails) {
+        resolve: async function (root, params, user_id) {
+          const user = await UserModel.findOne({ SpotifyUserID: user_id }).exec();
+          if (!user) {
             throw new Error("Error");
           }
-          return userDetails;
+          user.id = user_id;
+          const cp = {...user.toObject()};
+          const graphicalPlaylists = await Promise.all(user.graphicalPlaylists.map(async graphicalPlaylistId => {
+              const graphicalPlaylist = await GraphicalPlaylistModel.findById(graphicalPlaylistId).exec();
+              return {
+                  id: graphicalPlaylistId,
+                  ...graphicalPlaylist.toObject()
+              }
+          }));
+          cp.graphicalPlaylists = graphicalPlaylists;
+          return cp;
         },
       },
     };
@@ -235,7 +256,7 @@ var mutation = new GraphQLObjectType({
             privacyStatus: params.privacyStatus
           });
           graphicalPlaylist.save();
-          user.graphicalPlaylists.push(graphicalPlaylist);
+          user.graphicalPlaylists.push(graphicalPlaylist._id.toString());
           user.save();
           if (!graphicalPlaylist) {
             throw new Error("Error");
@@ -406,12 +427,21 @@ var mutation = new GraphQLObjectType({
           const user = await UserModel.findOne({ SpotifyUserID: user_id });
           if (user === null)
             throw new Error("User not found");
-          const index = user.graphicalPlaylists.findIndex(graph => graph._id.toString() === params.id);
+          const index = user.graphicalPlaylists.indexOf(params.id);
           if (index >= 0) {
-            const ret = user.graphicalPlaylists.splice(index, 1)[0];
+            user.graphicalPlaylists.splice(index, 1);
             user.save();
-            await GraphicalPlaylistModel.deleteOne({_id: params.id});
-            return ret;
+            GraphicalPlaylistModel.deleteOne({_id: params.id}).exec();
+            return {
+                id: params.id,
+                name: "fake name",
+                owner: user_id,
+                playlists: [],
+                artists: [],
+                nodes: [],
+                lastModified: Date.now(),
+                privacyStatus: "fake privacy status"
+            }
           }
           throw new Error("Desmond the moon bear");
         },

@@ -85,21 +85,28 @@ class HamburgerMenu extends React.Component {
 
     componentDidMount(){
         this.poll();
-        setInterval(this.poll, 1000);
+        this.interval = setInterval(this.poll, 1000);
     }
 
-    deleteGraph(id) {
-        console.log("2hello");
-        request('/graphql', DELETE_GRAPH, { id: id }).then((data) => {
-            console.log(data);
-            if (data && data.deleteGraphicalPlaylist) {
-                console.log(this.props.graphId());
-                this.setState({ graphList: this.state.graphList.filter(graph => graph.id !== data.deleteGraphicalPlaylist.id), deleteTarget: undefined, deleteId: undefined }, () => {
-                    if (data.deleteGraphicalPlaylist.id === this.props.graphId())
-                        window.location.pathname = "/";
-                });
-            }
-        });
+    componentWillUnmount() {
+        if (this.interval)
+            clearInterval(this.interval);
+    }
+
+    async deleteGraph(id) {
+        try {
+            await request('/graphql', DELETE_GRAPH, { id: id }).then((data) => {
+                if (data && data.deleteGraphicalPlaylist) {
+                    this.setState({ graphList: this.state.graphList.filter(graph => graph.id !== data.deleteGraphicalPlaylist.id), deleteTarget: undefined, deleteId: undefined }, () => {
+                        if (data.deleteGraphicalPlaylist.id === this.props.graphId())
+                            window.location.pathname = "/";
+                    });
+                }
+            });
+        }
+        catch (error) {
+            console.log("Server disconnected");
+        }
     }
 
     render() {
