@@ -10,33 +10,55 @@ import img5 from "./DummyData/p5.JPG";
 import img6 from "./DummyData/p6.JPG";
 import img7 from "./DummyData/p7.JPG";
 import img8 from "./DummyData/p8.JPG";
+import IconButton from "@material-ui/core/IconButton";
+import { request, gql } from 'graphql-request';
+import Input from "@material-ui/core/Input";
 
+const RETRIEVE_GRAPHS = gql`
+    query{
+        graphicalPlaylists{
+            id
+            owner
+            name
+        }
+    }
+` 
+const SEARCH_GRAPHS = gql`
+    query searchGraphicalPlaylists($name: String!){
+        searchGraphicalPlaylists(name: $name){
+        name
+        id
+        owner
+        }
+    }
+` 
 
 class Browse extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            photos : [
-                {name: null, id: null, src: null}
-            ]
+            text: ""
         };
     }
+    
+    handleSearchText = (e) => {
+        this.setState({text: e.target.value});
+    }
 
-    componentDidMount(){
-        var json = require('./DummyData/DummyArtists.json');
-        var graphList = json.graphicalPlaylists.map((thumbnails, index) => ({name: thumbnails.name, id: index}));
-        var otherList = [img1,img2,img3,img4,img5,img6,img7,img8];
-        for(let i = 0; i < otherList.length;i++){
-            graphList[i].src = otherList[i];
-        }
-        for(let i = 0; i < otherList.length;i++){
-            graphList.push({name: "fake", id: i, src: img7});
-        }
-        for(let i = 0; i < otherList.length;i++){
-            graphList.push({name: "fake", id: i, src: img7});
-        }
-        this.setState({photos: graphList});        
-        window.onload = () => {
+    handleSearch = () => {
+        this.searchQuery();
+    }
+
+    async searchQuery(){
+        request('/graphql', SEARCH_GRAPHS, {name: this.state.text}).then((response) =>{
+            var graphList = []
+            var data = response.searchGraphicalPlaylists;
+            for(let i = 0; i < data.length; i++){
+                data[i].thumb = {name: data[i].name, id: i, src: img1}
+                graphList.push(data[i]);
+            }
+            console.log(graphList);
+            this.setState({graphs: graphList});
             const grid = document.querySelector('.grid');
             const masonry = new Masonry(grid, {
                 itemSelector: '.grid-item',
@@ -44,22 +66,52 @@ class Browse extends React.Component {
             });
             imagesloaded(grid, function(){
                 masonry.layout();
+            });
+        });
+    }
+
+    componentDidMount(){
+        this.loadGraphs();
+    }
+
+    loadGraphs(){
+        request('/graphql', RETRIEVE_GRAPHS).then((response) => {
+            var data = response.graphicalPlaylists;
+            var graphList = []
+            for(let i = 0; i < data.length; i++){
+                data[i].thumb = {name: data[i].name, id: i, src: img1}
+                console.log(data[i]);
+                graphList.push(data[i]);
+            }
+            this.setState({graphs: graphList});
+            const grid = document.querySelector('.grid');
+            const masonry = new Masonry(grid, {
+                itemSelector: '.grid-item',
+                gutter: 20, 
+            });
+            imagesloaded(grid, function(){
+                masonry.layout();
             })
-        };
+        });
     }
     
     render() {
         return (
             <div style={{height: "calc(100% - 3rem)"}}>
                 <div id="browse_search_section" style={{width: "20%", float: "left"}}>
-                    <div style={{backgroundColor: "black", height: "100%"}}>
+                    <div style={{backgroundColor: "var(--background-color)", height: "100%"}}>
+                        <div style={{fontSize: "5rem", color: "var(--text-color-purple)", fontFamily: "monospace", backgroundColor: "var(--background-color)" }}>Browse</div>
+                        <div style ={{display: "flex", height: "7.5%", justifyContent: "center", backgroundColor: "var(--text-color-purple)"}}>
+                            <Input onChange={this.handleSearchText} style={{height: "80%", width:"80%",color: "black",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
+                            <IconButton onClick={this.handleSearch}><i className="fas fa-search"></i></IconButton>
+                        </div>     
                     </div>
                 </div> 
                 <div id="browse_gallery" style={{width: "80%", float: 'right'}}>
-                    <div id="ScrollPaper" style={{backgroundColor: "blueviolet", width: "100%"}}>
+                    <div id="ScrollPaper" style={{backgroundColor: "white", width: "100%"}}>
                         <Typography ></Typography>
-                         <div className="grid" >
-                            {this.state.photos.map(img => (<div className="grid-item"><img alt="graph thumbnail" src= {img.src} style={{width: "100%"}}/> </div>))}
+                         <div className="grid" style={{marginLeft: "35px", marginTop: "20px"}}>
+                            {this.state.graphs === undefined? <div></div> : this.state.graphs.map(img => (<div className="grid-item"><div className="hvrbox"><img alt="graph thumbnail" src= {img.thumb.src} style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/><div className="hvrbox-layer_top"><div className="hvrbox-text">{img.thumb.name}</div></div></div> </div>))}
                         </div>
                     </div>
                 </div>

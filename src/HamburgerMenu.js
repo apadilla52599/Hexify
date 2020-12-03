@@ -113,7 +113,7 @@ class HamburgerMenu extends React.Component {
         const deleteOpen = this.state.deleteTarget !== undefined;
 
         return (
-            <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "black", visibility:"hidden", position:"relative" }}>
+            <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "var(--background-color)", visibility:"hidden", position:"relative" }}>
                  <div id="scroll" style={{width: "100%"}}>
                     <List style={{ width: "100%", height: "auto"}}>
                     <ListItem className="ListItemHover" key="create-new" button={true} onClick={() => window.location.pathname = "/edit"}>
@@ -125,7 +125,7 @@ class HamburgerMenu extends React.Component {
                         </ListItemText>
                     </ListItem>
                     <Divider/>
-                    <Typography variant="h6" style={{color:"black", backgroundColor: "blueviolet"}}>
+                    <Typography variant="h6" style={{color:"black", backgroundColor: "var(--text-color-purple)"}}>
                         GRAPHICAL PLAYLISTS
                     </Typography>
                     <Divider/>
