@@ -64,6 +64,7 @@ class GraphWindow extends React.Component {
             selectedTracks: [],
             nodes: [],
             selectedNode: null,
+            graphName: "Untitled",
         };
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -673,6 +674,34 @@ class GraphWindow extends React.Component {
         }
     }
 
+    populatePlaylist = (id, tracks, token, URL) => {
+        {
+            fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+            method: 'POST',
+            body:JSON.stringify({ uris: tracks.map(track => track.uri)}),
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }}).then(window.open(URL, '_blank'));
+        }
+    };
+
+    exportPlaylist = () => {
+        this.state.player._options.getOAuthToken(access_token => {
+            fetch(`https://api.spotify.com/v1/me/playlists`, {
+            method: 'POST',
+            body: JSON.stringify({ name: this.state.graphName,
+             description: "Playlist Created Through Hexify",
+             public : true}),
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${access_token}`,
+            }}).then(res =>{res.json().then(res =>{console.log(res);
+                this.populatePlaylist(res.id, this.state.selectedTracks, access_token, res.external_urls.spotify)});
+          });
+        });
+    };
+
     play = ({
       spotify_uri,
       playerInstance: {
@@ -792,7 +821,14 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
+                        <PlaylistEditor 
+                            exportPlaylist ={() => {
+                                if (this.state.player != null){
+                                    console.log("exporting");
+                                    this.exportPlaylist()
+                                }
+                                }}
+                            player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}

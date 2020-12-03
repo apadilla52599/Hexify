@@ -107,7 +107,7 @@ class Playback extends React.Component {
                 ) : (     
                     <div> 
                         {/* Center Controls (Previous, Pause, Play, Next) */}
-                        <div style={{position: "relative", padding: 0, margin: 0, left: "40%", top: "25"}}>
+                        <div style={{position: "relative", padding: 0, marginLeft: "-30", left: "50%", top: "25"}}>
                             {/* Previous Button */}
                             <IconButton style = {{position: "absolute", left:"-40", top:"10", padding:0}} onClick={this.props.prev}>
                                 <SkipPreviousIcon style = {{color: "gray",width: "40", height: "40"}}/>

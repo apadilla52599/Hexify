@@ -15,7 +15,7 @@ export default function Playlist(props){
               return (
                 <ListItem onClick={() => props.playTrack(track)} button key = {track.name} style={{margin:"0", paddingTop:"0", paddingBottom: "0"}} >
                   <div>
-                    <img alt="Album Cover" style = {{height: "2vw", width: "2vw", marginRight: ".5vw"}} src={track.album.images[0].url}/>
+                    <img alt="Album Cover" style = {{height: "30", width: "30", marginRight: ".5vw"}} src={track.album.images[0].url}/>
                   </div>
                   <ListItemText 
                   disableTypography
@@ -25,8 +25,8 @@ export default function Playlist(props){
                     <Typography style={{display:"inline-block", color: '#EABFB9', fontSize: "70%"}}>{track.artist.name}</Typography>
                   </div>}
                   secondary={<div>
-                        <i className="fas fa-record-vinyl" style={{display:"inline-block", color: 'purple', fontSize: ".6vw"}}></i>
-                        <Typography style={{display:"inline-block", color: 'gray', fontSize: ".6vw"}}>
+                        <i className="fas fa-record-vinyl" style={{display:"inline-block", color: 'purple', fontSize: "8"}}></i>
+                        <Typography style={{display:"inline-block", color: 'gray', fontSize: "70%"}}>
                           {track.album.name.length > 35 ? (track.album.name.substring(0,35)+"...") : (track.album.name)}
                         </Typography>
                   </div>}>
@@ -35,7 +35,7 @@ export default function Playlist(props){
                 
                     <ListItemSecondaryAction>
                        <IconButton onClick={() => props.delete(track)} edge="end" aria-label="delete" style = {{padding:"1vh"}}>
-                          <DeleteIcon style = {{width: "1.5vw", height: "1.5vw" }}/>
+                          <DeleteIcon style = {{width: "20", height: "20" }}/>
                       </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>
