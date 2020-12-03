@@ -41,7 +41,6 @@ class Titlebar extends React.Component {
             window.dispatchEvent(new Event('resize'));
         }
     }
-
     render() {
         const browsing = (window.location.pathname === "/browse");
         return (
@@ -61,9 +60,13 @@ class Titlebar extends React.Component {
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>
                 }
                 
-                <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                    <img height= "50" width= "75" src="https://i.gyazo.com/79142564837963c719e4300531af2e64.png" alt="Logo"></img>
-                </div>
+                    <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
+                        <a href="/edit">
+                            <img height= "50" width= "75" alt="Logo"
+                            src="https://i.gyazo.com/79142564837963c719e4300531af2e64.png" ></img>
+                        </a>
+                    </div>
+              
 
                 { !browsing &&
                     <IconButton href="/browse" style = {{color: "white", marginLeft: "22vw"}}>
