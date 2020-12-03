@@ -11,6 +11,7 @@ var GraphQLInt = require("graphql").GraphQLInt;
 var GraphQLDate = require("graphql-date");
 var UserModel = require("../models/User");
 var GraphicalPlaylistModel = require("../models/GraphicalPlaylist");
+const { GraphQLScalarType } = require("graphql");
 
 var userType = new GraphQLObjectType({
   name: "user",
@@ -137,6 +138,22 @@ var queryType = new GraphQLObjectType({
         type: new GraphQLList(graphicalPlaylistType),
         resolve: function () {
           const graphicalPlaylists = GraphicalPlaylistModel.find().exec();
+          if (!graphicalPlaylists) {
+            throw new Error("Error");
+          }
+          return graphicalPlaylists;
+        },
+      },
+      searchGraphicalPlaylists: {
+        type: new GraphQLList(graphicalPlaylistType),
+        args:{
+          name: {
+            type: new GraphQLNonNull(GraphQLString)
+          }
+        },
+        resolve: function (root, params) {
+          const regex = new RegExp(escapeRegex(params.name), "gi");
+          const graphicalPlaylists = GraphicalPlaylistModel.find({name: regex}).exec();
           if (!graphicalPlaylists) {
             throw new Error("Error");
           }
@@ -385,4 +402,8 @@ var mutation = new GraphQLObjectType({
     };
   },
 });
+
+function escapeRegex(text){
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
 module.exports = new GraphQLSchema({ query: queryType, mutation: mutation });
