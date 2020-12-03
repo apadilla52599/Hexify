@@ -62,9 +62,7 @@ class Titlebar extends React.Component {
                 }
                 
                 <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                    <a href="/edit" style = {{textDecoration: "none"}}>
-                        <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "1.2rem" }}>Hexify</p>
-                    </a>
+                    <img height= "50" width= "75" src="https://i.gyazo.com/79142564837963c719e4300531af2e64.png" alt="Logo"></img>
                 </div>
 
                 { !browsing &&
