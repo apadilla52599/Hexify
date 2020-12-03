@@ -55,7 +55,7 @@ class Titlebar extends React.Component {
                     </div>
                 }
                 { !browsing &&
-                    <Input placeholder="Untitled Graph" style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
+                    <Input placeholder="Untitled Graph" onChange={(e) => this.props.graphNameCallback(e.target.value)} style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
                 }
                 { !browsing &&
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>

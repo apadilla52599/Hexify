@@ -26,6 +26,14 @@ const CREATE_GRAPH = gql`
     }
 `
 
+const UPDATE_GRAPH = gql`
+    mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $privacyStatus: String!) {
+    	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, privacyStatus: $privacyStatus) {
+    		id
+    	}
+    }
+`
+
 const RETRIEVE_GRAPHICAL_PLAYLIST = gql`
 query RetrieveGraphicalPlaylist($id:String!){
     retrieveGraphicalPlaylist(id: $id){
@@ -72,6 +80,7 @@ class GraphWindow extends React.Component {
             selectedTracks: [],
             nodes: [],
             selectedNode: null,
+            privacyStatus: "public",
         };
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -88,6 +97,9 @@ class GraphWindow extends React.Component {
         this.state.quickAddSearchResults = [];
         this.skips = 0;
         this.position = 0;
+        this.id = undefined;
+        this.graphName = "Untitled Graph";
+        console.log("constructor");
         if (this.props.match && this.props.match.params)
             this.loadGraph(this.props.match.params.id);
     }
@@ -226,7 +238,7 @@ class GraphWindow extends React.Component {
             this.ctx.drawImage(node.artist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
             this.ctx.restore();
         }
-        if (node.artist.image == null) {
+        if (node.artist.image == null || node.artist.image === undefined) {
             var img = new Image();
             img.addEventListener('load', () => {
                 node.artist.image = img;
@@ -240,7 +252,6 @@ class GraphWindow extends React.Component {
     }
 
     draw() {
-        console.log("draw");
         // Correct the canvas dimensions if the window has been resized
         this.canvas.width = this.canvas.offsetWidth * window.devicePixelRatio;
         this.canvas.height = this.canvas.offsetHeight * window.devicePixelRatio;
@@ -443,9 +454,7 @@ class GraphWindow extends React.Component {
                     console.log("add node from recommended artists");
                     if (this.transactionStack === undefined)
                         await this.createGraph();
-                    const receipt = await this.transactionStack.addNode(node)
-                    console.log(receipt);
-                    console.log(node);
+                    const receipt = this.transactionStack.addNode(node)
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
                         this.setState({
@@ -473,6 +482,10 @@ class GraphWindow extends React.Component {
 
         document.addEventListener('keydown', (e) => {
             if (e.ctrlKey && this.transactionStack) {
+                if (e.key === 's') {
+                    e.preventDefault();
+                    this.save();
+                }
                 if (e.key === 'z') {
                     const receipt = this.transactionStack.undo();
                     if (receipt.update) {
@@ -522,52 +535,121 @@ class GraphWindow extends React.Component {
             }
             if (e.key === "Delete" && this.state.selectedNode != null) {
                 this.removeNode(this.state.selectedNode);
+                this.deselectNode();
             }
+        });
+
+        this.nameInterval = setInterval(() => {
+            const newName = this.props.graphName();
+            if (newName !== undefined && newName !== "" && newName !== this.graphName) {
+                this.graphName = newName;
+                this.save();
+            }
+        }, 1000);
+    }
+
+    async save() {
+        if (this.transactionStack === undefined)
+            await this.createGraph();
+        const artists = [];
+        const nodes = this.state.nodes.map((node) => {
+            const index = artists.indexOf(artist => artist.id === node.artist.id);
+            if (index === -1)
+                artists.push({
+                    id: node.artist.id,
+                    name: node.artist.name,
+                    tracks: this.state.selectedTracks.filter(track => track.artist.id === node.artist.id).map(track => {
+                        return {
+                            id: track.id,
+                            name: track.name,
+                            uri: track.uri
+                        }
+                    })
+                });
+            return {
+                q: node.coords.q,
+                r: node.coords.r,
+                artistId: node.artist.id
+            }
+        });
+        console.log(this.graphName);
+        request('/graphql', UPDATE_GRAPH,
+        {
+            id: this.id,
+            name: this.graphName,
+            artists: artists,
+            nodes: nodes,
+            privacyStatus: this.state.privacyStatus
         });
     }
 
     createGraph = async () => {
-        let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: "private" });
-        if (data && data.createGraphicalPlaylist)
-            this.transactionStack = new TransactionStack(this.state.nodes, this.state.tracks, data.createGraphicalPlaylist.id);
+        let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus });
+        if (data && data.createGraphicalPlaylist) {
+            this.id = data.createGraphicalPlaylist.id;
+            this.props.graphIdCallback(data.createGraphicalPlaylist.id);
+            this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks, data.createGraphicalPlaylist.id);
+        }
     }
 
     async loadGraph(id) {
+        this.id = id;
         let data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
-        var artistIds = data.retrieveGraphicalPlaylist.nodes.map(node => node.artistId);
-        var selectedTracks = data.retrieveGraphicalPlaylist.artists.map(artists => artists.tracks).flat().map(tracks=> tracks.id);
-        var graphNodes = data.retrieveGraphicalPlaylist.nodes;
-        var nodes = [];
-        for(let i = 0; i < Math.ceil(artistIds.length/50); i++){
+        console.log(data);
+        var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
+        var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
+
+        var tracks = [];
+        for(let i = 0; i < Math.ceil(trackIds.length/50); i++){
+            let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': trackIds.slice(i*50, (i+1)*50)}));
+            let d = await response.json();
+            tracks.push(...d.tracks);
+        }
+
+        var artists = [];
+        for(let i = 0; i < Math.ceil(artistIds.length/50); i++) {
             let response = await fetch("/v1/artists?" + new URLSearchParams({'ids': artistIds.slice(i*50, (i+1)*50)}));
             let d = await response.json();
-            for(let j = 0; j < d.artists.length; j++){
-                nodes.push({
-                    artist: d.artists[j],
-                    coords: {q: graphNodes[j + i*50].q, r: graphNodes[j + i*50].r},
-                    image: d.artists[j].images[0]
-                });
-            }
+            artists.push(...d.artists);
         }
-        var tracks = [];
-        for(let i = 0; i < Math.ceil(selectedTracks.length/50); i++){
-            let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': selectedTracks.slice(i*50, (i+1)*50)}));
-            let d = await response.json();
-            for(let j = 0; j < d.tracks.length; j++){
-                if(d.tracks[j] !== null && d.tracks[j] !== undefined ){
-                    d.tracks[j].artist = d.tracks[j].artists[0];
-                    tracks.push(d.tracks[j]);
-                }
+
+        var selectedTracks = [];
+        artists.forEach(artist => {
+            data.retrieveGraphicalPlaylist.artists.find(savedArtist => artist.id === savedArtist.id)
+                .tracks.forEach(artistTrack => {
+                const trackIndex = tracks.findIndex(track => track.id === artistTrack.id);
+                tracks[trackIndex].artist = artist;
+                selectedTracks.push(...tracks.splice(trackIndex, 1));
+            });
+        });
+
+        var nodes = data.retrieveGraphicalPlaylist.nodes.map(node => {
+            const artist = artists.find(artist => artist.id === node.artistId);
+            return {
+                artist: artist,
+                coords: {q: node.q, r: node.r}
             }
-        }
+        });
+
         this.transactionStack = new TransactionStack(nodes, tracks, id);
-        this.setState({nodes: nodes, selectedTracks: tracks}, this.draw); 
+        const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
+        this.graphName = data.retrieveGraphicalPlaylist.name;
+        this.setState({
+            nodes: nodes,
+            selectedTracks: selectedTracks,
+            currentTrack: currentTrack,
+            privacyStatus: data.retrieveGraphicalPlaylist.privacyStatus,
+        }, () => {
+            this.props.graphIdCallback(id);
+            this.draw();
+        }); 
     }
 
     componentWillUnmount() {
         this.canvas.onmousemove = null;
         this.canvas.onmouseleave = null;
         this.canvas.onclick = null;
+        clearInterval(this.nameInterval);
     }
 
     showPlaylist = () => {
@@ -620,7 +702,7 @@ class GraphWindow extends React.Component {
         document.onmouseup =  async (e) => {
             if (this.transactionStack === undefined)
                 await this.createGraph();
-            const receipt = await this.transactionStack.addNode(node);
+            const receipt = this.transactionStack.addNode(node);
             if (receipt.update){
                 this.setState({
                     nodes: receipt.nodes,
@@ -830,7 +912,7 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
+                        <PlaylistEditor privacyStatus={this.state.privacyStatus} privacyCallback={(privacyStatus) => this.setState({privacyStatus: privacyStatus})} player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}
