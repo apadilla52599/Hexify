@@ -10,16 +10,24 @@ import './style.css';
 
 class App extends Component {
 
+    graphIdCallback = (id) => {
+        this.graphId = id;
+    }
+
+    graphNameCallback = (name) => {
+        this.graphName = name;
+    }
+
     render() {
         return (
             <Router>
                 <div className="App" style={{ display: "flex", width: "100%", height: "100%" }}>
-                    <HamburgerMenu />
+                    <HamburgerMenu graphId={() => this.graphId}/>
                     <div style={{ flexGrow: 1 }}>
-                        <Titlebar />
+                        <Titlebar graphNameCallback={this.graphNameCallback}/>
                         <Switch>
-                            <Route path={["/", "/edit"]} exact component={() => <GraphWindow />} />
-                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow {...routerprops} />} />
+                            <Route path={["/", "/edit"]} exact component={() => <GraphWindow graphName={() => this.graphName} graphIdCallback={this.graphIdCallback}/>} />
+                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow graphName={() => this.graphName} graphIdCallback={this.graphIdCallback} {...routerprops} />} />
                             <Route path="/browse" exact component={Browse}/>
                         </Switch>
                     </div>
