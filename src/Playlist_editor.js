@@ -76,10 +76,10 @@ class PlaylistEditor extends React.Component {
                 <div style ={{display: "flex", height: "7.5%", justifyContent: "center"}}>
                     <Input onChange={this.handleSearch} style={{height: "80%", width:"80%",color: "white",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
                 </div>                  
-                <div style ={{height: "77.5%"}}>
+                <div style ={{height: "70%"}}>
                     <Playlist player={this.props.player} tracks = {this.props.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} delete = {this.props.deselectTrack} playTrack={this.props.playTrack} />
                 </div>
-                <div style = {{display: "flex",justifyContent: "space-between", height: "5%", paddingLeft: "2%", paddingRight: "2%"}}>
+                <div style = {{display: "flex",justifyContent: "space-between", marginTop: "10%", paddingLeft: "2%", paddingRight: "2%"}}>
                     <Button variant="contained" color="primary"style = {{width: "30%", height: "20", fontSize: "12"}}>
                         Public
                     </Button>

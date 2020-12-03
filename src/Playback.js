@@ -66,7 +66,8 @@ class Playback extends React.Component {
                 marginLeft: "10%",
                 width: "80%",
                 marginTop: "88",
-                paddingTop: "2"
+                paddingTop: "2",
+                marginBottom:"0"
             },
             thumb: {
                 height: 15,
