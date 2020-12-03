@@ -44,7 +44,7 @@ class TransactionStack {
         }
     }
 
-    async removeNode(node) {
+    removeNode(node) {
         var update = false;
         var removedTracks = [];
         for (let i = 0; i < this.nodes.length; i++) {
@@ -58,7 +58,6 @@ class TransactionStack {
                     removedTracks: removedTracks,
                     data: node
                 });
-                await this.deleteNode(node);
                 this.nodes.splice(i, 1);
                 update = true;
             }

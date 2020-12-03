@@ -99,6 +99,8 @@ class GraphWindow extends React.Component {
         this.position = 0;
         this.id = undefined;
         this.graphName = "Untitled Graph";
+        this.saving = false;
+        this.saveAgain = false;
         console.log("constructor");
         if (this.props.match && this.props.match.params)
             this.loadGraph(this.props.match.params.id);
@@ -457,6 +459,7 @@ class GraphWindow extends React.Component {
                     const receipt = this.transactionStack.addNode(node)
                     if (receipt.update) {
                         this.adjacentRecommendedArtists = [];
+                        this.save();
                         this.setState({
                             selectedNode: node
                         }, this.draw);
@@ -501,6 +504,7 @@ class GraphWindow extends React.Component {
                                 newIndex--;
                             this.state.selectedTracks.splice(index, 1);
                         });
+                        this.save();
                         this.setState({
                             nodes: receipt.nodes,
                             selectedTracks: this.state.selectedTracks,
@@ -524,6 +528,7 @@ class GraphWindow extends React.Component {
                                 newIndex--;
                             this.state.selectedTracks.splice(index, 1);
                         });
+                        this.save();
                         this.setState({
                             nodes: receipt.nodes,
                             selectedTracks: this.state.selectedTracks,
@@ -549,38 +554,51 @@ class GraphWindow extends React.Component {
     }
 
     async save() {
-        if (this.transactionStack === undefined)
-            await this.createGraph();
-        const artists = [];
-        const nodes = this.state.nodes.map((node) => {
-            const index = artists.indexOf(artist => artist.id === node.artist.id);
-            if (index === -1)
-                artists.push({
-                    id: node.artist.id,
-                    name: node.artist.name,
-                    tracks: this.state.selectedTracks.filter(track => track.artist.id === node.artist.id).map(track => {
-                        return {
-                            id: track.id,
-                            name: track.name,
-                            uri: track.uri
-                        }
-                    })
-                });
-            return {
-                q: node.coords.q,
-                r: node.coords.r,
-                artistId: node.artist.id
-            }
-        });
-        console.log(this.graphName);
-        request('/graphql', UPDATE_GRAPH,
-        {
-            id: this.id,
-            name: this.graphName,
-            artists: artists,
-            nodes: nodes,
-            privacyStatus: this.state.privacyStatus
-        });
+        if (this.saving) {
+            this.saveAgain = true;
+        }
+        else {
+            this.saving = true;
+            if (this.transactionStack === undefined)
+                await this.createGraph();
+            const artists = [];
+            const nodes = this.state.nodes.map((node) => {
+                const index = artists.indexOf(artist => artist.id === node.artist.id);
+                if (index === -1)
+                    artists.push({
+                        id: node.artist.id,
+                        name: node.artist.name,
+                        tracks: this.state.selectedTracks.filter(track => track.artist.id === node.artist.id).map(track => {
+                            return {
+                                id: track.id,
+                                name: track.name,
+                                uri: track.uri
+                            }
+                        })
+                    });
+                return {
+                    q: node.coords.q,
+                    r: node.coords.r,
+                    artistId: node.artist.id
+                }
+            });
+            request('/graphql', UPDATE_GRAPH,
+            {
+                id: this.id,
+                name: this.graphName,
+                artists: artists,
+                nodes: nodes,
+                privacyStatus: this.state.privacyStatus
+            }).then(d => {
+                this.saving = false;
+                if (this.saveAgain || d === undefined || d.updateGraphicalPlaylist === undefined) {
+                    setTimeout(() => {
+                        this.saveAgain = false;
+                        this.save();
+                    }, 500);
+                }
+            });
+        }
     }
 
     createGraph = async () => {
@@ -709,6 +727,7 @@ class GraphWindow extends React.Component {
                     selectedNode: node
                 });
                 this.selectedQuickArtist = null;
+                this.save();
             }
             this.adjacentRecommendedArtists = [];
             this.draw();
@@ -756,16 +775,16 @@ class GraphWindow extends React.Component {
             tracks: selectedTracks
         });
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save());
         else
-            this.setState({ selectedTracks: this.state.selectedTracks});
+            this.setState({ selectedTracks: this.state.selectedTracks}, this.save());
     }
 
     clearTracks = () => {
         if (this.state.player)
             this.state.player.pause();
         this.neverStarted = true;
-        this.setState({ currentTrack: undefined, selectedTracks: [], paused: true });
+        this.setState({ currentTrack: undefined, selectedTracks: [], paused: true }, this.save);
     }
 
     removeNode = async (node) => {
@@ -782,6 +801,7 @@ class GraphWindow extends React.Component {
                 this.state.selectedTracks.splice(index, 1);
             });
             // console.log(receipt.removedTracks);
+            this.save();
             var selectedNode = this.state.selectedNode;
             if (selectedNode.coords.q === node.coords.q && selectedNode.coords.r === node.coords.r)
                 selectedNode = null;
@@ -912,7 +932,7 @@ class GraphWindow extends React.Component {
             <div id="graph_window">
                 <div id="playlist_column">
                     {this.state.selectedNode === null ? (
-                        <PlaylistEditor privacyStatus={this.state.privacyStatus} privacyCallback={(privacyStatus) => this.setState({privacyStatus: privacyStatus})} player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
+                        <PlaylistEditor privacyStatus={this.state.privacyStatus} privacyCallback={(privacyStatus) => this.setState({privacyStatus: privacyStatus}, this.save)} player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} tracks={this.state.selectedTracks} deselectTrack={this.deselectTrack} clearTracks={this.clearTracks} playTrack={(track) => this.playTrack(track)} />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
                     )}
