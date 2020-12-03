@@ -80,7 +80,6 @@ class GraphWindow extends React.Component {
             selectedTracks: [],
             nodes: [],
             selectedNode: null,
-            graphName: "Untitled",
             privacyStatus: "public",
         };
         this.selectedQuickArtist = null;
@@ -830,7 +829,7 @@ class GraphWindow extends React.Component {
         this.state.player._options.getOAuthToken(access_token => {
             fetch(`https://api.spotify.com/v1/me/playlists`, {
             method: 'POST',
-            body: JSON.stringify({ name: this.state.graphName,
+            body: JSON.stringify({ name: this.graphName,
              description: "Playlist Created Through Hexify",
              public : true}),
             headers: { 
