@@ -193,10 +193,14 @@ var queryType = new GraphQLObjectType({
               else {
                   const cp = {...graphicalPlaylist.toObject()};
                   cp.owner = user_id;
+                  delete cp.id;
+                  delete cp._id;
                   const newGraphicalPlaylist = new GraphicalPlaylistModel(cp);
                   newGraphicalPlaylist.save();
                   const user = await UserModel.findOne({ SpotifyUserID: user_id }).exec();
-                  user.raphicalPlaylists.push(newGraphicalPlaylist._id.toString());
+                  user.graphicalPlaylists.push(newGraphicalPlaylist._id.toString());
+                  user.save();
+                  return newGraphicalPlaylist;
               }
           }
           return graphicalPlaylist;

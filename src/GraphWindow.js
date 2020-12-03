@@ -611,9 +611,9 @@ class GraphWindow extends React.Component {
     }
 
     async loadGraph(id) {
-        this.id = id;
         let data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
         console.log(data);
+        this.id = data.retrieveGraphicalPlaylist.id;
         var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
         var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
 
