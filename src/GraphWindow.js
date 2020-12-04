@@ -775,9 +775,9 @@ class GraphWindow extends React.Component {
             tracks: selectedTracks
         });
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save());
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save);
         else
-            this.setState({ selectedTracks: this.state.selectedTracks}, this.save());
+            this.setState({ selectedTracks: this.state.selectedTracks}, this.save);
     }
 
     clearTracks = () => {
