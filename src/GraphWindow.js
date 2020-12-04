@@ -605,14 +605,21 @@ class GraphWindow extends React.Component {
         let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus });
         if (data && data.createGraphicalPlaylist) {
             this.id = data.createGraphicalPlaylist.id;
+            window.history.pushState({id: this.id}, data.createGraphicalPlaylist.name, "/edit/" + this.id);
             this.props.graphIdCallback(data.createGraphicalPlaylist.id);
             this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks, data.createGraphicalPlaylist.id);
         }
     }
 
     async loadGraph(id) {
-        let data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
-        console.log(data);
+        var data;
+        try {
+            data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
+            console.log(data);
+        }
+        catch (error) {
+            window.location.pathname = "/edit";
+        }
         this.id = data.retrieveGraphicalPlaylist.id;
         var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
         var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
