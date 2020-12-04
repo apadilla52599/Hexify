@@ -566,7 +566,7 @@ class GraphWindow extends React.Component {
                 await this.createGraph();
             const artists = [];
             const nodes = this.state.nodes.map((node) => {
-                const index = artists.indexOf(artist => artist.id === node.artist.id);
+                const index = artists.findIndex(artist => artist.id === node.artist.id);
                 if (index === -1)
                     artists.push({
                         id: node.artist.id,
@@ -637,6 +637,7 @@ class GraphWindow extends React.Component {
             let d = await response.json();
             tracks.push(...d.tracks);
         }
+        console.log(tracks);
 
         var artists = [];
         for(let i = 0; i < Math.ceil(artistIds.length/50); i++) {
@@ -644,6 +645,7 @@ class GraphWindow extends React.Component {
             let d = await response.json();
             artists.push(...d.artists);
         }
+        console.log(artists);
 
         var selectedTracks = [];
         artists.forEach(artist => {
@@ -662,6 +664,7 @@ class GraphWindow extends React.Component {
                 coords: {q: node.q, r: node.r}
             }
         });
+        console.log(selectedTracks);
 
         this.transactionStack = new TransactionStack(nodes, tracks, id);
         const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
@@ -789,9 +792,9 @@ class GraphWindow extends React.Component {
             tracks: selectedTracks
         });
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save);
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
         else
-            this.setState({ selectedTracks: this.state.selectedTracks}, this.save);
+            this.setState({ selectedTracks: this.state.selectedTracks});
     }
 
     clearTracks = () => {
