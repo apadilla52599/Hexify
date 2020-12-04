@@ -7,6 +7,21 @@ import Button from '@material-ui/core/Button';
 
 class Titlebar extends React.Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+        this.savingInterval = setInterval(() => {
+            this.setState(this.props.saving);
+        }, 1000);
+    }
+
+    componentWillUnmount() {
+        this.savingInterval = undefined;
+    }
+
     handleClick = () => {
         const menu = document.getElementById("hamburger_menu");
         if (menu !== undefined) {
@@ -43,6 +58,12 @@ class Titlebar extends React.Component {
     }
     render() {
         const browsing = (window.location.pathname === "/browse");
+        var lastModified = "";
+        if (this.state.saving)
+            lastModified = "Saving...";
+        else if (this.state.date) {
+            lastModified = "Last updated: " + this.state.date.toLocaleDateString() + " at " + this.state.date.toLocaleTimeString();
+        }
         return (
             <div id="titlebar" style={{ ...this.props.style,minHeight: "3rem", display: "flex", alignItems: "center" }}>
                 <div>
@@ -57,7 +78,7 @@ class Titlebar extends React.Component {
                     <Input placeholder="Untitled Graph" onChange={(e) => this.props.graphNameCallback(e.target.value)} style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
                 }
                 { !browsing &&
-                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>
+                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>{lastModified}</p>
                 }
                 
                     <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>

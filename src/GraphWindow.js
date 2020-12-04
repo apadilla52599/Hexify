@@ -22,6 +22,7 @@ const CREATE_GRAPH = gql`
     mutation CreateGraphicalPlaylist($name: String!, $privacyStatus: String!) {
       createGraphicalPlaylist(name: $name, privacyStatus: $privacyStatus) {
         id
+        lastModified
       }
     }
 `
@@ -30,6 +31,7 @@ const UPDATE_GRAPH = gql`
     mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $privacyStatus: String!) {
     	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, privacyStatus: $privacyStatus) {
     		id
+            lastModified
     	}
     }
 `
@@ -559,6 +561,7 @@ class GraphWindow extends React.Component {
         }
         else {
             this.saving = true;
+            this.props.savingCallback(true);
             if (this.transactionStack === undefined)
                 await this.createGraph();
             const artists = [];
@@ -591,6 +594,8 @@ class GraphWindow extends React.Component {
                 privacyStatus: this.state.privacyStatus
             }).then(d => {
                 this.saving = false;
+                console.log(d);
+                this.props.savingCallback(false, d.updateGraphicalPlaylist.lastModified);
                 if (this.saveAgain || d === undefined || d.updateGraphicalPlaylist === undefined) {
                     setTimeout(() => {
                         this.saveAgain = false;
@@ -605,6 +610,7 @@ class GraphWindow extends React.Component {
         let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus });
         if (data && data.createGraphicalPlaylist) {
             this.id = data.createGraphicalPlaylist.id;
+            this.props.savingCallback(false, data.createGraphicalPlaylist.lastModified);
             window.history.pushState({id: this.id}, data.createGraphicalPlaylist.name, "/edit/" + this.id);
             this.props.graphIdCallback(data.createGraphicalPlaylist.id);
             this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks, data.createGraphicalPlaylist.id);
@@ -620,6 +626,7 @@ class GraphWindow extends React.Component {
         catch (error) {
             window.location.pathname = "/edit";
         }
+        this.props.savingCallback(false, data.retrieveGraphicalPlaylist.lastModified);
         this.id = data.retrieveGraphicalPlaylist.id;
         var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
         var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
