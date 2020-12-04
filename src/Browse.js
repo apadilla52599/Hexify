@@ -20,6 +20,7 @@ const RETRIEVE_GRAPHS = gql`
             id
             owner
             name
+            privacyStatus
         }
     }
 ` 
@@ -55,12 +56,9 @@ class Browse extends React.Component {
             var graphList = []
             var data = response.searchGraphicalPlaylists;
             for(let i = 0; i < data.length; i++){
-                if (data[i].privacyStatus === "public" || data[i].privacyStatus === undefined){
-                    data[i].thumb = {name: data[i].name, id: data[i].id, src: img1}
-                    graphList.push(data[i]);
-                }
+                data[i].thumb = {name: data[i].name, id: data[i].id, src: img1}
+                graphList.push(data[i]);
             }
-            console.log(graphList);
             this.setState({graphs: graphList});
             const grid = document.querySelector('.grid');
             const masonry = new Masonry(grid, {
@@ -81,13 +79,11 @@ class Browse extends React.Component {
         request('/graphql', RETRIEVE_GRAPHS).then((response) => {
             var data = response.graphicalPlaylists;
             var graphList = []
+            console.log(data);
             for(let i = 0; i < data.length; i++){
-                if (data[i].privacyStatus === "public" || data[i].privacyStatus === undefined){
-                    data[i].thumb = {name: data[i].name, id: data[i].id, src: img1}
-                    console.log(data[i]);
-                    graphList.push(data[i]);
-                }
-                console.log(data[i].privacyStatus);
+                data[i].thumb = {name: data[i].name, id: data[i].id, src: img1}
+                console.log(data[i]);
+                graphList.push(data[i]);
             }
             this.setState({graphs: graphList});
             const grid = document.querySelector('.grid');
