@@ -130,7 +130,7 @@ class HamburgerMenu extends React.Component {
                         GRAPHICAL PLAYLISTS
                     </Typography>
                     <Divider/>
-                    {this.state.graphList.sort((a,b) => a.lastModified.localeCompare(b.lastModified)).map( (graph, index) => (
+                    {this.state.graphList.sort((a,b) => b.lastModified.localeCompare(a.lastModified)).map( (graph, index) => (
                         <ListItem className="ListItemHover" button={true} key={index} onClick={() => window.location.pathname = "/edit/" + graph.id}>
                         <ListItemAvatar>
                             <Avatar sizes="large" src={graph.thumbnail}></Avatar>
