@@ -168,10 +168,11 @@ var queryType = new GraphQLObjectType({
       graphicalPlaylists: {
         type: new GraphQLList(graphicalPlaylistType),
         resolve: function () {
-          const graphicalPlaylists = GraphicalPlaylistModel.find().exec();
+          const graphicalPlaylists = GraphicalPlaylistModel.find({privacyStatus: "public"}).exec();
           if (!graphicalPlaylists) {
             throw new Error("Error");
           }
+
           return graphicalPlaylists;
         },
       },
@@ -184,7 +185,7 @@ var queryType = new GraphQLObjectType({
         },
         resolve: function (root, params) {
           const regex = new RegExp(escapeRegex(params.name), "gi");
-          const graphicalPlaylists = GraphicalPlaylistModel.find({name: regex}).exec();
+          const graphicalPlaylists = GraphicalPlaylistModel.find({name: regex, privacyStatus: "public"}).exec();
           if (!graphicalPlaylists) {
             throw new Error("Error");
           }
