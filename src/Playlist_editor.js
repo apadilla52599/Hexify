@@ -68,6 +68,7 @@ class PlaylistEditor extends React.Component {
 
     render() {
         const menuOpen = this.state.target !== undefined;
+        const clearOpen = this.state.target2 !== undefined;
         return (
             <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div style={{display: "flex", alignItems: "center", height: "7.5%"}}>
@@ -86,7 +87,7 @@ class PlaylistEditor extends React.Component {
                     <Button onClick = {this.share} variant="contained" style = {{width: "30%", height: "20", fontSize: "12"}}>
                         Share
                     </Button>
-                    <Button onClick={this.props.clearTracks} variant="contained" color="secondary"style = {{width: "30%", height: "20", fontSize: "12"}}>
+                    <Button onClick={(event) => this.setState({target2: event.target})}variant="contained" color="secondary"style = {{width: "30%", height: "20", fontSize: "12"}}>
                         Clear
                     </Button>
                     <Menu
@@ -97,6 +98,17 @@ class PlaylistEditor extends React.Component {
                         onClose={() => this.setState({target: undefined})}
                     >
                         {["Public", "Private", "Unlisted"].map(str => <MenuItem key={str} onClick={() => {this.setState({target: undefined}, this.props.privacyCallback(str.toLowerCase()))}}>{str}</MenuItem>)}
+                    </Menu>
+
+                    <Menu
+                    id="clear-menu"
+                    open={clearOpen}
+                    keepMounted
+                    anchorEl={this.state.target2}
+                    onClose={() => this.setState({target2: undefined})}
+                >
+                    <MenuItem onClick={() => {this.props.clearTracks();  this.setState({target2: undefined})}}>Clear</MenuItem>
+                    <MenuItem onClick={() => this.setState({target2: undefined})}>Cancel</MenuItem>
                     </Menu>
                 </div>
             </div>
