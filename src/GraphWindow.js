@@ -22,6 +22,7 @@ const CREATE_GRAPH = gql`
     mutation CreateGraphicalPlaylist($name: String!, $privacyStatus: String!) {
       createGraphicalPlaylist(name: $name, privacyStatus: $privacyStatus) {
         id
+        lastModified
       }
     }
 `
@@ -29,7 +30,7 @@ const CREATE_GRAPH = gql`
 const UPDATE_GRAPH = gql`
     mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $privacyStatus: String!) {
     	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, privacyStatus: $privacyStatus) {
-            id
+    		id
             lastModified
     	}
     }
@@ -562,11 +563,12 @@ class GraphWindow extends React.Component {
         }
         else {
             this.saving = true;
+            this.props.savingCallback(true);
             if (this.transactionStack === undefined)
                 await this.createGraph();
             const artists = [];
             const nodes = this.state.nodes.map((node) => {
-                const index = artists.indexOf(artist => artist.id === node.artist.id);
+                const index = artists.findIndex(artist => artist.id === node.artist.id);
                 if (index === -1)
                     artists.push({
                         id: node.artist.id,
@@ -594,6 +596,8 @@ class GraphWindow extends React.Component {
                 privacyStatus: this.state.privacyStatus
             }).then(d => {
                 this.saving = false;
+                console.log(d);
+                this.props.savingCallback(false, d.updateGraphicalPlaylist.lastModified);
                 if (this.saveAgain || d === undefined || d.updateGraphicalPlaylist === undefined) {
                     setTimeout(() => {
                         this.saveAgain = false;
@@ -604,7 +608,7 @@ class GraphWindow extends React.Component {
                 if(d !== undefined && d.updateGraphicalPlaylist !== undefined){
                     // this.setState({lastModified: d.updateGraphicalPlaylist.lastModified});
                     this.lastModified = d.updateGraphicalPlaylist.lastModified;
-                    this.props.lastModifiedCallback(this.lastModified);
+                    // this.props.lastModifiedCallback(this.lastModified);
                 }
             });
         }
@@ -614,14 +618,23 @@ class GraphWindow extends React.Component {
         let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus });
         if (data && data.createGraphicalPlaylist) {
             this.id = data.createGraphicalPlaylist.id;
+            this.props.savingCallback(false, data.createGraphicalPlaylist.lastModified);
+            window.history.pushState({id: this.id}, data.createGraphicalPlaylist.name, "/edit/" + this.id);
             this.props.graphIdCallback(data.createGraphicalPlaylist.id);
             this.transactionStack = new TransactionStack(this.state.nodes, this.state.selectedTracks, data.createGraphicalPlaylist.id);
         }
     }
 
     async loadGraph(id) {
-        let data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
-        console.log(data);
+        var data;
+        try {
+            data = await request('/graphql', RETRIEVE_GRAPHICAL_PLAYLIST, {id: id});
+            console.log(data);
+        }
+        catch (error) {
+            window.location.pathname = "/edit";
+        }
+        this.props.savingCallback(false, data.retrieveGraphicalPlaylist.lastModified);
         this.id = data.retrieveGraphicalPlaylist.id;
         var artistIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.id);
         var trackIds = data.retrieveGraphicalPlaylist.artists.map(artist => artist.tracks).flat().map(tracks=> tracks.id);
@@ -632,6 +645,7 @@ class GraphWindow extends React.Component {
             let d = await response.json();
             tracks.push(...d.tracks);
         }
+        console.log(tracks);
 
         var artists = [];
         for(let i = 0; i < Math.ceil(artistIds.length/50); i++) {
@@ -639,6 +653,7 @@ class GraphWindow extends React.Component {
             let d = await response.json();
             artists.push(...d.artists);
         }
+        console.log(artists);
 
         var selectedTracks = [];
         artists.forEach(artist => {
@@ -657,6 +672,7 @@ class GraphWindow extends React.Component {
                 coords: {q: node.q, r: node.r}
             }
         });
+        console.log(selectedTracks);
 
         this.transactionStack = new TransactionStack(nodes, tracks, id);
         const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
@@ -672,7 +688,7 @@ class GraphWindow extends React.Component {
             this.draw();
         });
         this.lastModified = data.retrieveGraphicalPlaylist.lastModified; 
-        this.props.lastModifiedCallback(this.lastModified);
+        // this.props.lastModifiedCallback(this.lastModified);
     }
 
     componentWillUnmount() {
@@ -765,7 +781,7 @@ class GraphWindow extends React.Component {
         }).then((response)=>{
             // this.setState({lastModified: response.updateTracks.lastModified});
             this.lastModified = response.updateTracks.lastModified;
-            this.props.lastModifiedCallback(this.lastModified);
+            // this.props.lastModifiedCallback(this.lastModified);
         });
         if (this.state.currentTrack)
             this.setState({ selectedTracks: this.state.selectedTracks });
@@ -792,12 +808,12 @@ class GraphWindow extends React.Component {
         }).then((response)=>{
             // this.setState({lastModified: response.updateTracks.lastModified});
             this.lastModified = response.updateTracks.lastModified;
-            this.props.lastModifiedCallback(this.lastModified);
+            // this.props.lastModifiedCallback(this.lastModified);
         });
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save());
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
         else
-            this.setState({ selectedTracks: this.state.selectedTracks}, this.save());
+            this.setState({ selectedTracks: this.state.selectedTracks});
     }
 
     clearTracks = () => {

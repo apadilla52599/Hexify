@@ -428,6 +428,7 @@ var mutation = new GraphQLObjectType({
               graphicalPlaylist.artists = params.artists;
               graphicalPlaylist.nodes = params.nodes;
               graphicalPlaylist.privacyStatus = params.privacyStatus;
+              graphicalPlaylist.lastModified = Date.now();
               graphicalPlaylist.save();
               return graphicalPlaylist;
           }

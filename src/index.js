@@ -18,8 +18,10 @@ class App extends Component {
         this.graphName = name;
     }
 
-    lastModifiedCallback = (lastModified) =>{
-        this.lastModified = lastModified;
+    savingCallback = (saving, date) => {
+        this.saving = saving;
+        if (saving === false && date)
+            this.date = new Date(date);
     }
 
     render() {
@@ -28,10 +30,10 @@ class App extends Component {
                 <div className="App" style={{ display: "flex", width: "100%", height: "100%" }}>
                     <HamburgerMenu graphId={() => this.graphId}/>
                     <div style={{ flexGrow: 1 }}>
-                        <Titlebar graphNameCallback={this.graphNameCallback} lastModified={() => this.lastModified} graphName={() => this.graphName}/>
+                        <Titlebar saving={() => { return {saving: this.saving, date: this.date}}} graphName={() => this.graphName} graphNameCallback={this.graphNameCallback}/>
                         <Switch>
-                            <Route path={["/", "/edit"]} exact component={() => <GraphWindow graphName={() => this.graphName} lastModifiedCallback={this.lastModifiedCallback} graphNameCallback={this.graphNameCallback} graphIdCallback={this.graphIdCallback}/>} />
-                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow graphName={() => this.graphName} lastModifiedCallback={this.lastModifiedCallback} graphNameCallback={this.graphNameCallback} graphIdCallback={this.graphIdCallback} {...routerprops} />} />
+                            <Route path={["/", "/edit"]} exact component={() => <GraphWindow graphName={() => this.graphName} graphNameCallback={this.graphNameCallback} savingCallback={this.savingCallback} graphIdCallback={this.graphIdCallback}/>} />
+                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow graphName={() => this.graphName} graphNameCallback={this.graphNameCallback} savingCallback={this.savingCallback} graphIdCallback={this.graphIdCallback} {...routerprops} />} />
                             <Route path="/browse" exact component={Browse}/>
                         </Switch>
                     </div>
