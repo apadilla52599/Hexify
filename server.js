@@ -27,10 +27,21 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// TODO: This no longer works
+app.use('/auth/temp/:id/:token', function (req, res, next) {
+  req.session.tempToken = req.params.token;
+  req.user = { id: req.params.id, accessToken: req.session.tempToken };
+  req.session.passport = {user: req.user};
+  next()
+});
+
 app.use('/graphql', function(req, res, next) {
     let id = "";
-    if (req.user !== undefined)
+    if (req.user !== undefined) {
+        console.log("there definitely is a req.user");
+        console.log(req.user);
         id = req.user.id;
+    }
     graphqlHTTP({
       schema: schema,
       rootValue: global,
@@ -38,14 +49,6 @@ app.use('/graphql', function(req, res, next) {
       context: id
     })(req, res);
 });
-
-app.use(function (req, res, next) {
-  if (req.user === undefined && req.session.tempToken) {
-    req.user = { accessToken: req.session.tempToken };
-  }
-  console.log(req.user);
-  next()
-})
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -101,9 +104,7 @@ app.get(
 );
 
 // TODO: This no longer works
-app.get('/auth/temp/:token', function (req, res) {
-  //console.log(req.params.token);
-  req.session.tempToken = req.params.token;
+app.use('/auth/temp/:id/:token', function (req, res, next) {
   return res.redirect('/');
 });
 
@@ -149,6 +150,7 @@ app.get('/v1*', function (req, res) {
 
 app.get('*', function (req, res) {
   if (req.user === undefined) {
+    console.log("aaaaaah");
     res.redirect('/auth/spotify');
   }
   else {
