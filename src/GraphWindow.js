@@ -782,6 +782,7 @@ class GraphWindow extends React.Component {
             // this.setState({lastModified: response.updateTracks.lastModified});
             this.lastModified = response.updateTracks.lastModified;
             // this.props.lastModifiedCallback(this.lastModified);
+            this.props.savingCallback(false, response.updateTracks.lastModified);
         });
         if (this.state.currentTrack)
             this.setState({ selectedTracks: this.state.selectedTracks });
@@ -809,6 +810,7 @@ class GraphWindow extends React.Component {
             // this.setState({lastModified: response.updateTracks.lastModified});
             this.lastModified = response.updateTracks.lastModified;
             // this.props.lastModifiedCallback(this.lastModified);
+            this.props.savingCallback(false, response.updateTracks.lastModified);
         });
         if (index < this.state.trackIndex)
             this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
