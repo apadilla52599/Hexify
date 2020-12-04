@@ -80,8 +80,8 @@ class PlaylistEditor extends React.Component {
                     <Playlist player={this.props.player} tracks = {this.props.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} delete = {this.props.deselectTrack} playTrack={this.props.playTrack} />
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", marginTop: "10%", paddingLeft: "2%", paddingRight: "2%"}}>
-                    <Button variant="contained" color="primary"style = {{width: "30%", height: "20", fontSize: "12"}}>
-                        Public
+                    <Button onClick={(event) => this.setState({target: event.target})} variant="contained" color="primary" style={{width: "30%", height: "20", fontSize: "12"}}>
+                        {this.props.privacyStatus}
                     </Button>
                     <Button onClick = {this.share} variant="contained" style = {{width: "30%", height: "20", fontSize: "12"}}>
                         Share
