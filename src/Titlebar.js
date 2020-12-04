@@ -6,6 +6,13 @@ import Button from '@material-ui/core/Button';
 
 
 class Titlebar extends React.Component {
+    constructor(){
+        super();
+        this.state = {
+            graphName: "Untitled Graph",
+            lastModified: ""
+        }
+    }
 
     handleClick = () => {
         const menu = document.getElementById("hamburger_menu");
@@ -41,6 +48,20 @@ class Titlebar extends React.Component {
             window.dispatchEvent(new Event('resize'));
         }
     }
+
+    componentDidMount(){
+        this.nameInterval = setInterval(() => {
+            const newName = this.props.graphName();
+            const newDate = this.props.lastModified();
+            if (newName !== undefined && newName !== "" && newName !== this.graphName) {
+                this.setState({graphName: newName});
+            }
+            if (newDate !== undefined && newDate !== "" && newDate !== this.lastModified) {
+                this.setState({lastModified: newDate});
+            }
+        }, 1000);
+    }
+
     render() {
         const browsing = (window.location.pathname === "/browse");
         return (
@@ -54,10 +75,10 @@ class Titlebar extends React.Component {
                     </div>
                 }
                 { !browsing &&
-                    <Input placeholder="Untitled Graph" onChange={(e) => this.props.graphNameCallback(e.target.value)} style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
+                    <Input placeholder={this.state.graphName} onChange={(e) => this.props.graphNameCallback(e.target.value)} style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
                 }
                 { !browsing &&
-                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: Today 2:52pm</p>
+                    <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>Last Updated: {this.state.lastModified}</p>
                 }
                 
                     <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>

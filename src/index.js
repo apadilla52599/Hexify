@@ -18,16 +18,20 @@ class App extends Component {
         this.graphName = name;
     }
 
+    lastModifiedCallback = (lastModified) =>{
+        this.lastModified = lastModified;
+    }
+
     render() {
         return (
             <Router>
                 <div className="App" style={{ display: "flex", width: "100%", height: "100%" }}>
                     <HamburgerMenu graphId={() => this.graphId}/>
                     <div style={{ flexGrow: 1 }}>
-                        <Titlebar graphNameCallback={this.graphNameCallback}/>
+                        <Titlebar graphNameCallback={this.graphNameCallback} lastModified={() => this.lastModified} graphName={() => this.graphName}/>
                         <Switch>
-                            <Route path={["/", "/edit"]} exact component={() => <GraphWindow graphName={() => this.graphName} graphIdCallback={this.graphIdCallback}/>} />
-                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow graphName={() => this.graphName} graphIdCallback={this.graphIdCallback} {...routerprops} />} />
+                            <Route path={["/", "/edit"]} exact component={() => <GraphWindow graphName={() => this.graphName} lastModifiedCallback={this.lastModifiedCallback} graphNameCallback={this.graphNameCallback} graphIdCallback={this.graphIdCallback}/>} />
+                            <Route path="/edit/:id" exact component={(routerprops) => <GraphWindow graphName={() => this.graphName} lastModifiedCallback={this.lastModifiedCallback} graphNameCallback={this.graphNameCallback} graphIdCallback={this.graphIdCallback} {...routerprops} />} />
                             <Route path="/browse" exact component={Browse}/>
                         </Switch>
                     </div>

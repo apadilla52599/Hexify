@@ -29,7 +29,8 @@ const CREATE_GRAPH = gql`
 const UPDATE_GRAPH = gql`
     mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $privacyStatus: String!) {
     	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, privacyStatus: $privacyStatus) {
-    		id
+            id
+            lastModified
     	}
     }
 `
@@ -63,6 +64,7 @@ const UPDATE_TRACKS = gql`
 mutation($id:String!, $artistId: String!, $tracks: [trackInput]!){
     updateTracks(id: $id, artistId: $artistId, tracks: $tracks){
       id
+      lastModified
     } 
   }
 `
@@ -81,6 +83,7 @@ class GraphWindow extends React.Component {
             nodes: [],
             selectedNode: null,
             privacyStatus: "public",
+            lastModified: ""
         };
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -597,6 +600,12 @@ class GraphWindow extends React.Component {
                         this.save();
                     }, 500);
                 }
+                
+                if(d !== undefined && d.updateGraphicalPlaylist !== undefined){
+                    // this.setState({lastModified: d.updateGraphicalPlaylist.lastModified});
+                    this.lastModified = d.updateGraphicalPlaylist.lastModified;
+                    this.props.lastModifiedCallback(this.lastModified);
+                }
             });
         }
     }
@@ -652,6 +661,7 @@ class GraphWindow extends React.Component {
         this.transactionStack = new TransactionStack(nodes, tracks, id);
         const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
         this.graphName = data.retrieveGraphicalPlaylist.name;
+        this.props.graphNameCallback(this.graphName);
         this.setState({
             nodes: nodes,
             selectedTracks: selectedTracks,
@@ -660,7 +670,9 @@ class GraphWindow extends React.Component {
         }, () => {
             this.props.graphIdCallback(id);
             this.draw();
-        }); 
+        });
+        this.lastModified = data.retrieveGraphicalPlaylist.lastModified; 
+        this.props.lastModifiedCallback(this.lastModified);
     }
 
     componentWillUnmount() {
@@ -750,6 +762,10 @@ class GraphWindow extends React.Component {
             id: this.transactionStack.id,
             artistId: track.artist.id,
             tracks: selectedTracks
+        }).then((response)=>{
+            // this.setState({lastModified: response.updateTracks.lastModified});
+            this.lastModified = response.updateTracks.lastModified;
+            this.props.lastModifiedCallback(this.lastModified);
         });
         if (this.state.currentTrack)
             this.setState({ selectedTracks: this.state.selectedTracks });
@@ -773,6 +789,10 @@ class GraphWindow extends React.Component {
             id: this.transactionStack.id,
             artistId: track.artist.id,
             tracks: selectedTracks
+        }).then((response)=>{
+            // this.setState({lastModified: response.updateTracks.lastModified});
+            this.lastModified = response.updateTracks.lastModified;
+            this.props.lastModifiedCallback(this.lastModified);
         });
         if (index < this.state.trackIndex)
             this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save());

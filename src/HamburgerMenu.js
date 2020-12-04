@@ -23,6 +23,7 @@ const RETRIEVE_USER = gql`
         graphicalPlaylists {
             id
             name
+            lastModified
         }
     }
   }
@@ -111,7 +112,7 @@ class HamburgerMenu extends React.Component {
 
     render() {
         const deleteOpen = this.state.deleteTarget !== undefined;
-
+        
         return (
             <div id="hamburger_menu" style={{ display: "flex", width: "0%", height: "100vh", backgroundColor: "var(--background-color)", visibility:"hidden", position:"relative" }}>
                  <div id="scroll" style={{width: "100%"}}>
@@ -129,7 +130,7 @@ class HamburgerMenu extends React.Component {
                         GRAPHICAL PLAYLISTS
                     </Typography>
                     <Divider/>
-                    {this.state.graphList.map( (graph, index) => (
+                    {this.state.graphList.sort((a,b) => a.lastModified.localeCompare(b.lastModified)).map( (graph, index) => (
                         <ListItem className="ListItemHover" button={true} key={index} onClick={() => window.location.pathname = "/edit/" + graph.id}>
                         <ListItemAvatar>
                             <Avatar sizes="large" src={graph.thumbnail}></Avatar>

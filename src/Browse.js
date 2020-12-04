@@ -29,6 +29,7 @@ const SEARCH_GRAPHS = gql`
         name
         id
         owner
+        privacyStatus
         }
     }
 ` 
@@ -54,8 +55,10 @@ class Browse extends React.Component {
             var graphList = []
             var data = response.searchGraphicalPlaylists;
             for(let i = 0; i < data.length; i++){
-                data[i].thumb = {name: data[i].name, id: i, src: img1}
-                graphList.push(data[i]);
+                if (data[i].privacyStatus === "public" || data[i].privacyStatus === undefined){
+                    data[i].thumb = {name: data[i].name, id: data[i].id, src: img1}
+                    graphList.push(data[i]);
+                }
             }
             console.log(graphList);
             this.setState({graphs: graphList});
@@ -79,9 +82,12 @@ class Browse extends React.Component {
             var data = response.graphicalPlaylists;
             var graphList = []
             for(let i = 0; i < data.length; i++){
-                data[i].thumb = {name: data[i].name, id: i, src: img1}
-                console.log(data[i]);
-                graphList.push(data[i]);
+                if (data[i].privacyStatus === "public" || data[i].privacyStatus === undefined){
+                    data[i].thumb = {name: data[i].name, id: data[i].id, src: img1}
+                    console.log(data[i]);
+                    graphList.push(data[i]);
+                }
+                console.log(data[i].privacyStatus);
             }
             this.setState({graphs: graphList});
             const grid = document.querySelector('.grid');
@@ -111,7 +117,7 @@ class Browse extends React.Component {
                     <div id="ScrollPaper" style={{backgroundColor: "white", width: "100%"}}>
                         <Typography ></Typography>
                          <div className="grid" style={{marginLeft: "35px", marginTop: "20px"}}>
-                            {this.state.graphs === undefined? <div></div> : this.state.graphs.map(img => (<div className="grid-item"><div className="hvrbox"><img alt="graph thumbnail" src= {img.thumb.src} style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/><div className="hvrbox-layer_top"><div className="hvrbox-text">{img.thumb.name}</div></div></div> </div>))}
+                            {this.state.graphs === undefined? <div></div> : this.state.graphs.map(img => (<div className="grid-item"><div className="hvrbox"><img  alt="graph thumbnail" src= {img.thumb.src} style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/><div onClick={() => window.location.pathname = "/edit/" + img.thumb.id} className="hvrbox-layer_top"><div className="hvrbox-text">{img.thumb.name}</div></div></div> </div>))}
                         </div>
                     </div>
                 </div>
