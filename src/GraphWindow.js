@@ -84,8 +84,9 @@ class GraphWindow extends React.Component {
             nodes: [],
             selectedNode: null,
             privacyStatus: "public",
-            lastModified: ""
+            lastModified: "",
         };
+        this.artistLookup = {};
         this.selectedQuickArtist = null;
         this.transform = null;
         this.canvas = null;
@@ -298,7 +299,7 @@ class GraphWindow extends React.Component {
             }
             else {
                 this.adjacentRecommendedArtists.forEach((artistNode) => {
-                    this.drawNodeImage(artistNode);
+                        this.drawNodeImage(artistNode);
                 });
             }
         }
@@ -329,25 +330,37 @@ class GraphWindow extends React.Component {
             fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/related-artists").then((response) => {
                 response.json().then(d => {
                     var i = 0;
+                    var filtered = d.artists.filter(artist => !(artist.id in this.artistLookup));
+                    this.shuffleArtists(filtered);
+                    console.log("Shuffled", filtered);
+                    var artistList = d.artists;
+                    if(filtered.length >= 6){
+                        artistList = filtered;
+                        console.log("in filtered");
+                    }
+                    var artistList = artistList.filter(artist => !(artist.images === undefined || artist.images[0] === undefined || artist.images[0].url === undefined || artist.id === undefined));
                     selectedNeighbors.forEach((neighborCoords) => {
-                        let artist = d.artists[i];
-                        var flag = false;
-                        for (let j = 0; j < DummyData.artists.length; j++) {
-                            if (DummyData.artists[j].id === artist.id) {
-                                flag = true;
-                                artist = DummyData.artists[j];
+                        if(artistList.length - i > 0){
+                            let artist = artistList[i];
+                            var flag = false;
+                            for (let j = 0; j < DummyData.artists.length; j++) {
+                                if (DummyData.artists[j].id === artist.id) {
+                                    flag = true;
+                                    artist = DummyData.artists[j];
+                                }
                             }
+                            if (flag === false) {
+                                DummyData.artists.push(artist);
+                            }
+
+                            const length = this.adjacentRecommendedArtists.push({
+                                artist: artist,
+                                coords: neighborCoords,
+                                image: null
+                            });
+                            this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
+                            i++;
                         }
-                        if (flag === false) {
-                            DummyData.artists.push(artist);
-                        }
-                        const length = this.adjacentRecommendedArtists.push({
-                            artist: artist,
-                            coords: neighborCoords,
-                            image: null
-                        });
-                        this.drawNodeImage(this.adjacentRecommendedArtists[length - 1]);
-                        i++;
                     });
                     this.queryingSimilar = false;
                 });
@@ -608,6 +621,11 @@ class GraphWindow extends React.Component {
                 if(d !== undefined && d.updateGraphicalPlaylist !== undefined){
                     // this.setState({lastModified: d.updateGraphicalPlaylist.lastModified});
                     this.lastModified = d.updateGraphicalPlaylist.lastModified;
+                    this.artistLookup = {};
+                    for(let i = 0; i < artists.length; i++){
+                        this.artistLookup[artists[i].id] = artists[i];
+                    }
+                    console.log(this.artistLookup);
                     // this.props.lastModifiedCallback(this.lastModified);
                 }
             });
@@ -654,6 +672,10 @@ class GraphWindow extends React.Component {
             artists.push(...d.artists);
         }
         console.log(artists);
+
+        for(let i = 0; i < artists.length; i++){
+            this.artistLookup[artists[i].id] = artists[i];
+        }
 
         var selectedTracks = [];
         artists.forEach(artist => {
@@ -957,6 +979,19 @@ class GraphWindow extends React.Component {
         console.log("position");
         console.log(position)
         this.state.player.seek(position);
+    }
+
+    shuffleArtists = (array) => {
+        var i = array.length,
+            j = 0,
+            temp;
+        while (i--) {
+            j = Math.floor(Math.random() * (i+1));
+            temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 
     render() {
