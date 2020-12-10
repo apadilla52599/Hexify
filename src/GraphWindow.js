@@ -86,6 +86,7 @@ class GraphWindow extends React.Component {
             privacyStatus: "public",
             lastModified: "",
         };
+        // this.state.limit = true;
         this.artistLookup = {};
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -1043,29 +1044,88 @@ class GraphWindow extends React.Component {
         }
         return array;
     }
+    
+    toggleLimit = () =>{
+        this.clearTracks();
+        
+        if(this.state.selectedNode.artist.tracks.length <= 10 && this.state.selectedNode.limit === true){
+            this.getAllTracks();
+        }else{
+            this.getTopTracks();
+        }
+    }
+
+    getAllTracks = () => {
+        fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/albums").then((response) => {
+            response.json().then(albums => {
+                console.log(albums);
+                var tracks = [];
+                var count = 0;
+                for (const album of albums.items){
+                    var len = albums.items.length
+                    fetch("/v1/albums/" + album.id + "/tracks?market=US").then((response) => {
+                        response.json().then(d => {
+                            for (const track of d.items) {
+                                track['album'] = album;
+                            }
+                            tracks = tracks.concat(d.items);
+                        })
+                        count ++;
+                    }).then(() => {if(count == len || count == 1){
+                        console.log(tracks);
+                        const selectedNode = {
+                            ...this.state.selectedNode,
+                        }
+                        selectedNode.limit = false;
+                        selectedNode.artist.tracks = tracks;
+                        var flag = false;
+                        for(let i = 0; i < this.state.nodes.length - 1; i++){
+                            if(selectedNode.artist.id === this.state.nodes[i].artist.id){
+                                flag = true;
+                                selectedNode.artist = this.state.nodes[i].artist;
+                            }
+                        }
+                        if(flag === false){
+                            selectedNode.artist.selectedTracks = [];
+                        }
+                        this.setState({selectedNode: selectedNode});
+                    }});
+                }
+            });
+        });
+    }
+
+    getTopTracks = () => {
+        fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
+            response.json().then(d => {
+                const selectedNode = {
+                    ...this.state.selectedNode,
+                }
+                selectedNode.limit = true;
+                selectedNode.artist.tracks = d.tracks;
+                var flag = false;
+                for(let i = 0; i < this.state.nodes.length - 1; i++){
+                    if(selectedNode.artist.id === this.state.nodes[i].artist.id){
+                        flag = true;
+                        selectedNode.artist = this.state.nodes[i].artist;
+                    }
+                }
+                if(flag === false){
+                    selectedNode.artist.selectedTracks = [];
+                }
+                this.setState({selectedNode: selectedNode});
+            });
+        });
+    }
 
     render() {
         var index = 0;
-        if (this.state.selectedNode !== null && this.state.selectedNode.artist.tracks === undefined) {
-            fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
-                response.json().then(d => {
-                    const selectedNode = {
-                        ...this.state.selectedNode,
-                    }
-                    selectedNode.artist.tracks = d.tracks;
-                    var flag = false;
-                    for(let i = 0; i < this.state.nodes.length - 1; i++){
-                        if(selectedNode.artist.id === this.state.nodes[i].artist.id){
-                            flag = true;
-                            selectedNode.artist = this.state.nodes[i].artist;
-                        }
-                    }
-                    if(flag === false){
-                        selectedNode.artist.selectedTracks = [];
-                    }
-                    this.setState({selectedNode: selectedNode});
-                });
-            });
+        if (this.state.selectedNode !== null &&this.state.selectedNode.artist.tracks === undefined) {
+            if(this.state.selectedNode.limit === undefined || this.state.selectedNode.limit == true){
+                this.getTopTracks();
+            }else{
+                this.getAllTracks();
+            }
         }
         if (this.playerLoaded === false && this.state.player) {
             this.playerLoaded = true;
@@ -1094,7 +1154,16 @@ class GraphWindow extends React.Component {
                             exportPlaylist ={() => {if(this.state.player != null){this.exportPlaylist()}}}
                         />
                     ) : (
-                        <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined} node={this.state.selectedNode} selectedTracks={this.state.selectedTracks} selectTrack={this.selectTrack} deselectTrack={this.deselectTrack} removeNode={this.removeNode} deselectNode={this.deselectNode} playTrack={(track) => this.playTrack(track)} />
+                        <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}
+                         node={this.state.selectedNode} 
+                         selectedTracks={this.state.selectedTracks} 
+                         selectTrack={this.selectTrack} 
+                         deselectTrack={this.deselectTrack} 
+                         removeNode={this.removeNode} 
+                         deselectNode={this.deselectNode} 
+                         playTrack={(track) => this.playTrack(track)}
+                         toggleLimit = {this.toggleLimit}
+                          />
                     )}
                     {this.state.selectedTracks.length > 0 && this.state.player &&
                         <Playback
