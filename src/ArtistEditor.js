@@ -1,7 +1,7 @@
 import React from "react";
 import TrackList from "./TrackList.js";
 import Button from '@material-ui/core/Button';
-import { Input } from "@material-ui/core";
+import {Input, FormControlLabel, FormGroup, Switch} from "@material-ui/core";
 
 class ArtistEditor extends React.Component{
     constructor(props){
@@ -15,6 +15,9 @@ class ArtistEditor extends React.Component{
 
 
     render() {
+        if(this.props.node.limit == undefined){
+            this.props.node.limit = true;
+        }
         const imgStyle = {
             marginTop: "16px",
             width: "10vh",
@@ -37,12 +40,28 @@ class ArtistEditor extends React.Component{
                 <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "6vh", height: "6vh", position: "absolute", marginLeft: "10%", marginTop: "calc(16px + 2vh)"}}>
                     <i className="fas fa-chevron-left"></i>
                 </div>
+                
                 <div style={{display: "flex", height: "min-content", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <div style={imgStyle} />
                 </div>
-                <div style={{display: "flex", height: "64px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
+                <div style={{display: "flex", height: "32px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{this.props.node.artist.name}</p>
                 </div>
+
+                <div style={{display: "flex", height: "32px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
+                <FormGroup style = {{color: "white", cursor: "default", fontFamily: "monospace", fontSize: "12px"}}>
+                    <FormControlLabel
+                    control={<Switch
+                    // disabled = {tracks.length > 10}
+                    checked={this.props.node.limit} 
+                    onChange={this.props.toggleLimit} />}
+                    label="Limit Tracks"
+                    />
+                </FormGroup>
+                </div>
+
+
+
                 <div style={{display: "flex", height: "calc(50% - 100px - 5vh)", marginBottom: "16px", justifyContent: "center", flexGrow: 1 }}>
                     <TrackList player={this.props.player} tracks={selectedTracks} icon="fas fa-times" handleClick={this.props.deselectTrack} playTrack={this.props.playTrack} />
                 </div>
