@@ -416,9 +416,12 @@ class GraphWindow extends React.Component {
         const highlightCursor = (e) => {
             this.mouseCoord = this.pixelToAxial(e.clientX, e.clientY);
             this.draw();
-            if(this.movingArtist !== null){
+            if(this.movingArtist !== null &&
+                (this.mouseCoord.q !== this.movingArtist.oldCoords.q &&
+                this.mouseCoord.r !== this.movingArtist.oldCoords.r)
+            ) {
                 this.movingArtist.node.coords = this.mouseCoord;
-                console.log(this.movingArtist.node.coords);
+                this.movingArtist.moved = true;
                 this.drawNodeImage(this.movingArtist.node);
             }
             else if(this.selectedQuickArtist !== null){
@@ -451,12 +454,16 @@ class GraphWindow extends React.Component {
                     const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
                     if (this.state.selectedNode !== null &&
                         this.state.selectedNode.coords.q === mouseCoords.q &&
-                        this.state.selectedNode.coords.r === mouseCoords.r) {
+                        this.state.selectedNode.coords.r === mouseCoords.r &&
+                        this.movingArtist === null
+                    ) {
                         this.adjacentRecommendedArtists = [];
                         this.movingArtist = {
                             node: this.state.selectedNode,
                             oldCoords: {...this.state.selectedNode.coords},
+                            moved: false
                         };
+                        console.log(this.movingArtist);
                         const index = this.state.nodes.findIndex(node => node.coords.q === this.movingArtist.node.coords.q || node.coords.r === this.movingArtist.node.coords.r);
                         this.movingArtist.index = index;
                         this.setState({
@@ -513,11 +520,6 @@ class GraphWindow extends React.Component {
         this.canvas.onclick = (e) => {
             const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
             if (e.button === 0) {
-                if (this.state.selectedNode !== null &&
-                    this.state.selectedNode.coords.q === mouseCoords.q &&
-                    this.state.selectedNode.coords.r === mouseCoords.r) {
-                    this.canvas.onmousemove = (e) => console.log(e);
-                }
                 var flag = false;
                 this.adjacentRecommendedArtists.forEach(async (node) => {
                     if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
