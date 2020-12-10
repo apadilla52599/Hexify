@@ -44,15 +44,43 @@ class TransactionStack {
         }
     }
 
-    removeNode(node) {
+    moveNode({node, oldCoords, index}) {
+        var oldNode = undefined;
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (i !== index && this.nodes[i].coords.q === node.coords.q && this.nodes[i].coords.r === node.coords.r) {
+                console.log(i);
+                console.log(index);
+                console.log(this.nodes[i].coords);
+                console.log({oldCoords});
+                oldNode = this.nodes[i];
+                this.nodes.splice(i, 1);
+            }
+        }
+        this.stackPush({
+            type: "move",
+            data: {
+                oldNode: oldNode,
+                oldCoords: oldCoords,
+                coords: {...node.coords}
+            }
+        });
+        return {
+            update: true,
+            nodes: this.nodes,
+        }
+    }
+
+    removeNode(node, keepTracks) {
         var update = false;
         var removedTracks = [];
         for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].coords.q === node.coords.q &&
                 this.nodes[i].coords.r === node.coords.r) {
-                for (let i = 0; i < this.selectedTracks.length; i++)
-                    if (this.selectedTracks[i].artist.id === node.artist.id)
-                        removedTracks.push({ index: i, track: this.selectedTracks[i] });
+                if (keepTracks === undefined || keepTracks === false) {
+                    for (let i = 0; i < this.selectedTracks.length; i++)
+                        if (this.selectedTracks[i].artist.id === node.artist.id)
+                            removedTracks.push({ index: i, track: this.selectedTracks[i] });
+                }
                 this.stackPush({
                     type: "remove",
                     removedTracks: removedTracks,
@@ -105,6 +133,19 @@ class TransactionStack {
                     }
                 }
             }
+            else if (transaction.type === "move") {
+                console.log(this.stack);
+                console.log(this.nodes);
+                const nodeIndex = this.nodes.findIndex((node) => {
+                    return node.coords.q === transaction.data.coords.q && node.coords.r === transaction.data.coords.r;
+                });
+                this.nodes[nodeIndex].coords = transaction.data.oldCoords;
+                if (transaction.data.oldNode !== undefined) {
+                    this.nodes.push(transaction.data.oldNode);
+                }
+                this.topIndex -= 1;
+                update = true;
+            }
         }
         return {
             update: update,
@@ -121,7 +162,6 @@ class TransactionStack {
         if (this.topIndex < this.stack.length) {
             const transaction = this.stack[this.topIndex];
             if (transaction.type === "add") {
-                console.log(this.stack);
                 this.nodes.push(transaction.data);
                 addedTracks = transaction.removedTracks;
                 this.topIndex += 1;
@@ -147,6 +187,24 @@ class TransactionStack {
                         update = true;
                     }
                 }
+            }
+            else if (transaction.type === "move") {
+                console.log(this.stack);
+                console.log(this.nodes);
+                const nodeIndex = this.nodes.findIndex((node) => {
+                    return node.coords.q === transaction.data.coords.q && node.coords.r === transaction.data.coords.r;
+                });
+                const oldNodeIndex = this.nodes.findIndex((node) => {
+                    return node.coords.q === transaction.data.oldCoords.q && node.coords.r === transaction.data.oldCoords.r;
+                });
+                if (nodeIndex >= 0) {
+                    this.nodes.splice(nodeIndex, 1);
+                }
+                if (oldNodeIndex >= 0) {
+                    this.nodes[oldNodeIndex].coords = transaction.data.coords;
+                }
+                this.topIndex += 1;
+                update = true;
             }
         }
         return {
