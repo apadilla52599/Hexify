@@ -46,6 +46,10 @@ class TransactionStack {
 
     moveNode({node, oldCoords, index}) {
         var oldNode = undefined;
+        console.log(node.coords);
+        console.log(this.nodes[index].coords);
+        this.nodes[index] = node.coords;
+        //console.log(this.nodes);
         for (let i = 0; i < this.nodes.length; i++) {
             if (i !== index && this.nodes[i].coords.q === node.coords.q && this.nodes[i].coords.r === node.coords.r) {
                 console.log(i);

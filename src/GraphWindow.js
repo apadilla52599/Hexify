@@ -418,6 +418,7 @@ class GraphWindow extends React.Component {
             this.draw();
             if(this.movingArtist !== null){
                 this.movingArtist.node.coords = this.mouseCoord;
+                console.log(this.movingArtist.node.coords);
                 this.drawNodeImage(this.movingArtist.node);
             }
             else if(this.selectedQuickArtist !== null){
@@ -459,7 +460,6 @@ class GraphWindow extends React.Component {
                         const index = this.state.nodes.findIndex(node => node.coords.q === this.movingArtist.node.coords.q || node.coords.r === this.movingArtist.node.coords.r);
                         this.movingArtist.index = index;
                         this.setState({
-                            nodes: this.state.nodes.filter(node => node.coords.q !== this.movingArtist.node.coords.q || node.coords.r !== this.movingArtist.node.coords.r),
                             selectedNode: null
                         }, this.draw);
                     }
@@ -494,6 +494,9 @@ class GraphWindow extends React.Component {
                 this.draw();
             })
         );
+        let defaultTransform = this.transform;
+        defaultTransform.k *= 2.5;
+        selection.call(d3.zoom().transform, defaultTransform);
 
         // Draw the graph for the first time
         this.draw();
