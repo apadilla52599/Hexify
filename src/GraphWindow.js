@@ -1,6 +1,6 @@
 import React from "react";
 import * as d3 from "d3";
-import DummyData from "./DummyData/DummyArtists.json";
+//import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
 import Drawer from "@material-ui/core/Drawer";
 
@@ -74,9 +74,6 @@ class GraphWindow extends React.Component {
 
     constructor(props) {
         super(props);
-        DummyData.artists.forEach((artist) => {
-            artist.image = null;
-        });
         this.state = {
             trackIndex: 0,
             paused: true,
@@ -87,6 +84,8 @@ class GraphWindow extends React.Component {
             lastModified: "",
         };
         // this.state.limit = true;
+        this.topRecommendedArtists = [];
+        this.loadedArtists = [];
         this.artistLookup = {};
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -94,7 +93,6 @@ class GraphWindow extends React.Component {
         this.ctx = null;
         this.mouseCoord = null;
         this.adjacentRecommendedArtists = [];
-        this.topRecommendedArtists = DummyData.artists.slice(0, 6);
         this.queryingSimilar = false;
         this.playerLoaded = false;
         this.neverStarted = true;
@@ -345,14 +343,14 @@ class GraphWindow extends React.Component {
                         if(artistList.length - i > 0){
                             let artist = artistList[i];
                             var flag = false;
-                            for (let j = 0; j < DummyData.artists.length; j++) {
-                                if (DummyData.artists[j].id === artist.id) {
+                            for (let j = 0; j < this.loadedArtists.length; j++) {
+                                if (this.loadedArtists[j].id === artist.id) {
                                     flag = true;
-                                    artist = DummyData.artists[j];
+                                    artist = this.loadedArtists[j];
                                 }
                             }
                             if (flag === false) {
-                                DummyData.artists.push(artist);
+                                this.loadedArtists.push(artist);
                             }
 
                             const length = this.adjacentRecommendedArtists.push({
@@ -375,6 +373,7 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
+        this.topRecommendedArtists = this.loadedArtists.slice(0, 6);
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
             fetch('/auth/token').then(response => response.json()).then(data => {
@@ -618,6 +617,16 @@ class GraphWindow extends React.Component {
                 this.removeNode(this.state.selectedNode);
                 this.deselectNode();
             }
+        });
+
+        // Get the user's top artists
+        fetch("/v1/me/top/artists?time_range=medium_term").then((response) => {
+            console.log(response);
+            response.json().then(d => {
+                console.log(d);
+                this.topRecommendedArtists.push(...d.items);
+                this.loadedArtists.push(...d.items);
+            });
         });
 
         this.nameInterval = setInterval(() => {
@@ -1066,7 +1075,7 @@ class GraphWindow extends React.Component {
                 console.log(albums);
                 var tracks = [];
                 var count = 0;
-                for (const album of albums.items){
+                for (const album of albums.items) {
                     var len = albums.items.length
                     fetch("/v1/albums/" + album.id + "/tracks?market=US").then((response) => {
                         response.json().then(d => {
@@ -1253,14 +1262,16 @@ class GraphWindow extends React.Component {
                         <i className="fas fa-search" style={ { fontSize: "1.5rem" } }></i>
                     </div>
                 {
-                    this.topRecommendedArtists.map((artist) => {
+                    this.topRecommendedArtists.slice(0, 6).map((artist) => {
                         index += 1;
+                        console.log(this.topRecommendedArtists);
+                        console.log(index);
                         return (
                             <div
                                 key={ index }
-                                onMouseDown = { this.handleQuickAddDrag.bind(this, DummyData.artists[index - 1]) }
+                                onMouseDown = { this.handleQuickAddDrag.bind(this, this.topRecommendedArtists[index - 1]) }
 
-                                style={ this.quickAddStyle(index, DummyData.artists[index - 1].images[0].url) }
+                                style={ this.quickAddStyle(index, this.topRecommendedArtists[index - 1].images[0].url) }
                             />
                         );
                     })
