@@ -996,6 +996,8 @@ class GraphWindow extends React.Component {
     }
     
     toggleLimit = () =>{
+        this.clearTracks();
+        
         if(this.state.selectedNode.artist.tracks.length <= 10 && this.state.selectedNode.limit === true){
             this.getAllTracks();
         }else{
@@ -1019,7 +1021,7 @@ class GraphWindow extends React.Component {
                             tracks = tracks.concat(d.items);
                         })
                         count ++;
-                    }).then(() => {if(count == len){
+                    }).then(() => {if(count == len || count == 1){
                         console.log(tracks);
                         const selectedNode = {
                             ...this.state.selectedNode,
