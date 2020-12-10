@@ -997,7 +997,7 @@ class GraphWindow extends React.Component {
     
     toggleLimit = () =>{
         this.clearTracks();
-        
+
         if(this.state.selectedNode.artist.tracks.length <= 10 && this.state.selectedNode.limit === true){
             this.getAllTracks();
         }else{
@@ -1067,6 +1067,49 @@ class GraphWindow extends React.Component {
             });
         });
     }
+    randomizePlaylist = () =>{
+        
+    }
+
+    selectRandomTracks = (artist, artistTracks) => {
+        var thresh;
+        if(artistTracks.length > 10){
+            thresh = .1;
+        }else{
+            thresh = .4;
+        }
+        if(artistTracks != undefined && this.state.selectedTracks != undefined){
+            for (const track of artistTracks){
+                track.artist = artist;
+                if(Math.random() < thresh){
+                    this.state.selectedTracks.push(track);
+                    var selectedTracks = this.state.selectedTracks.map((t)=> 
+                    {
+                        if(t != undefined){
+                            let obj = {
+                                id: t.id,
+                                name: t.name,
+                                uri: t.uri
+                            };
+                            return obj
+                        }
+                    });
+                    request('/graphql', UPDATE_TRACKS, {
+                        id: this.transactionStack.id,
+                        artistId: track.artist.id,
+                        tracks: selectedTracks
+                    }).then((response)=>{
+                        this.lastModified = response.updateTracks.lastModified;
+                        this.props.savingCallback(false, response.updateTracks.lastModified);
+                    });
+                    if (this.state.currentTrack)
+                        this.setState({ selectedTracks: this.state.selectedTracks });
+                    else
+                        this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
+                } 
+            }
+        }
+    }
 
     render() {
         var index = 0;
@@ -1113,6 +1156,7 @@ class GraphWindow extends React.Component {
                          deselectNode={this.deselectNode} 
                          playTrack={(track) => this.playTrack(track)}
                          toggleLimit = {this.toggleLimit}
+                         randomSelect = {this.selectRandomTracks}
                           />
                     )}
                     {this.state.selectedTracks.length > 0 && this.state.player &&

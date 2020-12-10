@@ -14,7 +14,7 @@ class ArtistEditor extends React.Component{
     }
 
     handlePageChange1 = (e,v) => {
-        this.setState({nonSelectedpage: v});
+        this.setState({nonSelectedPage: v});
     }
     handlePageChange2 = (e,v) => {
         this.setState({selectedPage: v});
@@ -46,6 +46,13 @@ class ArtistEditor extends React.Component{
             <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "3vh", position: "absolute", marginLeft: "5%", marginTop: "5%"}}>
                     <i className="fas fa-chevron-left"></i>
+                </div>
+
+                <div onClick={() =>{this.setState({nonSelectedPage: 1});this.props.randomSelect(this.props.node.artist, tracks.filter(tracks => 
+                            tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1))}} 
+                style={{cursor: "pointer", color: "white", fontSize: "3vh", 
+                position: "absolute", marginLeft: "75%", marginTop: "5%"}}>
+                    <i className="fas fa-dice"></i>
                 </div>
                 
                 <div style={{display: "flex", height: "min-content", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
