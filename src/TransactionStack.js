@@ -44,17 +44,15 @@ class TransactionStack {
         }
     }
 
-    removeNode(node, keepTracks) {
+    removeNode(node) {
         var update = false;
         var removedTracks = [];
         for (let i = 0; i < this.nodes.length; i++) {
             if (this.nodes[i].coords.q === node.coords.q &&
                 this.nodes[i].coords.r === node.coords.r) {
-                if (keepTracks === undefined || keepTracks === false) {
-                    for (let i = 0; i < this.selectedTracks.length; i++)
-                        if (this.selectedTracks[i].artist.id === node.artist.id)
-                            removedTracks.push({ index: i, track: this.selectedTracks[i] });
-                }
+                for (let i = 0; i < this.selectedTracks.length; i++)
+                    if (this.selectedTracks[i].artist.id === node.artist.id)
+                        removedTracks.push({ index: i, track: this.selectedTracks[i] });
                 this.stackPush({
                     type: "remove",
                     removedTracks: removedTracks,
