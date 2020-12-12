@@ -513,7 +513,7 @@ class GraphWindow extends React.Component {
                 if (this.state.selectedNode !== null &&
                     this.state.selectedNode.coords.q === mouseCoords.q &&
                     this.state.selectedNode.coords.r === mouseCoords.r) {
-                    this.canvas.onmousemove = (e) => console.log(e);
+                    // this.canvas.onmousemove = (e) => console.log(e);
                 }
                 var flag = false;
                 this.adjacentRecommendedArtists.forEach(async (node) => {
@@ -1117,12 +1117,48 @@ class GraphWindow extends React.Component {
             });
         });
     }
+
     randomizePlaylist = () =>{
-        
-    }
+        var thresh = .1;
+        for (const node of this.state.nodes){
+            var artist = node.artist.name;
+            console.log(artist.id);
+            var artistTracks = node.artist.tracks;
+            if(artistTracks != undefined && this.state.selectedTracks != undefined){
+                for (const track of artistTracks){
+                    track.artist = artist;
+                    if(Math.random() < thresh){
+                        this.state.selectedTracks.push(track);
+                    }
+                }
+            }
+        }
+        var selectedTracks = this.state.selectedTracks.map((t)=> {
+            if(t != undefined){
+                let obj = {
+                    id: t.id,
+                    name: t.name,
+                    uri: t.uri
+                };
+                return obj
+            }
+        });
+        request('/graphql', UPDATE_TRACKS, {
+            id: this.transactionStack.id,
+            artistId: artist.id,
+            tracks: selectedTracks
+        }).then((response)=>{
+            this.lastModified = response.updateTracks.lastModified;
+            this.props.savingCallback(false, response.updateTracks.lastModified);
+        });
+        this.setState({ selectedTracks: this.state.selectedTracks });
+    }   
 
     selectRandomTracks = (artist, artistTracks) => {
         var thresh;
+        if(artistTracks === undefined){
+            return;
+        }
         if(artistTracks.length > 10){
             thresh = .1;
         }else{
@@ -1195,6 +1231,7 @@ class GraphWindow extends React.Component {
                             clearTracks={this.clearTracks}
                             playTrack={(track) => this.playTrack(track)}
                             exportPlaylist ={() => {if(this.state.player != null){this.exportPlaylist()}}}
+                            randomizePlaylist = {this.randomizePlaylist}
                         />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}
