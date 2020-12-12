@@ -99,7 +99,10 @@ class Titlebar extends React.Component {
               
 
                 { !browsing &&
-                    <IconButton href="/browse" style = {{color: "white", marginLeft: "22vw"}}>
+                    <p id="camera_button" style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.2rem", marginLeft: "18vw" }}><i className="fas fa-camera"></i></p>
+                }
+                { !browsing &&
+                    <IconButton href="/browse" style = {{color: "white" }}>
                         <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
                     </IconButton>
                 }
@@ -108,7 +111,7 @@ class Titlebar extends React.Component {
                     Log In
                 </Button>
                  :
-                <Button href="/logout" id="purple_text_background" variant="contained" color="default" style = {{marginRight: "1vw", marginLeft: "1vw", height: "2rem", fontSize: ".75rem"}}>
+                <Button href="/logout" id="purple_text_background" variant="contained" color="default" style = {{marginRight: "1vw", height: "2rem", fontSize: ".75rem"}}>
                     Log out
                 </Button>
                 }

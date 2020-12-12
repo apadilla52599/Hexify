@@ -26,12 +26,12 @@ body {
 #graph_window {
     width: 100%;
     height: calc(100% - var(--titlebar-height));
+    display: flex;
 }
 
 #playlist_column {
     width: var(--playlist-column-width);
     height: calc(100% - var(--titlebar-height));
-    position: absolute;
 }
 
 #sidebar_column {

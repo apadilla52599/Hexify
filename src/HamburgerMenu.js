@@ -78,7 +78,6 @@ class HamburgerMenu extends React.Component {
     poll = () => {
         request('/graphql', RETRIEVE_USER).then((data) => {
             if (data && data.user) {
-                data.user.graphicalPlaylists.forEach(graph => graph.thumbnail = img1);
                 this.setState({ graphList: data.user.graphicalPlaylists });
             }
         });
@@ -133,7 +132,7 @@ class HamburgerMenu extends React.Component {
                     {this.state.graphList.sort((a,b) => b.lastModified.localeCompare(a.lastModified)).map( (graph, index) => (
                         <ListItem className="ListItemHover" button={true} key={index} onClick={() => window.location.pathname = "/edit/" + graph.id}>
                         <ListItemAvatar>
-                            <Avatar sizes="large" src={graph.thumbnail}></Avatar>
+                            <Avatar sizes="large" src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".jpg"}></Avatar>
                         </ListItemAvatar>
                         <ListItemText
                             primary={graph.name} style={{color: "white"}}

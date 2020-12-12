@@ -3,6 +3,7 @@ import * as d3 from "d3";
 //import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
 import Drawer from "@material-ui/core/Drawer";
+import AWS from 'aws-sdk';
 
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
@@ -17,6 +18,7 @@ const selectedColor = "#B19CD9";
 const hexRadius = cartesianToPixel;
 const imageRadius = cartesianToPixel * .6;
 const nodeBackground = "#d0d0d0";
+const bucket = "hexifythumbnails";
 
 const CREATE_GRAPH = gql`
     mutation CreateGraphicalPlaylist($name: String!, $privacyStatus: String!) {
@@ -162,8 +164,8 @@ class GraphWindow extends React.Component {
 
     pixelToCart(u, v) {
         return {
-            x: (u - this.canvas.parentElement.offsetLeft - this.transform.x) / this.transform.k,
-            y: (v - this.canvas.parentElement.offsetTop  - this.transform.y) / this.transform.k,
+            x: (u - this.canvas.offsetLeft - this.transform.x) / this.transform.k,
+            y: (v - this.canvas.offsetTop  - this.transform.y) / this.transform.k,
         }
     }
 
@@ -247,6 +249,7 @@ class GraphWindow extends React.Component {
         }
         if (node.artist.image == null || node.artist.image === undefined) {
             var img = new Image();
+            img.crossOrigin = "Anonymous";
             img.addEventListener('load', () => {
                 node.artist.image = img;
                 drawLoadedImage();
@@ -263,7 +266,9 @@ class GraphWindow extends React.Component {
         this.canvas.width = this.canvas.offsetWidth * window.devicePixelRatio;
         this.canvas.height = this.canvas.offsetHeight * window.devicePixelRatio;
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = "white";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.transform.x * window.devicePixelRatio, this.transform.y * window.devicePixelRatio);
         this.ctx.scale(this.transform.k * window.devicePixelRatio, this.transform.k * window.devicePixelRatio);
 
@@ -406,6 +411,25 @@ class GraphWindow extends React.Component {
                 player.connect();
             });
         };
+
+        AWS.config.update({
+            region: "us-east-1",
+            credentials: new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: "us-east-1:3abb82ba-8894-4534-95c5-b7ba2a06cc76"
+            })
+        });
+
+        this.s3 = new AWS.S3({
+          apiVersion: "2006-03-01",
+          params: { Bucket: bucket }
+        });
+        var cam = document.getElementById("camera_button")
+        console.log(cam);
+        cam.addEventListener("click", () => {
+            console.log("clicked");
+            this.upload();
+        });
+
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
         this.ctx = this.canvas.getContext("2d");
@@ -612,6 +636,9 @@ class GraphWindow extends React.Component {
                         });
                     }
                 }
+                else if (e.key === 'e') {
+                    this.upload();
+                }
             }
             if (e.key === "Delete" && this.state.selectedNode != null) {
                 this.removeNode(this.state.selectedNode);
@@ -636,6 +663,35 @@ class GraphWindow extends React.Component {
                 this.save();
             }
         }, 1000);
+    }
+
+    async upload() {
+        if (this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
+            const Key = this.id + ".jpg";
+            
+            // Get signed URL from S3
+            const s3Params = {
+                Bucket: bucket,
+                Key,
+                Expires: 300,
+                ContentType: 'image/jpeg'
+            }
+            const uploadURL = await this.s3.getSignedUrlPromise('putObject', s3Params)
+             
+            this.canvas.toBlob(async function(blob) {
+                console.log(blob);
+                const result = await fetch(uploadURL, {
+                    method: 'PUT',
+                    body: blob
+                });
+                console.log(result);
+            }, "image/jpeg", .6);
+            /*const result = await fetch(uploadURL, {
+                method: 'PUT',
+                body: new Blob([new Uint8Array([1, 2, 3, 4, 5])], {type: 'image/jpeg'})
+            });
+            console.log(result);*/
+        }
     }
 
     async save() {
@@ -1264,8 +1320,8 @@ class GraphWindow extends React.Component {
                 {
                     this.topRecommendedArtists.slice(0, 6).map((artist) => {
                         index += 1;
-                        console.log(this.topRecommendedArtists);
-                        console.log(index);
+                        /*console.log(this.topRecommendedArtists);
+                        console.log(index);*/
                         return (
                             <div
                                 key={ index }
@@ -1289,7 +1345,7 @@ class GraphWindow extends React.Component {
                     </List>
                 </Drawer>
                 </div>
-                <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
+                <canvas id="graph_canvas" style={{ width: "calc(100% - var(--playlist-column-width))", height: "100%" }}></canvas>
             </div>
         );
     }
