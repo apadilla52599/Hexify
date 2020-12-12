@@ -44,36 +44,6 @@ class TransactionStack {
         }
     }
 
-    moveNode({node, oldCoords, index}) {
-        var oldNode = undefined;
-        console.log(node);
-        console.log(this.nodes[index].coords);
-        this.nodes[index].coords = node.coords;
-        this.nodes.forEach(n => {
-            console.log({...n.coords});
-            console.log({...n.artist});
-        });
-        for (let i = 0; i < this.nodes.length; i++) {
-            if (i !== index && this.nodes[i].coords.q === node.coords.q && this.nodes[i].coords.r === node.coords.r) {
-                console.log(this.nodes[i].coords);
-                oldNode = this.nodes[i];
-                this.nodes.splice(i, 1);
-            }
-        }
-        this.stackPush({
-            type: "move",
-            data: {
-                oldNode: oldNode,
-                oldCoords: oldCoords,
-                coords: {...node.coords}
-            }
-        });
-        return {
-            update: true,
-            nodes: this.nodes,
-        }
-    }
-
     removeNode(node, keepTracks) {
         var update = false;
         var removedTracks = [];
@@ -137,19 +107,6 @@ class TransactionStack {
                     }
                 }
             }
-            else if (transaction.type === "move") {
-                console.log(this.stack);
-                console.log(this.nodes);
-                const nodeIndex = this.nodes.findIndex((node) => {
-                    return node.coords.q === transaction.data.coords.q && node.coords.r === transaction.data.coords.r;
-                });
-                this.nodes[nodeIndex].coords = transaction.data.oldCoords;
-                if (transaction.data.oldNode !== undefined) {
-                    this.nodes.push(transaction.data.oldNode);
-                }
-                this.topIndex -= 1;
-                update = true;
-            }
         }
         return {
             update: update,
@@ -191,24 +148,6 @@ class TransactionStack {
                         update = true;
                     }
                 }
-            }
-            else if (transaction.type === "move") {
-                console.log(this.stack);
-                console.log(this.nodes);
-                const nodeIndex = this.nodes.findIndex((node) => {
-                    return node.coords.q === transaction.data.coords.q && node.coords.r === transaction.data.coords.r;
-                });
-                const oldNodeIndex = this.nodes.findIndex((node) => {
-                    return node.coords.q === transaction.data.oldCoords.q && node.coords.r === transaction.data.oldCoords.r;
-                });
-                if (nodeIndex >= 0) {
-                    this.nodes.splice(nodeIndex, 1);
-                }
-                if (oldNodeIndex >= 0) {
-                    this.nodes[oldNodeIndex].coords = transaction.data.coords;
-                }
-                this.topIndex += 1;
-                update = true;
             }
         }
         return {

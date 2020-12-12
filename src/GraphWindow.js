@@ -439,15 +439,7 @@ class GraphWindow extends React.Component {
         const highlightCursor = (e) => {
             this.mouseCoord = this.pixelToAxial(e.clientX, e.clientY);
             this.draw();
-            if(this.movingArtist !== null &&
-                (this.mouseCoord.q !== this.movingArtist.oldCoords.q &&
-                this.mouseCoord.r !== this.movingArtist.oldCoords.r)
-            ) {
-                this.movingArtist.node.coords = this.mouseCoord;
-                this.movingArtist.moved = true;
-                this.drawNodeImage(this.movingArtist.node);
-            }
-            else if(this.selectedQuickArtist !== null){
+            if(this.selectedQuickArtist !== null){
                 this.selectedQuickArtist.coords = this.mouseCoord;
                 this.drawNodeImage(this.selectedQuickArtist);
             }
@@ -471,56 +463,8 @@ class GraphWindow extends React.Component {
                 }
             })
             .clickDistance(4)
-            .on("start", (d3event) => {
-                const e = d3event.sourceEvent;
-                if (e.type === "mousedown") {
-                    const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
-                    if (this.state.selectedNode !== null &&
-                        this.state.selectedNode.coords.q === mouseCoords.q &&
-                        this.state.selectedNode.coords.r === mouseCoords.r &&
-                        this.movingArtist === null
-                    ) {
-                        this.adjacentRecommendedArtists = [];
-                        this.movingArtist = {
-                            node: this.state.selectedNode,
-                            oldCoords: {...this.state.selectedNode.coords},
-                            moved: false
-                        };
-                        console.log(this.movingArtist);
-                        const index = this.state.nodes.findIndex(node => node.coords.q === this.movingArtist.node.coords.q || node.coords.r === this.movingArtist.node.coords.r);
-                        this.movingArtist.index = index;
-                        this.setState({
-                            selectedNode: null
-                        }, this.draw);
-                    }
-                }
-            })
             .on("zoom", (d3event) => {
-                if (this.movingArtist === null) {
-                    this.transform = d3event.transform;
-                    this.draw();
-                }
-                else {
-                    highlightCursor(d3event.sourceEvent);
-                }
-            })
-            .on("end", (d3event) => {
-                if (this.movingArtist !== null) {
-                    selection.call(d3.zoom().transform, this.transform);
-                    const receipt = this.transactionStack.moveNode(this.movingArtist);
-                    if (receipt.update) {
-                        console.log(receipt.nodes);
-                        this.adjacentRecommendedArtists = [];
-                        this.setState({
-                            nodes: receipt.nodes,
-                            selectedNode: this.movingArtist.node
-                        }, () => {
-                            this.save();
-                            this.draw();
-                        });
-                    }
-                }
-                this.movingArtist = null;
+                this.transform = d3event.transform;
                 this.draw();
             })
         );
