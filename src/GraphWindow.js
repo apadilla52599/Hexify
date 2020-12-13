@@ -610,8 +610,8 @@ class GraphWindow extends React.Component {
         fetch("/v1/me/top/artists?time_range=medium_term").then((response) => {
             console.log(response);
             response.json().then(d => {
-                console.log(d);
-                this.setState({ topRecommendedArtists: d.items });
+                if (d.items !== undefined)
+                    this.setState({ topRecommendedArtists: d.items });
             });
         });
 
