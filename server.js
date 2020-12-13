@@ -61,7 +61,7 @@ passport.use(
     {
       clientID: "c0ed6811aa0f4bcaaf430e3659be4d57",
       clientSecret: "b1144988d7c248bcb2cf490f52435645",
-      callbackURL: 'http://ec2-3-139-58-25.us-east-2.compute.amazonaws.com/:8080/auth/spotify/callback'
+      callbackURL: 'http://ec2-3-139-58-25.us-east-2.compute.amazonaws.com:8080/auth/spotify/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       UserModel.findOne({ SpotifyUserID: profile.id }, function(err, obj) {
