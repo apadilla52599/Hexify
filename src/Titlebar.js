@@ -20,7 +20,6 @@ class Titlebar extends React.Component {
         }, 1000);
         this.nameInterval = setInterval(() => {
             const newName = this.props.graphName();
-            console.log("name interval");
             if (newName !== undefined && newName !== "" && newName !== this.graphName) {
                 this.setState({graphName: newName});
                 clearInterval(this.nameInterval);
