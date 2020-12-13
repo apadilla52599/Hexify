@@ -1,8 +1,9 @@
 import React from "react";
 import * as d3 from "d3";
-import DummyData from "./DummyData/DummyArtists.json";
+//import DummyData from "./DummyData/DummyArtists.json";
 import TransactionStack from "./TransactionStack.js";
 import Drawer from "@material-ui/core/Drawer";
+import AWS from 'aws-sdk';
 
 import ArtistEditor from './ArtistEditor.js';
 import PlaylistEditor from './Playlist_editor.js';
@@ -17,6 +18,7 @@ const selectedColor = "#B19CD9";
 const hexRadius = cartesianToPixel;
 const imageRadius = cartesianToPixel * .6;
 const nodeBackground = "#d0d0d0";
+const bucket = "hexifythumbnails";
 
 const CREATE_GRAPH = gql`
     mutation CreateGraphicalPlaylist($name: String!, $privacyStatus: String!) {
@@ -28,8 +30,8 @@ const CREATE_GRAPH = gql`
 `
 
 const UPDATE_GRAPH = gql`
-    mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $privacyStatus: String!) {
-    	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, privacyStatus: $privacyStatus) {
+    mutation UpdateGraphicalPlaylist($id: String!, $name: String!, $artists: [artistInput], $nodes: [nodeInput], $genres: [dictionaryInput] $privacyStatus: String!) {
+    	updateGraphicalPlaylist(id: $id, name: $name, artists: $artists, nodes: $nodes, genres: $genres privacyStatus: $privacyStatus) {
     		id
             lastModified
     	}
@@ -56,6 +58,10 @@ query RetrieveGraphicalPlaylist($id:String!){
           uri
         }
       }
+      genres { 
+        key
+        value
+        }
       lastModified
     }
   }
@@ -74,9 +80,6 @@ class GraphWindow extends React.Component {
 
     constructor(props) {
         super(props);
-        DummyData.artists.forEach((artist) => {
-            artist.image = null;
-        });
         this.state = {
             trackIndex: 0,
             paused: true,
@@ -87,6 +90,8 @@ class GraphWindow extends React.Component {
             lastModified: "",
         };
         // this.state.limit = true;
+        this.topRecommendedArtists = [];
+        this.loadedArtists = [];
         this.artistLookup = {};
         this.selectedQuickArtist = null;
         this.transform = null;
@@ -94,7 +99,6 @@ class GraphWindow extends React.Component {
         this.ctx = null;
         this.mouseCoord = null;
         this.adjacentRecommendedArtists = [];
-        this.topRecommendedArtists = DummyData.artists.slice(0, 6);
         this.queryingSimilar = false;
         this.playerLoaded = false;
         this.neverStarted = true;
@@ -105,6 +109,7 @@ class GraphWindow extends React.Component {
         this.position = 0;
         this.id = undefined;
         this.graphName = "Untitled Graph";
+        this.genreList = undefined;
         this.saving = false;
         this.saveAgain = false;
         this.movingArtist = null;
@@ -164,8 +169,8 @@ class GraphWindow extends React.Component {
 
     pixelToCart(u, v) {
         return {
-            x: (u - this.canvas.parentElement.offsetLeft - this.transform.x) / this.transform.k,
-            y: (v - this.canvas.parentElement.offsetTop  - this.transform.y) / this.transform.k,
+            x: (u - this.canvas.offsetLeft - this.transform.x) / this.transform.k,
+            y: (v - this.canvas.offsetTop  - this.transform.y) / this.transform.k,
         }
     }
 
@@ -249,6 +254,7 @@ class GraphWindow extends React.Component {
         }
         if (node.artist.image == null || node.artist.image === undefined) {
             var img = new Image();
+            img.crossOrigin = "Anonymous";
             img.addEventListener('load', () => {
                 node.artist.image = img;
                 drawLoadedImage();
@@ -265,7 +271,9 @@ class GraphWindow extends React.Component {
         this.canvas.width = this.canvas.offsetWidth * window.devicePixelRatio;
         this.canvas.height = this.canvas.offsetHeight * window.devicePixelRatio;
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = "white";
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.translate(this.transform.x * window.devicePixelRatio, this.transform.y * window.devicePixelRatio);
         this.ctx.scale(this.transform.k * window.devicePixelRatio, this.transform.k * window.devicePixelRatio);
 
@@ -345,14 +353,14 @@ class GraphWindow extends React.Component {
                         if(artistList.length - i > 0){
                             let artist = artistList[i];
                             var flag = false;
-                            for (let j = 0; j < DummyData.artists.length; j++) {
-                                if (DummyData.artists[j].id === artist.id) {
+                            for (let j = 0; j < this.loadedArtists.length; j++) {
+                                if (this.loadedArtists[j].id === artist.id) {
                                     flag = true;
-                                    artist = DummyData.artists[j];
+                                    artist = this.loadedArtists[j];
                                 }
                             }
                             if (flag === false) {
-                                DummyData.artists.push(artist);
+                                this.loadedArtists.push(artist);
                             }
 
                             const length = this.adjacentRecommendedArtists.push({
@@ -375,6 +383,7 @@ class GraphWindow extends React.Component {
     }
 
     componentDidMount() {
+        this.topRecommendedArtists = this.loadedArtists.slice(0, 6);
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
             fetch('/auth/token').then(response => response.json()).then(data => {
@@ -407,6 +416,25 @@ class GraphWindow extends React.Component {
                 player.connect();
             });
         };
+
+        AWS.config.update({
+            region: "us-east-1",
+            credentials: new AWS.CognitoIdentityCredentials({
+                IdentityPoolId: "us-east-1:3abb82ba-8894-4534-95c5-b7ba2a06cc76"
+            })
+        });
+
+        this.s3 = new AWS.S3({
+          apiVersion: "2006-03-01",
+          params: { Bucket: bucket }
+        });
+        var cam = document.getElementById("camera_button")
+        console.log(cam);
+        cam.addEventListener("click", () => {
+            console.log("clicked");
+            this.upload();
+        });
+
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
         this.ctx = this.canvas.getContext("2d");
@@ -416,8 +444,12 @@ class GraphWindow extends React.Component {
         const highlightCursor = (e) => {
             this.mouseCoord = this.pixelToAxial(e.clientX, e.clientY);
             this.draw();
-            if(this.movingArtist !== null){
+            if(this.movingArtist !== null &&
+                (this.mouseCoord.q !== this.movingArtist.oldCoords.q &&
+                this.mouseCoord.r !== this.movingArtist.oldCoords.r)
+            ) {
                 this.movingArtist.node.coords = this.mouseCoord;
+                this.movingArtist.moved = true;
                 this.drawNodeImage(this.movingArtist.node);
             }
             else if(this.selectedQuickArtist !== null){
@@ -450,16 +482,19 @@ class GraphWindow extends React.Component {
                     const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
                     if (this.state.selectedNode !== null &&
                         this.state.selectedNode.coords.q === mouseCoords.q &&
-                        this.state.selectedNode.coords.r === mouseCoords.r) {
+                        this.state.selectedNode.coords.r === mouseCoords.r &&
+                        this.movingArtist === null
+                    ) {
                         this.adjacentRecommendedArtists = [];
                         this.movingArtist = {
                             node: this.state.selectedNode,
                             oldCoords: {...this.state.selectedNode.coords},
+                            moved: false
                         };
+                        console.log(this.movingArtist);
                         const index = this.state.nodes.findIndex(node => node.coords.q === this.movingArtist.node.coords.q || node.coords.r === this.movingArtist.node.coords.r);
                         this.movingArtist.index = index;
                         this.setState({
-                            nodes: this.state.nodes.filter(node => node.coords.q !== this.movingArtist.node.coords.q || node.coords.r !== this.movingArtist.node.coords.r),
                             selectedNode: null
                         }, this.draw);
                     }
@@ -494,6 +529,9 @@ class GraphWindow extends React.Component {
                 this.draw();
             })
         );
+        let defaultTransform = this.transform;
+        defaultTransform.k *= 2.5;
+        selection.call(d3.zoom().transform, defaultTransform);
 
         // Draw the graph for the first time
         this.draw();
@@ -510,16 +548,13 @@ class GraphWindow extends React.Component {
         this.canvas.onclick = (e) => {
             const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
             if (e.button === 0) {
-                if (this.state.selectedNode !== null &&
-                    this.state.selectedNode.coords.q === mouseCoords.q &&
-                    this.state.selectedNode.coords.r === mouseCoords.r) {
-                    // this.canvas.onmousemove = (e) => console.log(e);
-                }
                 var flag = false;
                 this.adjacentRecommendedArtists.forEach(async (node) => {
                     if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
                         flag = true;
                         console.log("add node from recommended artists");
+                        this.updateGenres(node.artist.genres);
+
                         if (this.transactionStack === undefined)
                             await this.createGraph();
                         const receipt = this.transactionStack.addNode(node)
@@ -608,11 +643,24 @@ class GraphWindow extends React.Component {
                         });
                     }
                 }
+                else if (e.key === 'e') {
+                    this.upload();
+                }
             }
             if (e.key === "Delete" && this.state.selectedNode != null) {
                 this.removeNode(this.state.selectedNode);
                 this.deselectNode();
             }
+        });
+
+        // Get the user's top artists
+        fetch("/v1/me/top/artists?time_range=medium_term").then((response) => {
+            console.log(response);
+            response.json().then(d => {
+                console.log(d);
+                this.topRecommendedArtists.push(...d.items);
+                this.loadedArtists.push(...d.items);
+            });
         });
 
         this.nameInterval = setInterval(() => {
@@ -622,6 +670,35 @@ class GraphWindow extends React.Component {
                 this.save();
             }
         }, 1000);
+    }
+
+    async upload() {
+        if (this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
+            const Key = this.id + ".jpg";
+            
+            // Get signed URL from S3
+            const s3Params = {
+                Bucket: bucket,
+                Key,
+                Expires: 300,
+                ContentType: 'image/jpeg'
+            }
+            const uploadURL = await this.s3.getSignedUrlPromise('putObject', s3Params)
+             
+            this.canvas.toBlob(async function(blob) {
+                console.log(blob);
+                const result = await fetch(uploadURL, {
+                    method: 'PUT',
+                    body: blob
+                });
+                console.log(result);
+            }, "image/jpeg", .6);
+            /*const result = await fetch(uploadURL, {
+                method: 'PUT',
+                body: new Blob([new Uint8Array([1, 2, 3, 4, 5])], {type: 'image/jpeg'})
+            });
+            console.log(result);*/
+        }
     }
 
     async save() {
@@ -654,13 +731,16 @@ class GraphWindow extends React.Component {
                     artistId: node.artist.id
                 }
             });
+
+
             request('/graphql', UPDATE_GRAPH,
             {
                 id: this.id,
                 name: this.graphName,
                 artists: artists,
                 nodes: nodes,
-                privacyStatus: this.state.privacyStatus
+                privacyStatus: this.state.privacyStatus,
+                genres: this.genreList,
             }).then(d => {
                 this.saving = false;
                 this.props.savingCallback(false, d.updateGraphicalPlaylist.lastModified);
@@ -684,7 +764,7 @@ class GraphWindow extends React.Component {
     }
 
     createGraph = async () => {
-        let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus });
+        let data = await request('/graphql', CREATE_GRAPH, { name: "Untitled graph", privacyStatus: this.state.privacyStatus});
         if (data && data.createGraphicalPlaylist) {
             this.id = data.createGraphicalPlaylist.id;
             this.props.savingCallback(false, data.createGraphicalPlaylist.lastModified);
@@ -750,6 +830,7 @@ class GraphWindow extends React.Component {
         this.transactionStack = new TransactionStack(nodes, tracks, id);
         const currentTrack = (selectedTracks.length > 0) ? selectedTracks[0] : undefined;
         this.graphName = data.retrieveGraphicalPlaylist.name;
+        this.genreList = data.retrieveGraphicalPlaylist.genres;
         this.props.graphNameCallback(this.graphName);
         this.setState({
             nodes: nodes,
@@ -763,6 +844,7 @@ class GraphWindow extends React.Component {
         this.lastModified = data.retrieveGraphicalPlaylist.lastModified; 
         // this.props.lastModifiedCallback(this.lastModified);
     }
+
 
     componentWillUnmount() {
         this.canvas.onmousemove = null;
@@ -808,6 +890,29 @@ class GraphWindow extends React.Component {
                 backgroundColor: nodeBackground
             };
     }
+    updateGenres= (genres) => {
+        if (this.genreList === undefined){
+            this.genreList = [];
+            genres.forEach((genre)=>{
+                this.genreList.push({"key": genre, "value": 1});
+             });
+        }else{
+           genres.forEach((genre)=>{
+                let obj = this.genreList.find((o, i) => {
+                    if (o.key === genre) {
+                        this.genreList[i].value++;
+                        return true; // stop searching
+                    }
+                });
+                if(obj == undefined){
+                    this.genreList.push({"key": genre, "value": 1});
+                }
+             });
+        }
+        this.genreList.sort((a, b) => b.value - a.value);
+        console.log(this.genreList);
+        console.log(this.genreList.slice(0,3));
+    }
 
     handleQuickAddDrag = (artist, e) => {
         e.preventDefault();
@@ -817,6 +922,9 @@ class GraphWindow extends React.Component {
             coords: {q: mouseCoords.q, r: mouseCoords.r},
             image: artist.image
         }
+        console.log("add node from recommended artists");
+        this.updateGenres(node.artist.genres);
+
         this.selectedQuickArtist = node;
         document.onmouseup =  async (e2) => {
             if (this.transactionStack === undefined)
@@ -1061,7 +1169,7 @@ class GraphWindow extends React.Component {
                 console.log(albums);
                 var tracks = [];
                 var count = 0;
-                for (const album of albums.items){
+                for (const album of albums.items) {
                     var len = albums.items.length
                     fetch("/v1/albums/" + album.id + "/tracks?market=US").then((response) => {
                         response.json().then(d => {
@@ -1285,14 +1393,16 @@ class GraphWindow extends React.Component {
                         <i className="fas fa-search" style={ { fontSize: "1.5rem" } }></i>
                     </div>
                 {
-                    this.topRecommendedArtists.map((artist) => {
+                    this.topRecommendedArtists.slice(0, 6).map((artist) => {
                         index += 1;
+                        /*console.log(this.topRecommendedArtists);
+                        console.log(index);*/
                         return (
                             <div
                                 key={ index }
-                                onMouseDown = { this.handleQuickAddDrag.bind(this, DummyData.artists[index - 1]) }
+                                onMouseDown = { this.handleQuickAddDrag.bind(this, this.topRecommendedArtists[index - 1]) }
 
-                                style={ this.quickAddStyle(index, DummyData.artists[index - 1].images[0].url) }
+                                style={ this.quickAddStyle(index, this.topRecommendedArtists[index - 1].images[0].url) }
                             />
                         );
                     })
@@ -1310,7 +1420,7 @@ class GraphWindow extends React.Component {
                     </List>
                 </Drawer>
                 </div>
-                <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
+                <canvas id="graph_canvas" style={{ width: "calc(100% - var(--playlist-column-width))", height: "100%" }}></canvas>
             </div>
         );
     }

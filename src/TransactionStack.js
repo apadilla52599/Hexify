@@ -46,12 +46,16 @@ class TransactionStack {
 
     moveNode({node, oldCoords, index}) {
         var oldNode = undefined;
+        console.log(node);
+        console.log(this.nodes[index].coords);
+        this.nodes[index].coords = node.coords;
+        this.nodes.forEach(n => {
+            console.log({...n.coords});
+            console.log({...n.artist});
+        });
         for (let i = 0; i < this.nodes.length; i++) {
             if (i !== index && this.nodes[i].coords.q === node.coords.q && this.nodes[i].coords.r === node.coords.r) {
-                console.log(i);
-                console.log(index);
                 console.log(this.nodes[i].coords);
-                console.log({oldCoords});
                 oldNode = this.nodes[i];
                 this.nodes.splice(i, 1);
             }

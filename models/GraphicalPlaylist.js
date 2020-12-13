@@ -6,6 +6,7 @@ var GraphicalPlaylistSchema = new mongoose.Schema({
   playlists: [String],
   artists: [Object],
   nodes: [Object],
+  genres: [Object],
   lastModified: { type: Date, default: Date.now },
   privacyStatus: String
 });

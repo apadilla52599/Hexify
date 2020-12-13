@@ -38,8 +38,6 @@ app.use('/auth/temp/:id/:token', function (req, res, next) {
 app.use('/graphql', function(req, res, next) {
     let id = "";
     if (req.user !== undefined) {
-        console.log("there definitely is a req.user");
-        console.log(req.user);
         id = req.user.id;
     }
     graphqlHTTP({
@@ -88,7 +86,7 @@ passport.use(
 
 /* Routes */
 app.get('/auth/spotify', passport.authenticate('spotify', {
-    scope: ['streaming', 'user-read-email', 'user-read-private', 'playlist-modify-public','playlist-modify-private']
+    scope: ['streaming', 'user-top-read', 'user-read-email', 'user-read-private', 'playlist-modify-public','playlist-modify-private']
   }), function(req, res) {
   // The request will be redirected to spotify for authentication, so this
   // function will not be called.
@@ -136,12 +134,16 @@ app.get('/v1*', function (req, res) {
       setTimeout(sendReq, parseInt(spotifyRes.headers['retry-after']));
     }
     else {
+      console.log(spotifyRes.statusCode);
       spotifyRes.setEncoding('utf8');
       let rawData = '';
       spotifyRes.on('data', (chunk) => { rawData += chunk; });
 
       spotifyRes.on('end', () => {
-        res.json(JSON.parse(rawData));
+        if (rawData !== '')
+          res.json(JSON.parse(rawData));
+        else
+          res.json(JSON.parse({}));
       });
     }
   });
@@ -150,7 +152,6 @@ app.get('/v1*', function (req, res) {
 
 app.get('*', function (req, res) {
   if (req.user === undefined) {
-    console.log("aaaaaah");
     res.redirect('/auth/spotify');
   }
   else {

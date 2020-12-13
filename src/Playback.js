@@ -174,8 +174,6 @@ class Playback extends React.Component {
                               ]}
                             valueLabelFormat= {(x) => getDuration(x/100 * playing.duration_ms)}
                         />
-
-
                         {/* Volume Button*/}
                         <IconButton  style = {{position: "absolute",margin:"0", padding: "0",float: "right", marginTop:"80", marginLeft:"8"}}>
                             {this.state.muted === true ? (

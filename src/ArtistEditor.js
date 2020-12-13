@@ -44,14 +44,14 @@ class ArtistEditor extends React.Component{
         });
         return (
             <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
-                <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "3vh", position: "absolute", marginLeft: "5%", marginTop: "5%"}}>
+                <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "3vh", position: "absolute", marginLeft: "30", marginTop: "2vh"}}>
                     <i className="fas fa-chevron-left"></i>
                 </div>
 
                 <div onClick={() =>{this.setState({nonSelectedPage: 1});this.props.randomSelect(this.props.node.artist, tracks.filter(tracks => 
                             tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1))}} 
                 style={{cursor: "pointer", color: "white", fontSize: "3vh", 
-                position: "absolute", marginLeft: "75%", marginTop: "5%"}}>
+                position: "absolute", marginLeft: "275", marginTop: "2vh"}}>
                     <i className="fas fa-dice"></i>
                 </div>
                 

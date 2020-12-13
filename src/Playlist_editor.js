@@ -73,7 +73,7 @@ class PlaylistEditor extends React.Component {
             <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div onClick={() =>{this.props.randomizePlaylist()}} 
                     style={{cursor: "pointer", color: "white", fontSize: "3vh", 
-                    position: "absolute", marginLeft: "75%",  marginTop: "5%"}}>
+                    position: "absolute", marginLeft: "275", marginTop: "2vh"}}>
                         <i className="fas fa-dice"></i>
                 </div>
                 

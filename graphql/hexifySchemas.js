@@ -129,6 +129,35 @@ var artistInput = new GraphQLInputObjectType({
   },
 });
 
+var dictionaryType = new GraphQLObjectType({
+  name: "dictionaryType",
+  fields: function() {
+    return {
+      key: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      value: {
+        type: new GraphQLNonNull(GraphQLInt),
+      }
+    };
+  },
+});
+
+var dictionaryInput = new GraphQLInputObjectType({
+  name: "dictionaryInput",
+  fields: function() {
+    return {
+      key: {
+        type: new GraphQLNonNull(GraphQLString),
+      },
+      value: {
+        type: new GraphQLNonNull(GraphQLInt),
+      }
+    };
+  },
+});
+
+
 var graphicalPlaylistType = new GraphQLObjectType({
   name: "graphicalPlaylist",
   fields: function () {
@@ -156,6 +185,9 @@ var graphicalPlaylistType = new GraphQLObjectType({
       },
       privacyStatus: {
         type: GraphQLString,
+      },
+      genres:{
+        type: new GraphQLList(dictionaryType),
       },
     };
   },
@@ -275,7 +307,8 @@ var mutation = new GraphQLObjectType({
             playlists: [],
             artists: [],
             nodes: [],
-            privacyStatus: params.privacyStatus
+            privacyStatus: params.privacyStatus, 
+            genres: [],
           });
           graphicalPlaylist.save();
           user.graphicalPlaylists.push(graphicalPlaylist._id.toString());
@@ -421,6 +454,9 @@ var mutation = new GraphQLObjectType({
           privacyStatus: {
             type: GraphQLString,
           },
+          genres: {
+            type: new GraphQLList(dictionaryInput),
+          }
         },
         resolve: async function(root, params, user_id) {
           const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
@@ -429,6 +465,7 @@ var mutation = new GraphQLObjectType({
               graphicalPlaylist.artists = params.artists;
               graphicalPlaylist.nodes = params.nodes;
               graphicalPlaylist.privacyStatus = params.privacyStatus;
+              graphicalPlaylist.genres = params.genres;
               graphicalPlaylist.lastModified = Date.now();
               graphicalPlaylist.save();
               return graphicalPlaylist;
@@ -463,6 +500,7 @@ var mutation = new GraphQLObjectType({
                 artists: [],
                 nodes: [],
                 lastModified: Date.now(),
+                genres: [],
                 privacyStatus: "fake privacy status"
             }
           }

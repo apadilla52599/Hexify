@@ -5,7 +5,7 @@ import Pagination from '@material-ui/lab/Pagination';
 
 function TrackList(props) {
     var i = -1;
-    console.log(Math.ceil(props.tracks.length/10));
+    //console.log(Math.ceil(props.tracks.length/10));
     return (
         <div style={{width: "90%", height: "100%", marginBottom: "5"}}>
         <List id="scroll" style={{width: "100%", height: "90%", padding: "0px", backgroundColor: "#202020"}}>

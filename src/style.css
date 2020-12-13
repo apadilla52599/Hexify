@@ -26,12 +26,12 @@ body {
 #graph_window {
     width: 100%;
     height: calc(100% - var(--titlebar-height));
+    display: flex;
 }
 
 #playlist_column {
     width: var(--playlist-column-width);
     height: calc(100% - var(--titlebar-height));
-    position: absolute;
 }
 
 #sidebar_column {
@@ -139,7 +139,7 @@ body {
 .hvrbox {
 	position: relative;
 	display: inline-block;
-	overflow: hidden;
+	overflow: show;
 	max-width: 100%;
     height: auto;
     border-radius: 15px;
@@ -182,4 +182,18 @@ body {
 	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+}
+.genre-text {
+    display:none;
+    margin-left: 15px;
+    font-size: 20;
+}
+.genre:hover .genre-text {
+    display:block;
+    white-space: nowrap;
+    text-shadow:
+    -1px -1px 5px #000,
+    1px -1px 5px #000,
+    -1px 1px 5px #000,
+    1px 1px 5px #000;
 }
