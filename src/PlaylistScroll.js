@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 export default function Playlist(props){
   var tracks = props.tracks;
   return (
-          <List id="scroll" style = {{height: "100%"}}>
+          <List id="scroll" style = {{ width: "90%", height: "100%"}}>
             {tracks.map((track) => {
               return (
                 <ListItem onClick={() => props.playTrack(track)} button key = {track.name} style={{margin:"0", paddingTop:"0", paddingBottom: "0"}} >

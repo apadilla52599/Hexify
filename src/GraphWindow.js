@@ -290,9 +290,11 @@ class GraphWindow extends React.Component {
         canvas.height = height * window.devicePixelRatio;
         ctx.translate(transform.x * window.devicePixelRatio, transform.y * window.devicePixelRatio);
         ctx.scale(transform.k * window.devicePixelRatio, transform.k * window.devicePixelRatio);
-        ctx.fillStyle = "white";
-        ctx.fillRect(-transform.x * window.devicePixelRatio, -transform.y * window.devicePixelRatio, ctx.canvas.width, canvas.height);
-        console.log(ctx);
+        if (canvas !== this.canvas) {
+            ctx.fillStyle = "white";
+            ctx.fillRect(-transform.x * window.devicePixelRatio, -transform.y * window.devicePixelRatio, ctx.canvas.width, canvas.height);
+            console.log(ctx);
+        }
 
         var selectedNeighbors = [];
         if (canvas === this.canvas && this.state.selectedNode != null) {
@@ -1421,8 +1423,8 @@ class GraphWindow extends React.Component {
                     </List>
                 </Drawer>
                 </div>
-                <canvas id="graph_canvas" style={{ width: "calc(100%)", height: "100%" }}></canvas>
-                <canvas id="thumb_canvas" style={{ marginLeft: "calc(var(--playlist-column-width) - 2 *var(--playlist-column-margin))", marginTop: "var(--playlist-column-margin)", border: "solid", borderWidth: "2", borderRadius: "10px", borderColor: "gray", width: 100, height: 100, position: "absolute", pointerEvents: "none" }}></canvas>
+                <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
+                <canvas id="thumb_canvas" style={{ marginLeft: "calc(var(--playlist-column-width))", marginTop: "var(--playlist-column-margin)", border: "solid", borderWidth: "2", borderRadius: "10px", borderColor: "gray", width: 100, height: 100, position: "absolute", pointerEvents: "none" }}></canvas>
             </div>
         );
     }

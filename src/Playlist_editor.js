@@ -70,7 +70,7 @@ class PlaylistEditor extends React.Component {
         const menuOpen = this.state.target !== undefined;
         const clearOpen = this.state.target2 !== undefined;
         return (
-            <div id="playlist_editor" style={{ width: "100%", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
+            <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div onClick={() =>{this.props.randomizePlaylist()}} 
                     style={{cursor: "pointer", color: "white", fontSize: "3vh", 
                     position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
@@ -85,7 +85,7 @@ class PlaylistEditor extends React.Component {
                 <div style ={{display: "flex", height: "7.5%", justifyContent: "center"}}>
                     <Input onChange={this.handleSearch} style={{height: "80%", width:"80%",color: "white",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
                 </div>                  
-                <div style ={{height: "70%"}}>
+                <div style ={{display: "flex", justifyContent: "center", height: "70%"}}>
                     <Playlist player={this.props.player} tracks = {this.props.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} delete = {this.props.deselectTrack} playTrack={this.props.playTrack} />
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", marginTop: "10%", paddingLeft: "2%", paddingRight: "2%"}}>
