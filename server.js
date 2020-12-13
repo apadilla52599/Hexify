@@ -143,7 +143,7 @@ app.get('/v1*', function (req, res) {
         if (rawData !== '')
           res.json(JSON.parse(rawData));
         else
-          res.json(JSON.parse('{}'));
+          res.send(JSON.parse({}));
       });
     }
   });
