@@ -70,7 +70,7 @@ class PlaylistEditor extends React.Component {
         const menuOpen = this.state.target !== undefined;
         const clearOpen = this.state.target2 !== undefined;
         return (
-            <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
+            <div id="playlist_editor" style={{ width: "100%", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div onClick={() =>{this.props.randomizePlaylist()}} 
                     style={{cursor: "pointer", color: "white", fontSize: "3vh", 
                     position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>

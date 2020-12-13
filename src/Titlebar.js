@@ -28,8 +28,8 @@ class Titlebar extends React.Component {
     }
 
     componentWillUnmount() {
-        this.clearInterval(this.savingInterval);
-        this.clearInterval(this.nameInterval);
+        clearInterval(this.savingInterval);
+        clearInterval(this.nameInterval);
     }
 
     handleClick = () => {

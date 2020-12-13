@@ -90,7 +90,6 @@ class GraphWindow extends React.Component {
             lastModified: "",
             topRecommendedArtists: []
         };
-        this.topRecommendedArtists = [];
         this.loadedArtists = [];
         this.artistLookup = {};
         this.selectedQuickArtist = null;
@@ -205,27 +204,27 @@ class GraphWindow extends React.Component {
         });
     }
 
-    drawHex(node, backgroundColor) {
-        this.ctx.strokeStyle = "black";
-        this.ctx.lineWidth = 1;
+    drawHex(node, backgroundColor, ctx) {
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
 
         // Draw hexagon
-        this.ctx.beginPath();
+        ctx.beginPath();
         const omega = Math.PI / 3;
         const phi = Math.PI / 6;
         const {x, y} = this.axialToCart(node.coords);
-        this.ctx.moveTo(x + hexRadius * Math.cos(phi), y + hexRadius * Math.sin(phi));
+        ctx.moveTo(x + hexRadius * Math.cos(phi), y + hexRadius * Math.sin(phi));
         // The end condition is 6 to avoid a janky corner
         for (let i = 0; i <= 6; i++) {
-            this.ctx.lineTo(x + hexRadius * Math.cos(omega * (i + 1) + phi), y + hexRadius * Math.sin(omega * (i + 1) + phi));
+            ctx.lineTo(x + hexRadius * Math.cos(omega * (i + 1) + phi), y + hexRadius * Math.sin(omega * (i + 1) + phi));
         }
 
-        this.ctx.fillStyle = backgroundColor;
-        this.ctx.fill();
-        this.ctx.stroke();
+        ctx.fillStyle = backgroundColor;
+        ctx.fill();
+        ctx.stroke();
 
         // Draw artist image
-        this.drawNodeImage(node);
+        this.drawNodeImage(node, ctx);
 
         for (let i = 0; i < 6; i++) {
             const startX = x + hexRadius * Math.cos(omega * (i + 1) + phi);
@@ -233,7 +232,7 @@ class GraphWindow extends React.Component {
             const startY = y + hexRadius * Math.sin(omega * (i + 1) + phi);
             const endY = y + 2 * hexRadius * Math.sin(omega * (i + 1) + phi);
 
-            this.ctx.beginPath();
+            ctx.beginPath();
 
             const grd = this.ctx.createLinearGradient(
                 startX,
@@ -243,24 +242,26 @@ class GraphWindow extends React.Component {
             );
             grd.addColorStop(0, "black");
             grd.addColorStop(1, "transparent");
-            this.ctx.strokeStyle = grd;
+            ctx.strokeStyle = grd;
 
-            this.ctx.moveTo(startX, startY);
-            this.ctx.lineTo(endX, endY);
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
 
-            this.ctx.stroke();
+            ctx.stroke();
         }
     }
 
-    drawNodeImage(node) {
+    drawNodeImage(node, ctx) {
+        if (ctx === undefined)
+            ctx = this.ctx;
         const {x, y} = this.axialToCart(node.coords);
         const drawLoadedImage = () => {
-            this.ctx.save();
-            this.ctx.beginPath();
-            this.ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
-            this.ctx.clip();
-            this.ctx.drawImage(node.artist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
-            this.ctx.restore();
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(x, y, imageRadius, 0, 2 * Math.PI);
+            ctx.clip();
+            ctx.drawImage(node.artist.image, x - imageRadius, y - imageRadius, 2 * imageRadius, 2 * imageRadius);
+            ctx.restore();
         }
         if (node.artist.image == null || node.artist.image === undefined) {
             var img = new Image();
@@ -276,19 +277,25 @@ class GraphWindow extends React.Component {
         }
     }
 
-    draw() {
+    draw(canvas, ctx, transform, width, height) {
+        if (canvas === undefined || ctx === undefined || transform === undefined || width === undefined || height == undefined) {
+            canvas = this.canvas;
+            ctx = this.ctx;
+            transform = this.transform;
+            width = canvas.offsetWidth;
+            height = canvas.offsetHeight;
+        }
         // Correct the canvas dimensions if the window has been resized
-        this.canvas.width = this.canvas.offsetWidth * window.devicePixelRatio;
-        this.canvas.height = this.canvas.offsetHeight * window.devicePixelRatio;
-
-        //this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle = "white";
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.transform.x * window.devicePixelRatio, this.transform.y * window.devicePixelRatio);
-        this.ctx.scale(this.transform.k * window.devicePixelRatio, this.transform.k * window.devicePixelRatio);
+        canvas.width = width * window.devicePixelRatio;
+        canvas.height = height * window.devicePixelRatio;
+        ctx.translate(transform.x * window.devicePixelRatio, transform.y * window.devicePixelRatio);
+        ctx.scale(transform.k * window.devicePixelRatio, transform.k * window.devicePixelRatio);
+        ctx.fillStyle = "white";
+        ctx.fillRect(-transform.x * window.devicePixelRatio, -transform.y * window.devicePixelRatio, ctx.canvas.width, canvas.height);
+        console.log(ctx);
 
         var selectedNeighbors = [];
-        if (this.state.selectedNode != null) {
+        if (canvas === this.canvas && this.state.selectedNode != null) {
             if (this.adjacentRecommendedArtists.length === 0) {
                 selectedNeighbors = [
                     {
@@ -319,19 +326,20 @@ class GraphWindow extends React.Component {
             }
             else {
                 this.adjacentRecommendedArtists.forEach((artistNode) => {
-                        this.drawNodeImage(artistNode);
+                    this.drawNodeImage(artistNode);
                 });
             }
         }
 
         this.state.nodes.forEach((node) => {
-            if (this.state.selectedNode != null &&
+            if (canvas === this.canvas &&
+                this.state.selectedNode != null &&
                 this.state.selectedNode.coords.q === node.coords.q &&
                 this.state.selectedNode.coords.r === node.coords.r)
-                this.drawHex(node, selectedColor);
+                this.drawHex(node, selectedColor, ctx);
             else
-                this.drawHex(node, nodeBackground);
-            if (selectedNeighbors.length > 0) {
+                this.drawHex(node, nodeBackground, ctx);
+            if (canvas === this.canvas && selectedNeighbors.length > 0) {
                 var removed = 0;
                 for (let i = 0; i < selectedNeighbors.length; i++) {
                     let index = Math.round(i - removed);
@@ -344,7 +352,7 @@ class GraphWindow extends React.Component {
             }
         });
 
-        if (this.state.selectedNode != null && this.adjacentRecommendedArtists.length === 0 && this.queryingSimilar === false) {
+        if (canvas === this.canvas && this.state.selectedNode != null && this.adjacentRecommendedArtists.length === 0 && this.queryingSimilar === false) {
             // Draw the recommended artists
             this.queryingSimilar = true;
             fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/related-artists").then((response) => {
@@ -378,7 +386,7 @@ class GraphWindow extends React.Component {
             });
         }
 
-        if (this.mouseCoord != null) {
+        if (canvas === this.canvas && this.mouseCoord != null) {
             this.drawCursor();
         }
     }
@@ -428,12 +436,14 @@ class GraphWindow extends React.Component {
           apiVersion: "2006-03-01",
           params: { Bucket: bucket }
         });
+
         var cam = document.getElementById("camera_button")
         console.log(cam);
         cam.addEventListener("click", () => {
             console.log("clicked");
             this.upload();
         });
+        this.thumbCanvas = document.getElementById("thumb_canvas")
 
         const selection = d3.select("#graph_canvas");
         this.canvas = selection.node();
@@ -587,9 +597,6 @@ class GraphWindow extends React.Component {
                         });
                     }
                 }
-                else if (e.key === 'e') {
-                    this.upload();
-                }
             }
             if (e.key === "Delete" && this.state.selectedNode != null) {
                 this.removeNode(this.state.selectedNode);
@@ -616,7 +623,7 @@ class GraphWindow extends React.Component {
     }
 
     async upload() {
-        if (this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
+        if (this.thumbCanvas !== undefined && this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
             const Key = this.id + ".jpg";
             
             // Get signed URL from S3
@@ -626,9 +633,32 @@ class GraphWindow extends React.Component {
                 Expires: 300,
                 ContentType: 'image/jpeg'
             }
-            const uploadURL = await this.s3.getSignedUrlPromise('putObject', s3Params)
-             
-            this.canvas.toBlob(async function(blob) {
+            const uploadURL = await this.s3.getSignedUrlPromise('putObject', s3Params);
+
+            var minQ = Number.MAX_VALUE;
+            var minR = Number.MAX_VALUE;
+            var maxQ = Number.MIN_VALUE;
+            var maxR = Number.MIN_VALUE;
+            this.state.nodes.forEach(node => {
+                minQ = node.coords.q < minQ ? node.coords.q : minQ;
+                minR = node.coords.r < minR ? node.coords.r : minR;
+                maxQ = node.coords.q > maxQ ? node.coords.q : maxQ;
+                maxR = node.coords.r > maxR ? node.coords.r : maxR;
+            });
+            const min = this.axialToCart({q: minQ, r: minR});
+            const max = this.axialToCart({q: maxQ, r: maxR});
+            const transform = {
+                x: Math.ceil(4 * cartesianToPixel - min.x),
+                y: Math.ceil(4 * cartesianToPixel - min.y),
+                k: 1
+            };
+            const width = Math.ceil(max.x + 8 * cartesianToPixel - min.x);
+            const height = Math.ceil(max.y + 8 * cartesianToPixel - min.y);
+            this.thumbCanvas.style.width = width / 5;
+            this.thumbCanvas.style.height = height / 5;
+            this.draw(this.thumbCanvas, this.thumbCanvas.getContext("2d"), transform, width, height);
+
+            this.thumbCanvas.toBlob(async function(blob) {
                 console.log(blob);
                 const result = await fetch(uploadURL, {
                     method: 'PUT',
@@ -675,7 +705,7 @@ class GraphWindow extends React.Component {
                 }
             });
 
-
+            this.upload();
             request('/graphql', UPDATE_GRAPH,
             {
                 id: this.id,
@@ -783,6 +813,7 @@ class GraphWindow extends React.Component {
         }, () => {
             this.props.graphIdCallback(id);
             this.draw();
+            this.upload();
         });
         this.lastModified = data.retrieveGraphicalPlaylist.lastModified; 
         // this.props.lastModifiedCallback(this.lastModified);
@@ -1390,7 +1421,8 @@ class GraphWindow extends React.Component {
                     </List>
                 </Drawer>
                 </div>
-                <canvas id="graph_canvas" style={{ width: "calc(100% - var(--playlist-column-width))", height: "100%" }}></canvas>
+                <canvas id="graph_canvas" style={{ width: "calc(100%)", height: "100%" }}></canvas>
+                <canvas id="thumb_canvas" style={{ marginLeft: "calc(var(--playlist-column-width) - 2 *var(--playlist-column-margin))", marginTop: "var(--playlist-column-margin)", border: "solid", borderWidth: "2", borderRadius: "10px", borderColor: "gray", width: 100, height: 100, position: "absolute", pointerEvents: "none" }}></canvas>
             </div>
         );
     }
