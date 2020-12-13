@@ -187,6 +187,16 @@ class GraphWindow extends React.Component {
             this.ctx.lineTo(x + radius * Math.cos(omega * (i + 1) + phi), y + radius * Math.sin(omega * (i + 1) + phi));
         }
         this.ctx.stroke();
+        this.adjacentRecommendedArtists.forEach((node) => {
+            if (node.coords.q === this.mouseCoord.q && node.coords.r === this.mouseCoord.r) {
+                var text = this.ctx.measureText(node.artist.name);
+                this.ctx.fillStyle = "white";
+                this.ctx.fillRect(x - 2, y - 12, text.width + 4, 16);
+                this.ctx.fillStyle = "black";
+                this.ctx.lineWidth = .5;
+                this.ctx.fillText(node.artist.name, x, y);
+            }
+        });
     }
 
     drawHex(node, backgroundColor) {
@@ -1252,11 +1262,6 @@ class GraphWindow extends React.Component {
                 {
                     this.state.topRecommendedArtists.filter(artist => !(artist.id in this.artistLookup)).slice(0, 6).map((artist) => {
                         index += 1;
-                        console.log(artist.id + " " + artist.name);
-                        console.log(this.artistLookup);
-                        console.log(artist.id in this.artistLookup);
-                        /*console.log(this.state.topRecommendedArtists);
-                        console.log(index);*/
                         return (
                             <div
                                 key={ index }
