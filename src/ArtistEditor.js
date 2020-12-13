@@ -10,7 +10,7 @@ class ArtistEditor extends React.Component{
     }
 
     handleSearch = (e) => {
-        this.setState({text: e.target.value});
+        this.setState({nonSelectedPage: 1, text: e.target.value});
     }
 
     handlePageChange1 = (e,v) => {
@@ -47,8 +47,8 @@ class ArtistEditor extends React.Component{
 
                 <div onClick={() =>{this.setState({nonSelectedPage: 1});this.props.randomSelect(this.props.node.artist, tracks.filter(tracks => 
                             tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1))}} 
-                style={{cursor: "pointer", color: "white", fontSize: "3vh", 
-                position: "absolute", marginLeft: "275", marginTop: "2vh"}}>
+                            style={{cursor: "pointer", color: "white", fontSize: "3vh", 
+                            position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
                     <i className="fas fa-dice"></i>
                 </div>
                 
