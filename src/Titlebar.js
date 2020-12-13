@@ -22,12 +22,14 @@ class Titlebar extends React.Component {
             const newName = this.props.graphName();
             if (newName !== undefined && newName !== "" && newName !== this.graphName) {
                 this.setState({graphName: newName});
+                clearInterval(this.nameInterval);
             }
         }, 1000);
     }
 
     componentWillUnmount() {
-        this.savingInterval = undefined;
+        this.clearInterval(this.savingInterval);
+        this.clearInterval(this.nameInterval);
     }
 
     handleClick = () => {
@@ -84,7 +86,7 @@ class Titlebar extends React.Component {
                     </div>
                 }
                 { !browsing &&
-                    <Input placeholder={this.state.graphName} onChange={(e) => this.props.graphNameCallback(e.target.value)} style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
+                    <Input value={this.state.graphName} onChange={(e) => {this.setState({graphName: e.target.value}); this.props.graphNameCallback(e.target.value)}} style = {{ marginLeft: "2rem", marginRight: "1rem", color: "var(--text-color-secondary)", fontSize: ".8rem"}} />
                 }
                 { !browsing &&
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: ".8rem", width: "15vw" }}>{lastModified}</p>
