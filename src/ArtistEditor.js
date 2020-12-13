@@ -22,9 +22,6 @@ class ArtistEditor extends React.Component{
 
 
     render() {
-        if(this.props.node.limit == undefined){
-            this.props.node.limit = true;
-        }
         const imgStyle = {
             marginTop: "8px",
             width: "9vh",
@@ -60,18 +57,6 @@ class ArtistEditor extends React.Component{
                 </div>
                 <div style={{display: "flex", height: "32px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{this.props.node.artist.name}</p>
-                </div>
-
-                <div style={{display: "flex", height: "48px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                <FormGroup style = {{color: "white", cursor: "default", fontFamily: "monospace", fontSize: "12px"}}>
-                    <FormControlLabel
-                    control={<Switch
-                    // disabled = {tracks.length > 10}
-                    checked={this.props.node.limit} 
-                    onChange={this.props.toggleLimit} />}
-                    label="Limit Tracks"
-                    />
-                </FormGroup>
                 </div>
 
                 <div style={{display: "flex", height: "calc(50% - 100px - 5vh)", marginBottom: "16px", justifyContent: "center", flexGrow: 1 }}>
