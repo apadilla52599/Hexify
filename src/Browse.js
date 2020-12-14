@@ -149,7 +149,7 @@ class Browse extends React.Component {
                                         </div>
                                     ))}
                                     <img alt="graph thumbnail" 
-                                    src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".jpg"} 
+                                    src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".png"} 
                                     onError={(e) => {e.target.onerror = null; 
                                     e.target.src=this.images[Math.floor(Math.random() * 8)];}} 
                                     onLoad={(e) => {e.target.onload = null; if (this.masonry) this.masonry.layout()}} 

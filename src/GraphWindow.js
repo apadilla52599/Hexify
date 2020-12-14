@@ -299,11 +299,6 @@ class GraphWindow extends React.Component {
         canvas.height = height * window.devicePixelRatio;
         ctx.translate(transform.x * window.devicePixelRatio, transform.y * window.devicePixelRatio);
         ctx.scale(transform.k * window.devicePixelRatio, transform.k * window.devicePixelRatio);
-        if (canvas !== this.canvas) {
-            ctx.fillStyle = "white";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            console.log(ctx);
-        }
 
         var selectedNeighbors = [];
         if (canvas === this.canvas && this.state.selectedNode != null) {
@@ -427,40 +422,44 @@ class GraphWindow extends React.Component {
     componentDidMount() {
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
-            fetch('/auth/token').then(response => response.json()).then(data => {
-                if(data.token === ""){
-                    this.props.loginCallback(false);
-                    this.defaultSplash();      
-                }else{
-                    this.props.loginCallback(true);
+            fetch('/v1/me').then(userResp => userResp.json()).then(userData => {
+                if (userData.product === "premium") {
+                    fetch('/auth/token').then(response => response.json()).then(data => {
+                        if(data.token === ""){
+                            this.props.loginCallback(false);
+                            this.defaultSplash();      
+                        }else{
+                            this.props.loginCallback(true);
+                        }
+                        const player = new window.Spotify.Player({
+                            name: 'Web Playback SDK Quick Start Player',
+                            getOAuthToken: cb => { cb(data.token); }
+                        });
+                        console.log(data.token)
+                        // Error handling
+                        player.addListener('initialization_error', ({ message }) => { console.error(message);});
+                        player.addListener('authentication_error', ({ message }) => {console.error(message);});
+                        player.addListener('account_error', ({ message }) => { console.error(message); });
+                        player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+                        // Playback status updates
+                        //player.addListener('player_state_changed', state => { console.log(state); });
+
+                        // Ready
+                        player.addListener('ready', ({ device_id }) => {
+                            console.log('Ready with Device ID', device_id);
+                            this.setState({ player: player});
+                        });
+
+                        // Not Ready
+                        player.addListener('not_ready', ({ device_id }) => {
+                            console.log('Device ID has gone offline', device_id);
+                        });
+
+                        // Connect to the player!
+                        player.connect();
+                    });
                 }
-                const player = new window.Spotify.Player({
-                    name: 'Web Playback SDK Quick Start Player',
-                    getOAuthToken: cb => { cb(data.token); }
-                });
-                console.log(data.token)
-                // Error handling
-                player.addListener('initialization_error', ({ message }) => { console.error(message);});
-                player.addListener('authentication_error', ({ message }) => {console.error(message);});
-                player.addListener('account_error', ({ message }) => { console.error(message); });
-                player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-                // Playback status updates
-                //player.addListener('player_state_changed', state => { console.log(state); });
-
-                // Ready
-                player.addListener('ready', ({ device_id }) => {
-                    console.log('Ready with Device ID', device_id);
-                    this.setState({ player: player});
-                });
-
-                // Not Ready
-                player.addListener('not_ready', ({ device_id }) => {
-                    console.log('Device ID has gone offline', device_id);
-                });
-
-                // Connect to the player!
-                player.connect();
             });
         };
 
@@ -658,14 +657,14 @@ class GraphWindow extends React.Component {
     async upload() {
         if (!this.uploading && this.thumbCanvas !== undefined && this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
             this.uploading = true;
-            const Key = this.id + ".jpg";
+            const Key = this.id + ".png";
             
             // Get signed URL from S3
             const s3Params = {
                 Bucket: bucket,
                 Key,
                 Expires: 300,
-                ContentType: 'image/jpeg'
+                ContentType: 'image/png'
             }
             const uploadURL = await this.s3.getSignedUrlPromise('putObject', s3Params);
 
@@ -701,7 +700,7 @@ class GraphWindow extends React.Component {
                         this.uploadAgain = false;
                         this.upload();
                     }
-                }, "image/jpeg", .8);
+                }, "image/png", .8);
             }).catch(() => {
                 this.uploading = false;
                 if (this.uploadAgain) {
@@ -1396,7 +1395,7 @@ class GraphWindow extends React.Component {
                 </Drawer>
                 </div>
                 <canvas id="graph_canvas" style={{ width: "100%", height: "100%" }}></canvas>
-                <canvas id="thumb_canvas" style={{ marginLeft: "calc(var(--playlist-column-width))", marginTop: "var(--playlist-column-margin)", border: "solid", borderWidth: "2", borderRadius: "10px", borderColor: "gray", width: 100, height: 100, position: "absolute", pointerEvents: "none" }}></canvas>
+                <canvas id="thumb_canvas" style={{ backgroundColor: "white", marginLeft: "calc(var(--playlist-column-width))", marginTop: "var(--playlist-column-margin)", border: "solid", borderWidth: "2", borderRadius: "10px", borderColor: "gray", width: 100, height: 100, position: "absolute", pointerEvents: "none" }}></canvas>
             </div>
         );
     }

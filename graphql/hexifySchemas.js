@@ -467,8 +467,15 @@ var mutation = new GraphQLObjectType({
               graphicalPlaylist.privacyStatus = params.privacyStatus;
               graphicalPlaylist.genres = params.genres;
               graphicalPlaylist.lastModified = Date.now();
-              graphicalPlaylist.save();
-              return graphicalPlaylist;
+              const update = {...params};
+              delete update.id;
+              update.lastModified = Date.now();
+
+              graphicalPlaylist.save(function(error) {
+                  if (error)
+                      console.log(error);
+              });
+              return await GraphicalPlaylistModel.findByIdAndUpdate(params.id, update).exec();
           }
           throw new Error("Log in first");
         },
