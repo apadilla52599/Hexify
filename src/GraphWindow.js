@@ -11,6 +11,7 @@ import Playback from './Playback.js'
 import Input from '@material-ui/core/Input';
 import { List, ListItem, ListItemAvatar} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+import swal from 'sweetalert2';
 import { request, gql } from 'graphql-request'
 
 const cartesianToPixel = 20;
@@ -401,11 +402,39 @@ class GraphWindow extends React.Component {
         }
         return imagePromises;
     }
+    defaultSplash = (e) => {
+        swal.fire({
+            // title: 'Playlists Made Easy',
+            allowOutsideClick: false,
+            width: 500,
+            padding: '0',
+            showCancelButton: false,
+            imageUrl: 'https://i.gyazo.com/257f44e08929fc1a0fc1d95301be456d.gif',
+            // background: '#fff url()',
+            confirmButtonText: `Login With Spotify`,
+            confirmButtonColor: "#1DB954",
+            backdrop: `
+                rgba(0,0,123,0.4)
+            `
+          }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.pathname = '/auth/spotify'
+                swal.fire('Logged In!', '', 'success')
+            }})
+          //Original https://i.pinimg.com/originals/e0/94/d9/e094d9bb9a23354435ac138f3200e53d.gif
+          //larger image https://i.gyazo.com/f1ee894e7f75081ec30b527dd3618847.gif
+    }
 
     componentDidMount() {
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
             fetch('/auth/token').then(response => response.json()).then(data => {
+                if(data.token === ""){
+                    this.props.loginCallback(false);
+                    this.defaultSplash();      
+                }else{
+                    this.props.loginCallback(true);
+                }
                 const player = new window.Spotify.Player({
                     name: 'Web Playback SDK Quick Start Player',
                     getOAuthToken: cb => { cb(data.token); }
