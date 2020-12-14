@@ -199,8 +199,14 @@ var queryType = new GraphQLObjectType({
     return {
       graphicalPlaylists: {
         type: new GraphQLList(graphicalPlaylistType),
-        resolve: function () {
-          const graphicalPlaylists = GraphicalPlaylistModel.find({privacyStatus: "public"}).exec();
+        args:{
+          page: {
+            type: new GraphQLNonNull(GraphQLInt)
+          }
+        },
+        resolve: function (root, params) {
+          //page num in arg, Limit is hardcoded
+          const graphicalPlaylists = GraphicalPlaylistModel.find({privacyStatus: "public"}).skip(params.page * 10).limit(10).exec();
           if (!graphicalPlaylists) {
             throw new Error("Error");
           }
