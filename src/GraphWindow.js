@@ -11,6 +11,7 @@ import Playback from './Playback.js'
 import Input from '@material-ui/core/Input';
 import { List, ListItem, ListItemAvatar} from "@material-ui/core";
 import Avatar from "@material-ui/core/Avatar";
+import swal from 'sweetalert2';
 import { request, gql } from 'graphql-request'
 
 const cartesianToPixel = 20;
@@ -401,11 +402,38 @@ class GraphWindow extends React.Component {
         }
         return imagePromises;
     }
+    defaultSplash = (e) => {
+        swal.fire({
+            // title: 'Playlists Made Easy',
+            allowOutsideClick: false,
+            width: 500,
+            padding: '0',
+            showCancelButton: false,
+            imageUrl: 'https://i.gyazo.com/257f44e08929fc1a0fc1d95301be456d.gif',
+            // background: '#fff url()',
+            confirmButtonText: `Login With Spotify`,
+            confirmButtonColor: "#1DB954",
+            backdrop: `
+                rgba(0,0,123,0.4)
+            `
+          }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.pathname = '/auth/spotify';
+            }})
+          //Original https://i.pinimg.com/originals/e0/94/d9/e094d9bb9a23354435ac138f3200e53d.gif
+          //larger image https://i.gyazo.com/f1ee894e7f75081ec30b527dd3618847.gif
+    }
 
     componentDidMount() {
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
             fetch('/auth/token').then(response => response.json()).then(data => {
+                if(data.token === ""){
+                    this.props.loginCallback(false);
+                    this.defaultSplash();      
+                }else{
+                    this.props.loginCallback(true);
+                }
                 const player = new window.Spotify.Player({
                     name: 'Web Playback SDK Quick Start Player',
                     getOAuthToken: cb => { cb(data.token); }
@@ -1140,113 +1168,57 @@ class GraphWindow extends React.Component {
         return array;
     }
 
-    // parseAlbums = async  (access_token,ids, tracks) =>{
-    //     //console.log(ids)
-    //     fetch("https://api.spotify.com/v1/albums/?ids="+ ids.toString(), {
-    //         method: 'GET',
-    //         headers: { 
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${access_token}`,
-    //         }}).then(res =>{res.json().then(res =>{
-    //             for (var i = 0; i < res.albums.length; i++) {
-    //                 for (const track of res.albums[i].tracks.items) {
-    //                     track['album'] = res.albums[i];
-    //                 }
-    //                 tracks = tracks.concat(res.albums[i].tracks.items);
-    //             };
-    //             return tracks;
-    //         });
-    //       });
-    // }  
-
-    // getAllTracks = async () => {
-    //     fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/albums?market=US&include_groups=album,single&limit=50").then((response) => {
-    //         response.json().then(albums => {
-    //             var ids = albums.items.map(a => a.id);
-    //             console.log(ids.length);
-    //             this.state.player._options.getOAuthToken(async (access_token) => {
-    //                 var j = 0;
-    //                 var tracks = [];
-    //                 while(j*20 < ids.length){
-    //                     console.log(tracks);
-    //                     var temp = await this.parseAlbums(access_token, ids.slice(j,(j+1)*20), tracks);
-    //                     console.log(temp);
-    //                     tracks = temp;
-    //                     j++;
-    //                 }
-    //                 while(tracks.length != ids.length){
-    //                     //wait for all tracks
-    //                     console.log("here");
-    //                 }
-    //                 console.log(tracks);
-    //                 const selectedNode = {
-    //                     ...this.state.selectedNode,
-    //                 }
-    //                 if(selectedNode.artist.tracks === undefined){
-    //                     selectedNode.artist.tracks= tracks;
-    //                 }else{
-    //                     selectedNode.artist.tracks= selectedNode.artist.tracks.concat(tracks);
-    //                 }
-    //                 var flag = false;
-    //                 for(let i = 0; i < this.state.nodes.length - 1; i++){
-    //                     if(selectedNode.artist.id === this.state.nodes[i].artist.id){
-    //                         flag = true;
-    //                         selectedNode.artist = this.state.nodes[i].artist;
-    //                     }
-    //                 }
-    //                 if(flag === false){
-    //                     selectedNode.artist.selectedTracks = [];
-    //                 }
-    //                 this.setState({selectedNode: selectedNode});
-    //             });
-    //         });
-    //     });
-    //}
-    parseAlbums = (access_token,ids, tracks) =>{
-        fetch("https://api.spotify.com/v1/albums/?ids="+ ids.toString(), {
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${access_token}`,
-            }}).then(res =>{res.json().then(res =>{
-                for (var i = 0; i < res.albums.length; i++) {
-                    for (const track of res.albums[i].tracks.items) {
-                        track['album'] = res.albums[i];
-                    }
-                    tracks = tracks.concat(res.albums[i].tracks.items);
-                };
-                console.log(tracks);
-                const selectedNode = {
-                    ...this.state.selectedNode,
-                }
-                if(selectedNode.artist.tracks === undefined){
-                    selectedNode.artist.tracks= tracks;
-                }else{
-                    selectedNode.artist.tracks= selectedNode.artist.tracks.concat(tracks);
-                }
-                var flag = false;
-                for(let i = 0; i < this.state.nodes.length - 1; i++){
-                    if(selectedNode.artist.id === this.state.nodes[i].artist.id){
-                        flag = true;
-                        selectedNode.artist = this.state.nodes[i].artist;
-                    }
-                }
-                if(flag === false){
-                    selectedNode.artist.selectedTracks = [];
-                }
-                this.setState({selectedNode: selectedNode});
-            });
-          });
+    parseAlbums = async  (access_token,ids, tracks) =>{
+        console.log(ids)
+        var res = await fetch("https://api.spotify.com/v1/albums/?ids="+ ids.toString(), {
+        method: 'GET',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${access_token}`,
+        }});
+        res = await res.json();
+        console.log(res)
+        for (var i = 0; i < res.albums.length; i++) {
+            for (const track of res.albums[i].tracks.items) {
+                track['album'] = res.albums[i];
+            }
+            tracks = tracks.concat(res.albums[i].tracks.items);
+        };
+        return tracks;
     }  
 
-    getAllTracks = () => {
+    getAllTracks = async () => {
         fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/albums?market=US&include_groups=album,single&limit=50").then((response) => {
-            response.json().then((albums) => {
+            response.json().then(albums => {
                 var ids = albums.items.map(a => a.id);
                 console.log(ids.length);
-                this.state.player._options.getOAuthToken((access_token) => {
+                this.state.player._options.getOAuthToken(async (access_token) => {
+                    var j = 0;
                     var tracks = [];
-                    this.parseAlbums(access_token, ids.slice(0,20), tracks);
+                    for(var j = 0; j < ids.length/20; j++){
+                        console.log(j)
+                        var tracks = await this.parseAlbums(access_token, ids.slice(j*20,(j+1)*20), tracks);
+                        console.log(tracks);
+                    }
+                    const selectedNode = {
+                        ...this.state.selectedNode,
+                    }
+                    if(selectedNode.artist.tracks === undefined){
+                        selectedNode.artist.tracks= tracks;
+                    }else{
+                        selectedNode.artist.tracks= selectedNode.artist.tracks.concat(tracks);
+                    }
+                    var flag = false;
+                    for(let i = 0; i < this.state.nodes.length - 1; i++){
+                        if(selectedNode.artist.id === this.state.nodes[i].artist.id){
+                            flag = true;
+                            selectedNode.artist = this.state.nodes[i].artist;
+                        }
+                    }
+                    if(flag === false){
+                        selectedNode.artist.selectedTracks = [];
+                    }
+                    this.setState({selectedNode: selectedNode});
                 });
             });
         });

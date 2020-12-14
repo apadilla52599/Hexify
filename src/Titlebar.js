@@ -66,7 +66,6 @@ class Titlebar extends React.Component {
             window.dispatchEvent(new Event('resize'));
         }
     }
-
     render() {
         const browsing = (window.location.pathname === "/browse");
         var lastModified = "";
@@ -103,7 +102,7 @@ class Titlebar extends React.Component {
                         <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>
                     </IconButton>
                 }
-                {this.props.signedIn === false ? 
+                {this.props.signedIn() === false ? 
                 <Button href="/auth/spotify" id="purple_text_background" variant="contained" color="default" style = {{marginRight: "1vw", marginLeft: "1vw", height: "2rem", fontSize: ".75rem"}}>
                     Log In
                 </Button>
