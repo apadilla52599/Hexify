@@ -111,6 +111,8 @@ class GraphWindow extends React.Component {
         this.genreList = undefined;
         this.saving = false;
         this.saveAgain = false;
+        this.uploading = false;
+        this.uploadAgain = false;
         this.movingArtist = null;
         console.log("constructor");
         if (this.props.match && this.props.match.params)
@@ -224,7 +226,7 @@ class GraphWindow extends React.Component {
         ctx.stroke();
 
         // Draw artist image
-        this.drawNodeImage(node, ctx);
+        const imagePromise = this.drawNodeImage(node, ctx);
 
         for (let i = 0; i < 6; i++) {
             const startX = x + hexRadius * Math.cos(omega * (i + 1) + phi);
@@ -249,6 +251,7 @@ class GraphWindow extends React.Component {
 
             ctx.stroke();
         }
+        return imagePromise;
     }
 
     drawNodeImage(node, ctx) {
@@ -264,13 +267,17 @@ class GraphWindow extends React.Component {
             ctx.restore();
         }
         if (node.artist.image == null || node.artist.image === undefined) {
-            var img = new Image();
-            img.crossOrigin = "Anonymous";
-            img.addEventListener('load', () => {
-                node.artist.image = img;
-                drawLoadedImage();
-            }, true);
-            img.src = node.artist.images[0].url;
+            return new Promise((resolve, reject) => {
+                var img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.addEventListener('load', () => {
+                    node.artist.image = img;
+                    drawLoadedImage();
+                    resolve();
+                }, true);
+                img.addEventListener('error', reject, true);
+                img.src = node.artist.images[0].url;
+            });
         }
         else {
             drawLoadedImage();
@@ -278,7 +285,8 @@ class GraphWindow extends React.Component {
     }
 
     draw(canvas, ctx, transform, width, height) {
-        if (canvas === undefined || ctx === undefined || transform === undefined || width === undefined || height == undefined) {
+        const imagePromises = [];
+        if (canvas === undefined || ctx === undefined || transform === undefined || width === undefined || height === undefined) {
             canvas = this.canvas;
             ctx = this.ctx;
             transform = this.transform;
@@ -340,7 +348,7 @@ class GraphWindow extends React.Component {
                 this.state.selectedNode.coords.r === node.coords.r)
                 this.drawHex(node, selectedColor, ctx);
             else
-                this.drawHex(node, nodeBackground, ctx);
+                imagePromises.push(this.drawHex(node, nodeBackground, ctx));
             if (canvas === this.canvas && selectedNeighbors.length > 0) {
                 var removed = 0;
                 for (let i = 0; i < selectedNeighbors.length; i++) {
@@ -391,6 +399,7 @@ class GraphWindow extends React.Component {
         if (canvas === this.canvas && this.mouseCoord != null) {
             this.drawCursor();
         }
+        return imagePromises;
     }
 
     componentDidMount() {
@@ -439,12 +448,6 @@ class GraphWindow extends React.Component {
           params: { Bucket: bucket }
         });
 
-        var cam = document.getElementById("camera_button")
-        console.log(cam);
-        cam.addEventListener("click", () => {
-            console.log("clicked");
-            this.upload();
-        });
         this.thumbCanvas = document.getElementById("thumb_canvas")
 
         const selection = d3.select("#graph_canvas");
@@ -625,7 +628,8 @@ class GraphWindow extends React.Component {
     }
 
     async upload() {
-        if (this.thumbCanvas !== undefined && this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
+        if (!this.uploading && this.thumbCanvas !== undefined && this.id !== undefined && this.s3 !== undefined && this.canvas !== undefined) {
+            this.uploading = true;
             const Key = this.id + ".jpg";
             
             // Get signed URL from S3
@@ -658,22 +662,29 @@ class GraphWindow extends React.Component {
             const height = Math.ceil(max.y + 8 * cartesianToPixel - min.y);
             this.thumbCanvas.style.width = width / 5;
             this.thumbCanvas.style.height = height / 5;
-            this.draw(this.thumbCanvas, this.thumbCanvas.getContext("2d"), transform, width, height);
-
-            this.thumbCanvas.toBlob(async function(blob) {
-                console.log(blob);
-                const result = await fetch(uploadURL, {
-                    method: 'PUT',
-                    body: blob
-                });
-                console.log(result);
-            }, "image/jpeg", .6);
-            /*const result = await fetch(uploadURL, {
-                method: 'PUT',
-                body: new Blob([new Uint8Array([1, 2, 3, 4, 5])], {type: 'image/jpeg'})
+            Promise.all(this.draw(this.thumbCanvas, this.thumbCanvas.getContext("2d"), transform, width, height)).then(() => {
+                this.thumbCanvas.toBlob(async (blob) => {
+                    await fetch(uploadURL, {
+                        method: 'PUT',
+                        body: blob
+                    });
+                    this.uploading = false;
+                    if (this.uploadAgain) {
+                        this.uploadAgain = false;
+                        this.upload();
+                    }
+                }, "image/jpeg", .8);
+            }).catch(() => {
+                this.uploading = false;
+                if (this.uploadAgain) {
+                    this.uploadAgain = false;
+                    this.upload();
+                }
             });
-            console.log(result);*/
+
         }
+        else
+            this.uploadAgain = true;
     }
 
     async save() {
