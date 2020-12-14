@@ -301,7 +301,7 @@ class GraphWindow extends React.Component {
         ctx.scale(transform.k * window.devicePixelRatio, transform.k * window.devicePixelRatio);
         if (canvas !== this.canvas) {
             ctx.fillStyle = "white";
-            ctx.fillRect(-transform.x * window.devicePixelRatio, -transform.y * window.devicePixelRatio, ctx.canvas.width, canvas.height);
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             console.log(ctx);
         }
 
@@ -745,6 +745,8 @@ class GraphWindow extends React.Component {
                     artistId: node.artist.id
                 }
             });
+            console.log(nodes);
+            console.log(artists);
 
             this.upload();
             request('/graphql', UPDATE_GRAPH,
@@ -963,29 +965,10 @@ class GraphWindow extends React.Component {
 
     selectTrack = (track) => {
         this.state.selectedTracks.push(track);
-        var selectedTracks = this.state.selectedTracks.map((track)=> 
-        {
-            let obj = {
-                id: track.id,
-                name: track.name,
-                uri: track.uri
-            };
-            return obj
-        });
-        request('/graphql', UPDATE_TRACKS, {
-            id: this.transactionStack.id,
-            artistId: track.artist.id,
-            tracks: selectedTracks
-        }).then((response)=>{
-            // this.setState({lastModified: response.updateTracks.lastModified});
-            this.lastModified = response.updateTracks.lastModified;
-            // this.props.lastModifiedCallback(this.lastModified);
-            this.props.savingCallback(false, response.updateTracks.lastModified);
-        });
         if (this.state.currentTrack)
-            this.setState({ selectedTracks: this.state.selectedTracks });
+            this.setState({ selectedTracks: this.state.selectedTracks }, this.save);
         else
-            this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
+            this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track }, this.save);
     }
 
     deselectTrack = (track) => {
@@ -1250,6 +1233,8 @@ class GraphWindow extends React.Component {
         for (var node of this.state.nodes){
             var artist = node.artist;
             var artistTracks = node.artist.tracks;
+            console.log(artist);
+            console.log(artistTracks);
             await this.selectRandomTracks(artist,artistTracks);
         }    
     }  
