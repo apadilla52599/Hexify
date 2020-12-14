@@ -1291,7 +1291,7 @@ class GraphWindow extends React.Component {
             this.getAllTracks();
         }
         if (this.playerLoaded === false && this.state.player) {
-            this.state.player.setVolume(30);
+            this.state.player.setVolume(.3);
             this.playerLoaded = true;
             this.state.player.addListener('player_state_changed', (playerState) => {
                 if (playerState.position === 0 && playerState.paused && !this.state.paused && this.state.selectedTracks.length > 1 && !this.trackEnded) {
