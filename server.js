@@ -8,6 +8,7 @@ const userSchema = require('./models/User.js').schema;
 const UserModel = mongoose.model('User', userSchema);
 const { graphqlHTTP } = require('express-graphql');
 const fs = require('fs'); 
+const http = require('http');
 
 const passport = require('passport')
 const SpotifyStrategy = require('passport-spotify').Strategy;
@@ -24,6 +25,7 @@ const key = fs.readFileSync('./certifications/www_hexify_us.key');
 
 const hostname = "www.hexify.us";
 const httpsPort = 443;
+const httpPort = 80;
 
 const httpsOptions = {
   cert: cert,
@@ -31,6 +33,7 @@ const httpsOptions = {
   key: key
 }
 
+const httpServer = http.createServer(app);
 const httpsServer = https.createServer(httpsOptions, app);
 
 /* Middleware */
@@ -184,4 +187,5 @@ app.get('*', function (req, res) {
 });
 
 // app.listen(process.env.PORT || 80);
+httpServer.listen(httpPort, hostname)
 httpsServer.listen(httpsPort, hostname);
