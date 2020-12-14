@@ -418,8 +418,7 @@ class GraphWindow extends React.Component {
             `
           }).then((result) => {
             if (result.isConfirmed) {
-                window.location.pathname = '/auth/spotify'
-                swal.fire('Logged In!', '', 'success')
+                window.location.pathname = '/auth/spotify';
             }})
           //Original https://i.pinimg.com/originals/e0/94/d9/e094d9bb9a23354435ac138f3200e53d.gif
           //larger image https://i.gyazo.com/f1ee894e7f75081ec30b527dd3618847.gif
