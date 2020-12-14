@@ -199,7 +199,7 @@ var queryType = new GraphQLObjectType({
     return {
       graphicalPlaylists: {
         type: new GraphQLList(graphicalPlaylistType),
-        resolve: function () {
+        resolve: function (root, params) {
           const graphicalPlaylists = GraphicalPlaylistModel.find({privacyStatus: "public"}).exec();
           if (!graphicalPlaylists) {
             throw new Error("Error");

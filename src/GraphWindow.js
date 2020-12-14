@@ -1230,6 +1230,7 @@ class GraphWindow extends React.Component {
     }
 
     randomizePlaylist = async () => {
+        this.clearTracks();
         for (var node of this.state.nodes){
             var artist = node.artist;
             var artistTracks = node.artist.tracks;
@@ -1240,44 +1241,47 @@ class GraphWindow extends React.Component {
     }  
 
     selectRandomTracks =async (artist, artistTracks) => {
-        var thresh;
-        if(artistTracks === undefined){
-            return;
-        }
-        if(artistTracks.length > 10){
-            thresh = .05;
-        }else{
-            thresh = .4;
-        }
+        
         if(artistTracks != undefined && this.state.selectedTracks != undefined){
-            for (const track of artistTracks){
+            var count = 1 + Math.ceil(Math.random()*4);
+            if(artistTracks.length < 5){
+                count = artistTracks.length;
+            }
+            var ind = []
+            for(var i = 0; i< count; i++){
+                var x = Math.floor(Math.random()*artistTracks.length);
+                while(ind.includes(x)){
+                    x = Math.floor(Math.random()*artistTracks.length);
+                }
+                ind = ind.concat(x);
+                var track = artistTracks[x];
                 track.artist = artist;
-                if(Math.random() < thresh){
-                    this.state.selectedTracks.push(track);
-                    var selectedTracks = this.state.selectedTracks.map((t)=> 
-                    {
-                        if(t != undefined){
-                            let obj = {
-                                id: t.id,
-                                name: t.name,
-                                uri: t.uri
-                            };
-                            return obj
-                        }
-                    });
-                    await request('/graphql', UPDATE_TRACKS, {
-                        id: this.transactionStack.id,
-                        artistId: track.artist.id,
-                        tracks: selectedTracks
-                    }).then((response)=>{
-                        this.lastModified = response.updateTracks.lastModified;
-                        this.props.savingCallback(false, response.updateTracks.lastModified);
-                    });
-                    if (this.state.currentTrack)
-                        this.setState({ selectedTracks: this.state.selectedTracks });
-                    else
-                        this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
-                } 
+                console.log(this.state.selectedTracks);
+                //here
+                this.state.selectedTracks.push(track);
+                var selectedTracks = this.state.selectedTracks.map((t)=> 
+                {
+                    if(t != undefined){
+                        let obj = {
+                            id: t.id,
+                            name: t.name,
+                            uri: t.uri
+                        };
+                        return obj
+                    }
+                });
+                await request('/graphql', UPDATE_TRACKS, {
+                    id: this.transactionStack.id,
+                    artistId: track.artist.id,
+                    tracks: selectedTracks
+                }).then((response)=>{
+                    this.lastModified = response.updateTracks.lastModified;
+                    this.props.savingCallback(false, response.updateTracks.lastModified);
+                });
+                if (this.state.currentTrack)
+                    this.setState({ selectedTracks: this.state.selectedTracks });
+                else
+                    this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
             }
         }
     }
