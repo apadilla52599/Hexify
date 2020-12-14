@@ -28,8 +28,8 @@ class Titlebar extends React.Component {
     }
 
     componentWillUnmount() {
-        this.clearInterval(this.savingInterval);
-        this.clearInterval(this.nameInterval);
+        clearInterval(this.savingInterval);
+        clearInterval(this.nameInterval);
     }
 
     handleClick = () => {
@@ -98,11 +98,6 @@ class Titlebar extends React.Component {
                             src="https://i.gyazo.com/79142564837963c719e4300531af2e64.png" ></img>
                         </a>
                     </div>
-              
-
-                { !browsing &&
-                    <p id="camera_button" style={{cursor: "pointer", color: "white", fontFamily: "monospace", fontSize: "1.2rem", marginLeft: "18vw" }}><i className="fas fa-camera"></i></p>
-                }
                 { !browsing &&
                     <IconButton href="/browse" style = {{color: "white" }}>
                         <PublicIcon style={{width:"1.5rem", height:"1.5rem"}}/>

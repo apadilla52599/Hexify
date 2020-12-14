@@ -40,7 +40,7 @@ class ArtistEditor extends React.Component{
             tracks.splice(tracks.findIndex(track => track.id === selectedTrack.id), 1);
         });
         return (
-            <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
+            <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "3vh", position: "absolute", marginLeft: "30", marginTop: "2vh"}}>
                     <i className="fas fa-chevron-left"></i>
                 </div>
