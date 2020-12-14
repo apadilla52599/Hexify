@@ -48,7 +48,8 @@ app.use('/static', express.static(path.join(__dirname, '/build/static')));
 app.use(session({
   resave: false,
   saveUninitialized: true,
-  secret: 'HMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'
+  secret: 'HMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM',
+  cookie: { maxAge: 60000 }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -88,7 +89,7 @@ passport.use(
     {
       clientID: "c0ed6811aa0f4bcaaf430e3659be4d57",
       clientSecret: "b1144988d7c248bcb2cf490f52435645",
-      callbackURL: 'http://www.hexify.us/auth/spotify/callback'
+      callbackURL: 'https://www.hexify.us/auth/spotify/callback'
     },
     function(accessToken, refreshToken, expires_in, profile, done) {
       UserModel.findOne({ SpotifyUserID: profile.id }, function(err, obj) {
