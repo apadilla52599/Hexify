@@ -36,6 +36,13 @@ const httpsOptions = {
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(httpsOptions, app);
 
+app.use((req, res, next) => {
+  if(req.protocol === 'http') {
+    res.redirect(301, `https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
 /* Middleware */
 app.use('/static', express.static(path.join(__dirname, '/build/static')));
 app.use(session({
@@ -46,13 +53,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use((req, res, next) => {
-  if(req.protocol === 'http') {
-    res.redirect(301, `https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
 
 // TODO: This no longer works
 app.use('/auth/temp/:id/:token', function (req, res, next) {
