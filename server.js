@@ -7,6 +7,7 @@ const schema = require('./graphql/hexifySchemas');
 const userSchema = require('./models/User.js').schema;
 const UserModel = mongoose.model('User', userSchema);
 const { graphqlHTTP } = require('express-graphql');
+const fs = require('fs'); 
 
 const passport = require('passport')
 const SpotifyStrategy = require('passport-spotify').Strategy;
@@ -17,6 +18,21 @@ mongoose.connect("mongodb+srv://hexify_admin:DVX0kU3D8VlFKGwC@hexify.cxa7e.mongo
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
+const cert = fs.readFileSync('./certifications/www_hexify_us.crt');
+const ca = fs.readFileSync('./certifications/www_hexify_us.ca-bundle');
+const key = fs.readFileSync('./certifications/www_hexify_us.key');
+
+const hostname = "www.hexify.us";
+const httpsPort = 443;
+
+const httpsOptions = {
+  cert: cert,
+  ca: ca,
+  key: key
+}
+
+const httpsServer = https.createServer(httpsOptions, app);
+
 /* Middleware */
 app.use('/static', express.static(path.join(__dirname, '/build/static')));
 app.use(session({
@@ -26,6 +42,14 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use((req, res, next) => {
+  if(req.protocol === 'http') {
+    res.redirect(301, `https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
 
 // TODO: This no longer works
 app.use('/auth/temp/:id/:token', function (req, res, next) {
@@ -159,4 +183,5 @@ app.get('*', function (req, res) {
   }
 });
 
-app.listen(process.env.PORT || 80);
+// app.listen(process.env.PORT || 80);
+httpsServer.listen(httpsPort, hostname);
