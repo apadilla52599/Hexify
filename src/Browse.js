@@ -106,20 +106,20 @@ class Browse extends React.Component {
             });
         });
     }
-    getColor(genre) {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            if(genre.length <= i){
-                color += letters[Math.floor((genre.charCodeAt(i-genre.length)-65)/122 * 16)];
-            }else{
-                color += letters[Math.floor((genre.charCodeAt(i))/122 * 16)];
-            }
-          
+    getColor(genre){
+        var hash = 0;
+        for (var i = 0; i < genre.length; i++) {
+            hash = genre.charCodeAt(i) + ((hash << 5) - hash);
+            hash = hash & hash;
         }
-        console.log(color)
+        var color = '#';
+        for (var i = 0; i < 3; i++) {
+            var value = (hash >> (i * 8)) & 255;
+            color += ('00' + value.toString(16)).substr(-2);
+        }
         return color;
     }
+
     render() {
         return (
             <div style={{height: "calc(100% - 3rem)"}}>
@@ -142,7 +142,7 @@ class Browse extends React.Component {
                                 <div className="hvrbox">
                                     {graph.genres.slice(0,3).map((genre, index) => (
                                         <div className = "genre" style = {{cursor: "pointer",zIndex: "1",borderStyle: "solid",borderColor: "black", borderWidth: "3",
-                                        position: "absolute",marginTop: (22*(index+1) + "px"), marginBottom: "0%", marginLeft: "92%", height: "20px",width: "20px",backgroundColor: this.getColor(genre.key),borderRadius: "50%", }}>
+                                        position: "absolute",marginTop: (22*(index+1) + "px"), marginBottom: "0%", marginLeft: "85%", height: "20px",width: "20px",backgroundColor: this.getColor(genre.key),borderRadius: "50%", }}>
                                             <div className="genre-text" style = {{position: "absolute",zIndex: "2", color: "white"}}>
                                                 {genre.key}
                                            </div>

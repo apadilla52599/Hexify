@@ -152,12 +152,6 @@ app.get('/v1*', function (req, res) {
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, '/build/index.html'));
-  // if (req.user === undefined) {
-  //   res.redirect('/auth/spotify');
-  // }
-  // else {
-  //   res.sendFile(path.join(__dirname, '/build/index.html'));
-  // }
 });
 
 app.listen(process.env.PORT || 8080);
