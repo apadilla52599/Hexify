@@ -5,7 +5,7 @@
     --text-color-purple: #B19CD9;
     --titlebar-height: 3rem;
     --playlist-column-margin: 1rem;
-    --playlist-column-width: max(22em, 20vw);
+    --playlist-column-width: 22rem;
     --sidebar-width: 3rem;
     --playback-height: 7rem;
     --sidebar-margin: .5rem;
@@ -32,6 +32,7 @@ body {
 #playlist_column {
     width: var(--playlist-column-width);
     height: calc(100% - var(--titlebar-height));
+    position: absolute;
 }
 
 #sidebar_column {
@@ -139,7 +140,7 @@ body {
 .hvrbox {
 	position: relative;
 	display: inline-block;
-	overflow: hidden;
+	overflow: show;
 	max-width: 100%;
     height: auto;
     border-radius: 15px;
@@ -182,4 +183,18 @@ body {
 	-webkit-transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
+}
+.genre-text {
+    display:none;
+    margin-left: 15px;
+    font-size: 20;
+}
+.genre:hover .genre-text {
+    display:block;
+    white-space: nowrap;
+    text-shadow:
+    -1px -1px 5px #000,
+    1px -1px 5px #000,
+    -1px 1px 5px #000,
+    1px 1px 5px #000;
 }

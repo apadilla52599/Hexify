@@ -144,7 +144,7 @@ app.get('/auth/token', function (req, res) {
 app.get('/logout', function(req, res){
   console.log("should log out");
   req.logout();
-  res.redirect('/browse');
+  res.redirect('/edit');
 });
 
 app.get('/v1*', function (req, res) {
@@ -179,12 +179,13 @@ app.get('/v1*', function (req, res) {
 });
 
 app.get('*', function (req, res) {
-  if (req.user === undefined) {
-    res.redirect('/auth/spotify');
-  }
-  else {
-    res.sendFile(path.join(__dirname, '/build/index.html'));
-  }
+  res.sendFile(path.join(__dirname, '/build/index.html'));
+  // if (req.user === undefined) {
+  //   res.redirect('/auth/spotify');
+  // }
+  // else {
+  //   res.sendFile(path.join(__dirname, '/build/index.html'));
+  // }
 });
 
 // app.listen(process.env.PORT || 80);

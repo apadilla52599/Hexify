@@ -21,6 +21,10 @@ const RETRIEVE_GRAPHS = gql`
             owner
             name
             privacyStatus
+            genres { 
+                key
+                value
+            }
         }
     }
 ` 
@@ -31,6 +35,10 @@ const SEARCH_GRAPHS = gql`
         id
         owner
         privacyStatus
+        genres { 
+            key
+            value
+            }
         }
     }
 ` 
@@ -98,7 +106,20 @@ class Browse extends React.Component {
             });
         });
     }
-    
+    getColor(genre) {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            if(genre.length <= i){
+                color += letters[Math.floor((genre.charCodeAt(i-genre.length)-65)/122 * 16)];
+            }else{
+                color += letters[Math.floor((genre.charCodeAt(i))/122 * 16)];
+            }
+          
+        }
+        console.log(color)
+        return color;
+    }
     render() {
         return (
             <div style={{height: "calc(100% - 3rem)"}}>
@@ -113,13 +134,39 @@ class Browse extends React.Component {
                 </div> 
                 <div id="browse_gallery" style={{width: "80%", float: 'right'}}>
                     <div id="ScrollPaper" style={{backgroundColor: "white", width: "100%"}}>
-                        <Typography ></Typography>
                          <div className="grid" style={{marginLeft: "35px", marginTop: "20px"}}>
-                            {this.state.graphs === undefined? <div></div> : this.state.graphs.map(graph => (<div className="grid-item"><div className="hvrbox"><img alt="graph thumbnail" src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".jpg"} onError={(e) => {e.target.onerror = null; e.target.src=this.images[Math.floor(Math.random() * 8)];}} onLoad={(e) => {e.target.onload = null; if (this.masonry) this.masonry.layout()}} style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/><div onClick={() => window.location.pathname = "/edit/" + graph.id} className="hvrbox-layer_top"><div className="hvrbox-text">{graph.name}</div></div></div> </div>))}
+                            {this.state.graphs === undefined? 
+                            <div></div> : 
+                            this.state.graphs.map(graph => (
+                            <div className="grid-item">
+                                <div className="hvrbox">
+                                    {graph.genres.slice(0,3).map((genre, index) => (
+                                        <div className = "genre" style = {{cursor: "pointer",zIndex: "1",borderStyle: "solid",borderColor: "black", borderWidth: "3",
+                                        position: "absolute",marginTop: (22*(index+1) + "px"), marginBottom: "0%", marginLeft: "92%", height: "20px",width: "20px",backgroundColor: this.getColor(genre.key),borderRadius: "50%", }}>
+                                            <div className="genre-text" style = {{position: "absolute",zIndex: "2", color: "white"}}>
+                                                {genre.key}
+                                           </div>
+                                        </div>
+                                    ))}
+                                    <img alt="graph thumbnail" 
+                                    src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".png"} 
+                                    onError={(e) => {e.target.onerror = null; 
+                                    e.target.src=this.images[Math.floor(Math.random() * 8)];}} 
+                                    onLoad={(e) => {e.target.onload = null; if (this.masonry) this.masonry.layout()}} 
+                                    style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/>
+                                    <div onClick={() => window.location.pathname = "/edit/" + graph.id} className="hvrbox-layer_top">
+                                        <div className="hvrbox-text">
+                                            {graph.name}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
             </div>
+            
         );
     }
 }

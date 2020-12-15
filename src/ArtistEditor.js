@@ -10,7 +10,7 @@ class ArtistEditor extends React.Component{
     }
 
     handleSearch = (e) => {
-        this.setState({text: e.target.value});
+        this.setState({nonSelectedPage: 1, text: e.target.value});
     }
 
     handlePageChange1 = (e,v) => {
@@ -22,9 +22,6 @@ class ArtistEditor extends React.Component{
 
 
     render() {
-        if(this.props.node.limit == undefined){
-            this.props.node.limit = true;
-        }
         const imgStyle = {
             marginTop: "8px",
             width: "9vh",
@@ -43,15 +40,15 @@ class ArtistEditor extends React.Component{
             tracks.splice(tracks.findIndex(track => track.id === selectedTrack.id), 1);
         });
         return (
-            <div id="playlist_editor" style={{ height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
-                <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "3vh", position: "absolute", marginLeft: "5%", marginTop: "5%"}}>
+            <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
+                <div onClick={this.props.deselectNode} style={{cursor: "pointer", color: "white", fontSize: "3vh", position: "absolute", marginLeft: "30", marginTop: "2vh"}}>
                     <i className="fas fa-chevron-left"></i>
                 </div>
 
                 <div onClick={() =>{this.setState({nonSelectedPage: 1});this.props.randomSelect(this.props.node.artist, tracks.filter(tracks => 
                             tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1))}} 
-                style={{cursor: "pointer", color: "white", fontSize: "3vh", 
-                position: "absolute", marginLeft: "75%", marginTop: "5%"}}>
+                            style={{cursor: "pointer", color: "white", fontSize: "3vh", 
+                            position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
                     <i className="fas fa-dice"></i>
                 </div>
                 
@@ -60,18 +57,6 @@ class ArtistEditor extends React.Component{
                 </div>
                 <div style={{display: "flex", height: "32px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
                     <p style={{ color: "white", cursor: "default", fontFamily: "monospace", fontSize: "20px" }}>{this.props.node.artist.name}</p>
-                </div>
-
-                <div style={{display: "flex", height: "48px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-                <FormGroup style = {{color: "white", cursor: "default", fontFamily: "monospace", fontSize: "12px"}}>
-                    <FormControlLabel
-                    control={<Switch
-                    // disabled = {tracks.length > 10}
-                    checked={this.props.node.limit} 
-                    onChange={this.props.toggleLimit} />}
-                    label="Limit Tracks"
-                    />
-                </FormGroup>
                 </div>
 
                 <div style={{display: "flex", height: "calc(50% - 100px - 5vh)", marginBottom: "16px", justifyContent: "center", flexGrow: 1 }}>
