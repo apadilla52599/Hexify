@@ -1264,7 +1264,7 @@ class GraphWindow extends React.Component {
 
     render() {
         var index = 0;
-        if (this.state.selectedNode !== null &&(this.state.selectedNode.artist.tracks.length === undefined || this.state.selectedNode.artist.detail === "top")){
+        if (this.state.selectedNode !== null &&(this.state.selectedNode.artist.tracks === undefined || this.state.selectedNode.artist.detail === "top")){
             this.getAllTracks(this.state.selectedNode);
             //this.getAllTracks();
         }
