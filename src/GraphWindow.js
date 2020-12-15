@@ -68,15 +68,6 @@ query RetrieveGraphicalPlaylist($id:String!){
   }
 `
 
-const UPDATE_TRACKS = gql`
-mutation($id:String!, $artistId: String!, $tracks: [trackInput]!){
-    updateTracks(id: $id, artistId: $artistId, tracks: $tracks){
-      id
-      lastModified
-    } 
-  }
-`
-
 class GraphWindow extends React.Component {
 
     constructor(props) {
@@ -977,29 +968,10 @@ class GraphWindow extends React.Component {
     deselectTrack = (track) => {
         const index = this.state.selectedTracks.findIndex(selectedTrack => selectedTrack.id === track.id);
         this.state.selectedTracks.splice(index, 1);
-        var selectedTracks = this.state.selectedTracks.map((track)=> 
-        {
-            let obj = {
-                id: track.id,
-                name: track.name,
-                uri: track.uri
-            };
-            return obj
-        });
-        request('/graphql', UPDATE_TRACKS, {
-            id: this.transactionStack.id,
-            artistId: track.artist.id,
-            tracks: selectedTracks
-        }).then((response)=>{
-            // this.setState({lastModified: response.updateTracks.lastModified});
-            this.lastModified = response.updateTracks.lastModified;
-            // this.props.lastModifiedCallback(this.lastModified);
-            this.props.savingCallback(false, response.updateTracks.lastModified);
-        });
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save);
         else
-            this.setState({ selectedTracks: this.state.selectedTracks});
+            this.setState({ selectedTracks: this.state.selectedTracks}, this.save);
     }
 
     clearTracks = () => {
