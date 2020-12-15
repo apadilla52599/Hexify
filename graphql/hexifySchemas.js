@@ -238,7 +238,7 @@ var queryType = new GraphQLObjectType({
             throw new Error("Log in first");
           }
           if (graphicalPlaylist.owner !== user_id) {
-              if (user_id === "" || graphicalPlaylist.privacyStatus === "private")
+              if (graphicalPlaylist.privacyStatus === "private")
                 throw new Error("Not your playlist");
               else {
                   const cp = {...graphicalPlaylist.toObject()};
@@ -461,21 +461,10 @@ var mutation = new GraphQLObjectType({
         resolve: async function(root, params, user_id) {
           const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
           if (graphicalPlaylist.owner === user_id) {
-              graphicalPlaylist.name = params.name;
-              graphicalPlaylist.artists = params.artists;
-              graphicalPlaylist.nodes = params.nodes;
-              graphicalPlaylist.privacyStatus = params.privacyStatus;
-              graphicalPlaylist.genres = params.genres;
-              graphicalPlaylist.lastModified = Date.now();
               const update = {...params};
               delete update.id;
               update.lastModified = Date.now();
-              update.owner = user_id;
 
-              graphicalPlaylist.save(function(error) {
-                  if (error)
-                      console.log(error);
-              });
               return await GraphicalPlaylistModel.findByIdAndUpdate(params.id, update).exec();
           }
           throw new Error("Log in first");
@@ -499,7 +488,7 @@ var mutation = new GraphQLObjectType({
           if (index >= 0) {
             user.graphicalPlaylists.splice(index, 1);
             user.save();
-            GraphicalPlaylistModel.findByIdAndDelete(params.id).exec();
+            GraphicalPlaylistModel.deleteOne({_id: params.id}).exec();
             return {
                 id: params.id,
                 name: "fake name",

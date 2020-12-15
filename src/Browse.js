@@ -5,14 +5,6 @@ import Masonry from 'masonry-layout';
 import IconButton from "@material-ui/core/IconButton";
 import { request, gql } from 'graphql-request';
 import Input from "@material-ui/core/Input";
-import img1 from "./DummyData/p1.JPG";
-import img2 from "./DummyData/p2.JPG";
-import img3 from "./DummyData/p3.JPG";
-import img4 from "./DummyData/p4.JPG";
-import img5 from "./DummyData/p5.JPG";
-import img6 from "./DummyData/p6.JPG";
-import img7 from "./DummyData/p7.JPG";
-import img8 from "./DummyData/p8.JPG";
 
 const RETRIEVE_GRAPHS = gql`
     query{
@@ -49,16 +41,6 @@ class Browse extends React.Component {
         this.state = {
             text: ""
         };
-        this.images = [
-            img1,
-            img2,
-            img3,
-            img4,
-            img5,
-            img6,
-            img7,
-            img8
-        ];
     }
     
     handleSearchText = (e) => {
@@ -73,11 +55,7 @@ class Browse extends React.Component {
         request('/graphql', SEARCH_GRAPHS, {name: this.state.text}).then((response) =>{
             var graphList = []
             var data = response.searchGraphicalPlaylists;
-            for(let i = 0; i < data.length; i++){
-                data[i].img = new Image();
-                graphList.push(data[i]);
-            }
-            this.setState({graphs: graphList});
+            this.setState({graphs: data.filter(graph => graph.owner !== "")});
             const grid = document.querySelector('.grid');
             const masonry = new Masonry(grid, {
                 itemSelector: '.grid-item',
@@ -96,7 +74,7 @@ class Browse extends React.Component {
     loadGraphs(){
         request('/graphql', RETRIEVE_GRAPHS).then(async (response) => {
             var data = response.graphicalPlaylists;
-            this.setState({graphs: data}, () => {
+            this.setState({graphs: data.filter(graph => graph.owner !== "")}, () => {
                 const grid = document.querySelector('.grid');
                 this.masonry = new Masonry(grid, {
                     itemSelector: '.grid-item',
@@ -151,7 +129,7 @@ class Browse extends React.Component {
                                     <img alt="graph thumbnail" 
                                     src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".png"} 
                                     onError={(e) => {e.target.onerror = null; 
-                                    e.target.src=this.images[Math.floor(Math.random() * 8)];}} 
+                                    e.target.src="https://nsc.edu/wp-content/uploads/2020/09/blank-White-Square-image-for-Web-300x256-1.png"}} 
                                     onLoad={(e) => {e.target.onload = null; if (this.masonry) this.masonry.layout()}} 
                                     style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/>
                                     <div onClick={() => window.location.pathname = "/edit/" + graph.id} className="hvrbox-layer_top">

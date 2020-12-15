@@ -83,6 +83,7 @@ class GraphWindow extends React.Component {
             topRecommendedArtists: [],
             loading: false
         };
+        this.zoom = d3.zoom()
         this.loadedArtists = [];
         this.artistLookup = {};
         this.selectedQuickArtist = null;
@@ -107,6 +108,8 @@ class GraphWindow extends React.Component {
         this.uploading = false;
         this.uploadAgain = false;
         this.movingArtist = null;
+        this.walking = false;
+        this.transitioning = false;
         console.log("constructor");
         if (this.props.match && this.props.match.params)
             this.loadGraph(this.props.match.params.id);
@@ -187,16 +190,18 @@ class GraphWindow extends React.Component {
             this.ctx.lineTo(x + radius * Math.cos(omega * (i + 1) + phi), y + radius * Math.sin(omega * (i + 1) + phi));
         }
         this.ctx.stroke();
-        this.adjacentRecommendedArtists.forEach((node) => {
-            if (node.coords.q === this.mouseCoord.q && node.coords.r === this.mouseCoord.r) {
-                var text = this.ctx.measureText(node.artist.name);
-                this.ctx.fillStyle = "white";
-                this.ctx.fillRect(x - 2, y - 12, text.width + 4, 16);
-                this.ctx.fillStyle = "black";
-                this.ctx.lineWidth = .5;
-                this.ctx.fillText(node.artist.name, x, y);
-            }
-        });
+        if (this.walking === false) {
+            this.adjacentRecommendedArtists.forEach((node) => {
+                if (node.coords.q === this.mouseCoord.q && node.coords.r === this.mouseCoord.r) {
+                    var text = this.ctx.measureText(node.artist.name);
+                    this.ctx.fillStyle = "white";
+                    this.ctx.fillRect(x - 2, y - 12, text.width + 4, 16);
+                    this.ctx.fillStyle = "black";
+                    this.ctx.lineWidth = .5;
+                    this.ctx.fillText(node.artist.name, x, y);
+                }
+            });
+        }
     }
 
     drawHex(node, backgroundColor, ctx) {
@@ -322,7 +327,7 @@ class GraphWindow extends React.Component {
                     }
                 ];
             }
-            else {
+            else if (this.walking === false) {
                 this.adjacentRecommendedArtists.forEach((artistNode) => {
                     this.drawNodeImage(artistNode);
                 });
@@ -490,7 +495,7 @@ class GraphWindow extends React.Component {
         this.canvas.onmousemove = highlightCursor;
 
         selection.call(
-            d3.zoom()
+            this.zoom
             //.extent([[0, 0], [1900, 1000]])
             .wheelDelta((event) => {
                 if ((this.transform.k < 1 && event.deltaY > 0) || (this.transform.k > 8 && event.deltaY < 0)) {
@@ -530,39 +535,47 @@ class GraphWindow extends React.Component {
         this.canvas.onclick = (e) => {
             const mouseCoords = this.pixelToAxial(e.clientX, e.clientY);
             if (e.button === 0) {
-                var flag = false;
-                this.adjacentRecommendedArtists.forEach(async (node) => {
-                    if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
-                        flag = true;
-                        console.log("add node from recommended artists");
-                        this.updateGenres(node.artist.genres);
-
-                        if (this.transactionStack === undefined)
-                            await this.createGraph();
-                        const receipt = this.transactionStack.addNode(node)
-                        if (receipt.update) {
-                            this.adjacentRecommendedArtists = [];
-                            this.save();
-                            this.setState({
-                                selectedNode: node
-                            }, this.draw);
-                        }
-                    }
-                });
-                if (flag === false) {
-                    this.state.nodes.forEach((node) => {
-                        if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
-                            flag = true;
-                            this.adjacentRecommendedArtists = [];
-                            this.setState({ selectedNode: node });
-                            this.draw();
-                        }
+                if (this.walking === true) {
+                    this.state.nodes.forEach(node => {
+                        if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r)
+                            this.setState({selectedNode: node}, () => this.walkTheGraph(node));
                     });
                 }
-                if (flag === false) {
-                    this.adjacentRecommendedArtists = [];
-                    this.setState({ selectedNode: null });
-                    this.draw();
+                else {
+                    var flag = false;
+                    this.adjacentRecommendedArtists.forEach(async (node) => {
+                        if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
+                            flag = true;
+                            console.log("add node from recommended artists");
+                            this.updateGenres(node.artist.genres);
+
+                            if (this.transactionStack === undefined)
+                                await this.createGraph();
+                            const receipt = this.transactionStack.addNode(node)
+                            if (receipt.update) {
+                                this.adjacentRecommendedArtists = [];
+                                this.save();
+                                this.setState({
+                                    selectedNode: node
+                                }, this.draw);
+                            }
+                        }
+                    });
+                    if (flag === false) {
+                        this.state.nodes.forEach((node) => {
+                            if (node.coords.q === mouseCoords.q && node.coords.r === mouseCoords.r) {
+                                flag = true;
+                                this.adjacentRecommendedArtists = [];
+                                this.setState({ selectedNode: node });
+                                this.draw();
+                            }
+                        });
+                    }
+                    if (flag === false) {
+                        this.adjacentRecommendedArtists = [];
+                        this.setState({ selectedNode: null });
+                        this.draw();
+                    }
                 }
             }
         }
@@ -629,6 +642,35 @@ class GraphWindow extends React.Component {
             if (e.key === "Delete" && this.state.selectedNode != null) {
                 this.removeNode(this.state.selectedNode);
                 this.deselectNode();
+            }
+            if (e.key === "Escape") {
+                console.log("escaped");
+                this.setState({selectedNode: null}, () => {
+                    this.walking = false;
+                    clearInterval(this.transitionInterval);
+                    selection.call(
+                        this.zoom
+                        //.extent([[0, 0], [1900, 1000]])
+                        .wheelDelta((event) => {
+                            if ((this.transform.k < 1 && event.deltaY > 0) || (this.transform.k > 8 && event.deltaY < 0)) {
+                                event.preventDefault();
+                                return 0;
+                            }
+                            else {
+                                if(Math.abs(event.deltaY) < 5){
+                                    return -event.deltaY *  1 / 10;
+                                }else{
+                                    return -event.deltaY *  1 / 500;
+                                }
+                            }
+                        })
+                        .clickDistance(4)
+                        .on("zoom", (d3event) => {
+                            this.transform = d3event.transform;
+                            this.draw();
+                        })
+                    );
+                });
             }
         });
 
@@ -1210,7 +1252,6 @@ class GraphWindow extends React.Component {
  
 
     selectRandomTracks =async (artist, artistTracks) => {
-        
         if(artistTracks != undefined && this.state.selectedTracks != undefined){
             var count = 1 + Math.ceil(Math.random()*4);
             if(artistTracks.length < 5){
@@ -1234,6 +1275,7 @@ class GraphWindow extends React.Component {
             }
         }
     }
+
     randomizePlaylist = async () => {
         await this.clearTracks();
         var nodesList = [];
@@ -1262,6 +1304,62 @@ class GraphWindow extends React.Component {
         this.setState({nodes: nodesList, loading:false});    
     }  
 
+    playRandomSong = async node => {
+        const selectedTracks = this.state.selectedTracks.filter(track => track.artist.id === node.artist.id);
+        if (node.artist.tracks === undefined)
+            await this.getTopTracks(node);
+        console.log(node.artist.tracks !== undefined);
+        console.log(node.artist.tracks.length);
+        if (selectedTracks.length > 0) {
+            const randomTrack = selectedTracks[Math.floor(Math.random() * selectedTracks.length)];
+            randomTrack.artist = node.artist;
+            this.playTrack(randomTrack);
+        }
+        else if (node.artist.tracks !== undefined && node.artist.tracks.length > 0) {
+            const randomTrack = node.artist.tracks[Math.floor(Math.random() * node.artist.tracks.length)];
+            console.log(randomTrack);
+            randomTrack.artist = node.artist;
+            this.playTrack(randomTrack);
+        }
+    }
+
+    walkTheGraph = (node) => {
+        this.setState({selectedNode: node}, () => {
+            if (this.state.currentTrack === undefined || this.state.currentTrack.artist.id !== node.artist.id)
+                this.playRandomSong(node);
+            this.walking = true;
+            this.transitioning = true;
+            const coords = this.axialToCart(node.coords);
+            const n = 30;
+            var count = 0;
+            this.oldTransform = {...this.transform};
+            if (this.transitionInterval !== undefined)
+                clearInterval(this.transitionInterval);
+            this.zoom.on("zoom", null);
+            this.transitionInterval = setInterval(() => {
+                const i = count / n;
+                const k = this.oldTransform.k * (1 - i) + 8 * i;
+                const x = this.oldTransform.x * (1 - i) + (this.canvas.width / 2 - coords.x * k) * i;
+                const y = this.oldTransform.y * (1 - i) + (this.canvas.height / 2 - coords.y * k) * i;
+                if (count < n) {
+                    count += 1;
+                    this.transform.x = x;
+                    this.transform.y = y;
+                    this.transform.k = k;
+                    this.draw();
+                }
+                else {
+                    clearInterval(this.transitionInterval);
+                    this.transitioning = false;
+                    this.transform.x = x;
+                    this.transform.y = y;
+                    this.transform.k = k;
+                    this.draw();
+                }
+            }, 300 / n);
+        });
+    }
+
     render() {
         var index = 0;
         if (this.state.selectedNode !== null &&(this.state.selectedNode.artist.tracks === undefined || this.state.selectedNode.artist.detail === "top")){
@@ -1288,7 +1386,7 @@ class GraphWindow extends React.Component {
                         <PlaylistEditor
                             privacyStatus={this.state.privacyStatus}
                             privacyCallback={(privacyStatus) => this.setState({privacyStatus: privacyStatus}, this.save)}
-                            player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}
+                            player={(this.state.selectedTracks.length > 0 || this.walking) ? this.state.player : undefined}
                             tracks={this.state.selectedTracks}
                             deselectTrack={this.deselectTrack}
                             clearTracks={this.clearTracks}
@@ -1298,18 +1396,19 @@ class GraphWindow extends React.Component {
                             loading = {this.state.loading}
                         />
                     ) : (
-                        <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}
+                        <ArtistEditor player={(this.state.selectedTracks.length > 0 || this.walking) ? this.state.player : undefined}
                          node={this.state.selectedNode} 
                          selectedTracks={this.state.selectedTracks} 
                          selectTrack={this.selectTrack} 
                          deselectTrack={this.deselectTrack} 
+                         walkTheGraph={this.walkTheGraph}
                          removeNode={this.removeNode} 
                          deselectNode={this.deselectNode} 
                          playTrack={(track) => this.playTrack(track)}
                          randomSelect = {this.selectRandomTracks}
                           />
                     )}
-                    {this.state.selectedTracks.length > 0 && this.state.player &&
+                    {(this.state.selectedTracks.length > 0 || this.walking) && this.state.player &&
                         <Playback
                             player={this.state.player}
                             paused={this.state.paused}
