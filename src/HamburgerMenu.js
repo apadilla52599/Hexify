@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import MuiMenu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteIcon from '@material-ui/icons/Delete';
-import img1 from "./DummyData/p1.JPG";
 import { Divider } from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
 import { request, gql } from 'graphql-request'

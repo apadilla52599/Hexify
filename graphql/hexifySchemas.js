@@ -461,20 +461,10 @@ var mutation = new GraphQLObjectType({
         resolve: async function(root, params, user_id) {
           const graphicalPlaylist = await GraphicalPlaylistModel.findById(params.id).exec();
           if (graphicalPlaylist.owner === user_id) {
-              graphicalPlaylist.name = params.name;
-              graphicalPlaylist.artists = params.artists;
-              graphicalPlaylist.nodes = params.nodes;
-              graphicalPlaylist.privacyStatus = params.privacyStatus;
-              graphicalPlaylist.genres = params.genres;
-              graphicalPlaylist.lastModified = Date.now();
               const update = {...params};
               delete update.id;
               update.lastModified = Date.now();
 
-              graphicalPlaylist.save(function(error) {
-                  if (error)
-                      console.log(error);
-              });
               return await GraphicalPlaylistModel.findByIdAndUpdate(params.id, update).exec();
           }
           throw new Error("Log in first");

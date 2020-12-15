@@ -68,15 +68,6 @@ query RetrieveGraphicalPlaylist($id:String!){
   }
 `
 
-const UPDATE_TRACKS = gql`
-mutation($id:String!, $artistId: String!, $tracks: [trackInput]!){
-    updateTracks(id: $id, artistId: $artistId, tracks: $tracks){
-      id
-      lastModified
-    } 
-  }
-`
-
 class GraphWindow extends React.Component {
 
     constructor(props) {
@@ -361,7 +352,7 @@ class GraphWindow extends React.Component {
         if (canvas === this.canvas && this.state.selectedNode != null && this.adjacentRecommendedArtists.length === 0 && this.queryingSimilar === false) {
             // Draw the recommended artists
             this.queryingSimilar = true;
-            fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/related-artists", {credentials: 'include'}).then((response) => {
+            fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/related-artists").then((response) => {
                 response.json().then(d => {
                     var i = 0;
                     var filtered = d.artists.filter(artist => !(artist.id in this.artistLookup));
@@ -422,12 +413,12 @@ class GraphWindow extends React.Component {
     componentDidMount() {
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
-            fetch('/v1/me', {credentials: 'include'}).then(userResp => {
+            fetch('/v1/me').then(userResp => {
                 console.log(userResp);
                 if (userResp.ok) {
                     userResp.json().then(userData => {
                         if (userData.product === "premium") {
-                            fetch('/auth/token', {credentials: 'include'}).then(response => response.json()).then(data => {
+                            fetch('/auth/token').then(response => response.json()).then(data => {
                                 this.props.loginCallback(true);
                                 const player = new window.Spotify.Player({
                                     name: 'Web Playback SDK Quick Start Player',
@@ -641,7 +632,7 @@ class GraphWindow extends React.Component {
         });
 
         // Get the user's top artists
-        fetch("/v1/me/top/artists?time_range=medium_term", {credentials: 'include'}).then((response) => {
+        fetch("/v1/me/top/artists?time_range=medium_term").then((response) => {
             console.log(response);
             response.json().then(d => {
                 if (d.items !== undefined)
@@ -697,8 +688,7 @@ class GraphWindow extends React.Component {
                 this.thumbCanvas.toBlob(async (blob) => {
                     await fetch(uploadURL, {
                         method: 'PUT',
-                        body: blob,
-                        credentials: 'include'
+                        body: blob
                     });
                     this.uploading = false;
                     if (this.uploadAgain) {
@@ -810,7 +800,7 @@ class GraphWindow extends React.Component {
 
         var tracks = [];
         for(let i = 0; i < Math.ceil(trackIds.length/50); i++){
-            let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': trackIds.slice(i*50, (i+1)*50)}, {credentials: 'include'}));
+            let response = await fetch("/v1/tracks?" + new URLSearchParams({'ids': trackIds.slice(i*50, (i+1)*50)}));
             let d = await response.json();
             tracks.push(...d.tracks);
         }
@@ -818,7 +808,7 @@ class GraphWindow extends React.Component {
 
         var artists = [];
         for(let i = 0; i < Math.ceil(artistIds.length/50); i++) {
-            let response = await fetch("/v1/artists?" + new URLSearchParams({'ids': artistIds.slice(i*50, (i+1)*50)}, {credentials: 'include'}));
+            let response = await fetch("/v1/artists?" + new URLSearchParams({'ids': artistIds.slice(i*50, (i+1)*50)}));
             let d = await response.json();
             artists.push(...d.artists);
         }
@@ -978,29 +968,10 @@ class GraphWindow extends React.Component {
     deselectTrack = (track) => {
         const index = this.state.selectedTracks.findIndex(selectedTrack => selectedTrack.id === track.id);
         this.state.selectedTracks.splice(index, 1);
-        var selectedTracks = this.state.selectedTracks.map((track)=> 
-        {
-            let obj = {
-                id: track.id,
-                name: track.name,
-                uri: track.uri
-            };
-            return obj
-        });
-        request('/graphql', UPDATE_TRACKS, {
-            id: this.transactionStack.id,
-            artistId: track.artist.id,
-            tracks: selectedTracks
-        }).then((response)=>{
-            // this.setState({lastModified: response.updateTracks.lastModified});
-            this.lastModified = response.updateTracks.lastModified;
-            // this.props.lastModifiedCallback(this.lastModified);
-            this.props.savingCallback(false, response.updateTracks.lastModified);
-        });
         if (index < this.state.trackIndex)
-            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 });
+            this.setState({ selectedTracks: this.state.selectedTracks, trackIndex: this.state.trackIndex - 1 }, this.save);
         else
-            this.setState({ selectedTracks: this.state.selectedTracks});
+            this.setState({ selectedTracks: this.state.selectedTracks}, this.save);
     }
 
     clearTracks = () => {
@@ -1040,7 +1011,6 @@ class GraphWindow extends React.Component {
         fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
         method: 'POST',
         body:JSON.stringify({ uris: tracks.map(track => track.uri)}),
-        credentials: 'include',
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,
@@ -1051,7 +1021,6 @@ class GraphWindow extends React.Component {
         this.state.player._options.getOAuthToken(access_token => {
             fetch(`https://api.spotify.com/v1/me/playlists`, {
             method: 'POST',
-            credentials: 'include',
             body: JSON.stringify({ name: this.graphName,
              description: "Playlist Created Through Hexify",
              public : true}),
@@ -1124,7 +1093,7 @@ class GraphWindow extends React.Component {
 
     handleQuickAddSearch = (e) => {
         if(e.target.value !== ""){
-            fetch("/v1/search?q=" + e.target.value + "&type=artist&limit=6", {credentials: 'include'}).then((response) => {
+            fetch("/v1/search?q=" + e.target.value + "&type=artist&limit=6").then((response) => {
                 response.json().then(res => {
                     res.artists.items = res.artists.items.filter(item => item.images.length > 0);
                     this.setState({quickAddSearchResults: res.artists.items})
@@ -1161,7 +1130,6 @@ class GraphWindow extends React.Component {
         console.log(ids)
         var res = await fetch("https://api.spotify.com/v1/albums/?ids="+ ids.toString(), {
         method: 'GET',
-        credentials: 'include',
         headers: { 
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${access_token}`,
@@ -1178,7 +1146,7 @@ class GraphWindow extends React.Component {
     }  
 
     getAllTracks = async () => {
-        fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/albums?market=US&include_groups=album,single&limit=50", {credentials: 'include'}).then((response) => {
+        fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/albums?market=US&include_groups=album,single&limit=50").then((response) => {
             response.json().then(albums => {
                 var ids = albums.items.map(a => a.id);
                 console.log(ids.length);
@@ -1235,17 +1203,7 @@ class GraphWindow extends React.Component {
             });
         });
     }
-
-    randomizePlaylist = async () => {
-        this.clearTracks();
-        for (var node of this.state.nodes){
-            var artist = node.artist;
-            var artistTracks = node.artist.tracks;
-            console.log(artist);
-            console.log(artistTracks);
-            await this.selectRandomTracks(artist,artistTracks);
-        }    
-    }  
+ 
 
     selectRandomTracks =async (artist, artistTracks) => {
         
@@ -1265,30 +1223,7 @@ class GraphWindow extends React.Component {
                 track.artist = artist;
                 console.log(this.state.selectedTracks);
                 //here
-                this.state.selectedTracks.push(track);
-                var selectedTracks = this.state.selectedTracks.map((t)=> 
-                {
-                    if(t != undefined){
-                        let obj = {
-                            id: t.id,
-                            name: t.name,
-                            uri: t.uri
-                        };
-                        return obj
-                    }
-                });
-                await request('/graphql', UPDATE_TRACKS, {
-                    id: this.transactionStack.id,
-                    artistId: track.artist.id,
-                    tracks: selectedTracks
-                }).then((response)=>{
-                    this.lastModified = response.updateTracks.lastModified;
-                    this.props.savingCallback(false, response.updateTracks.lastModified);
-                });
-                if (this.state.currentTrack)
-                    this.setState({ selectedTracks: this.state.selectedTracks });
-                else
-                    this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
+                this.selectTrack(track);
             }
         }
     }
@@ -1324,7 +1259,6 @@ class GraphWindow extends React.Component {
                             clearTracks={this.clearTracks}
                             playTrack={(track) => this.playTrack(track)}
                             exportPlaylist ={() => {if(this.state.player != null){this.exportPlaylist()}}}
-                            randomizePlaylist = {this.randomizePlaylist}
                         />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}
