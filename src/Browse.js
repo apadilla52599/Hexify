@@ -141,9 +141,9 @@ class Browse extends React.Component {
                             <div className="grid-item">
                                 <div className="hvrbox">
                                     {graph.genres.slice(0,3).map((genre, index) => (
-                                        <div className = "genre" style = {{cursor: "pointer",zIndex: "1",borderStyle: "solid",borderColor: "black", borderWidth: "3",
+                                        <div className = "genre" style = {{direction: "rtl",cursor: "pointer",zIndex: "1",borderStyle: "solid",borderColor: "black", borderWidth: "3",
                                         position: "absolute",marginTop: (22*(index+1) + "px"), marginBottom: "0%", marginLeft: "85%", height: "20px",width: "20px",backgroundColor: this.getColor(genre.key),borderRadius: "50%", }}>
-                                            <div className="genre-text" style = {{position: "absolute",zIndex: "2", color: "white"}}>
+                                            <div className="genre-text" style = {{direction: "ltr", position: "absolute",zIndex: "2", color: "white"}}>
                                                 {genre.key}
                                            </div>
                                         </div>

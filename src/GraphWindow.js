@@ -1251,30 +1251,7 @@ class GraphWindow extends React.Component {
                 track.artist = artist;
                 console.log(this.state.selectedTracks);
                 //here
-                this.state.selectedTracks.push(track);
-                var selectedTracks = this.state.selectedTracks.map((t)=> 
-                {
-                    if(t != undefined){
-                        let obj = {
-                            id: t.id,
-                            name: t.name,
-                            uri: t.uri
-                        };
-                        return obj
-                    }
-                });
-                await request('/graphql', UPDATE_TRACKS, {
-                    id: this.transactionStack.id,
-                    artistId: track.artist.id,
-                    tracks: selectedTracks
-                }).then((response)=>{
-                    this.lastModified = response.updateTracks.lastModified;
-                    this.props.savingCallback(false, response.updateTracks.lastModified);
-                });
-                if (this.state.currentTrack)
-                    this.setState({ selectedTracks: this.state.selectedTracks });
-                else
-                    this.setState({ selectedTracks: this.state.selectedTracks, currentTrack: track });
+                this.selectTrack(track);
             }
         }
     }
