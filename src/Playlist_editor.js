@@ -1,11 +1,17 @@
 import React from "react";
-import Playlist from './PlaylistScroll.js';
 import Button from '@material-ui/core/Button'
 import { Input } from "@material-ui/core";
 import swal from 'sweetalert2';
 import MuiMenu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {withStyles} from "@material-ui/core/styles";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+import Typography from '@material-ui/core/Typography'
 
 const Menu = withStyles({
   paper: {
@@ -51,7 +57,7 @@ class PlaylistEditor extends React.Component {
             if (result.isConfirmed) {
                 this.props.exportPlaylist();
                 swal.fire('Created!', '', 'success')
-            }else if(result.dismiss == "cancel") {
+            }else if(result.dismiss === "cancel") {
                 var temp = document.createElement('input'),
                 text = window.location.href;
                 document.body.appendChild(temp);
@@ -69,19 +75,46 @@ class PlaylistEditor extends React.Component {
     render() {
         const menuOpen = this.state.target !== undefined;
         const clearOpen = this.state.target2 !== undefined;
+        var tracks = this.props.tracks.filter(tracks => tracks.name.toLowerCase().search(this.state.text.toLowerCase()) !== -1);
         return (
             <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
                 
                 <div style={{display: "flex", alignItems: "center", height: "7.5%"}}>
                         <p id = "purple_text" style={{fontFamily: "monospace", fontSize: "20",  display: "flex", justifyContent: "center", flexGrow: 1}}>Playlist Editor</p>
                 </div>
-
-
                 <div style ={{display: "flex", height: "7.5%", justifyContent: "center"}}>
-                    <Input onChange={this.handleSearch} style={{height: "80%", width:"80%",color: "white",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
-                </div>                  
+                    <Input onChangeCapture={this.handleSearch} style={{height: "80%", width:"80%",color: "white",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
+                </div>                
                 <div style ={{display: "flex", justifyContent: "center", height: "70%"}}>
-                    <Playlist player={this.props.player} tracks = {this.props.tracks.filter(tracks => tracks.name.toUpperCase().indexOf(this.state.text.toUpperCase()) !== -1)} delete = {this.props.deselectTrack} playTrack={this.props.playTrack} />
+                        <List id="scroll" style = {{ width: "90%", height: "100%"}}>
+                            {tracks.map((track) => {
+                            return (
+                            <ListItem onClick={() => this.props.playTrack(track)} button key = {track.id} style={{margin:"0", paddingTop:"0", paddingBottom: "0"}} >
+                                    <div>
+                                    <img alt="Album Cover" style = {{height: "30", width: "30", marginRight: ".5vw"}} src={track.album.images[0].url}/>
+                                    </div>
+                                    <ListItemText 
+                                    disableTypography
+                                    primary={<div>
+                                    <Typography style={{color: '#FFFFFF', fontSize: "70%", whiteSpace: "nowrap"}}>{track.name.length > 27 ? (track.name.substring(0,27)+"...") : (track.name)}</Typography>
+                                    <Typography style={{display:"inline-block", color: '#EABFB9', fontSize: "70%", whiteSpace: "nowrap"}}>{"🎤"+track.artist.name}</Typography>
+                                    </div>}
+                                    secondary={<div>
+                                    <Typography style={{display:"inline-block", color: 'gray', fontSize: "70%", whiteSpace: "nowrap"}}>
+                                    {track.album.name.length > 27 ? ("💿"+track.album.name.substring(0,27)+"...") : ("💿"+track.album.name)}
+                                    </Typography>
+                                    </div>}
+                                    >
+                                    </ListItemText>
+                                    <ListItemSecondaryAction>
+                                    <IconButton onClick={() => this.props.deselectTrack(track)} edge="end" aria-label="delete" style = {{padding:"1vh"}}>
+                                    <DeleteIcon style = {{width: "20", height: "20" }}/>
+                                    </IconButton>
+                                    </ListItemSecondaryAction>
+                            </ListItem>
+                            );
+                            })}
+                        </List>
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", marginTop: "10%", paddingLeft: "2%", paddingRight: "2%"}}>
                     <Button onClick={(event) => this.setState({target: event.target})} variant="contained" color="primary" style={{width: "30%", height: "20", fontSize: "12"}}>

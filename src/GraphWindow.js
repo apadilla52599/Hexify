@@ -1186,13 +1186,21 @@ class GraphWindow extends React.Component {
                         var tracks = await this.parseAlbums(access_token, ids.slice(j*20,(j+1)*20), tracks);
                         console.log(tracks);
                     }
+                    const seen = new Set();
+
+                    const filteredArr = tracks.filter(el => {
+                    const duplicate = seen.has(el.name);
+                    seen.add(el.name);
+                    return !duplicate;
+                    })
+
                     const selectedNode = {
                         ...this.state.selectedNode,
                     }
                     if(selectedNode.artist.tracks === undefined){
-                        selectedNode.artist.tracks= tracks;
+                        selectedNode.artist.tracks= filteredArr;
                     }else{
-                        selectedNode.artist.tracks= selectedNode.artist.tracks.concat(tracks);
+                        selectedNode.artist.tracks= selectedNode.artist.tracks.concat(filteredArr);
                     }
                     var flag = false;
                     for(let i = 0; i < this.state.nodes.length - 1; i++){
@@ -1240,16 +1248,20 @@ class GraphWindow extends React.Component {
             if(artistTracks.length < 5){
                 count = artistTracks.length;
             }
-            var ind = []
+            var ind = [];
             for(var i = 0; i< count; i++){
+                console.log("debug");
+                console.log(artistTracks);
                 var x = Math.floor(Math.random()*artistTracks.length);
                 while(ind.includes(x)){
                     x = Math.floor(Math.random()*artistTracks.length);
                 }
                 ind = ind.concat(x);
+                console.log(ind);
                 var track = artistTracks[x];
                 track.artist = artist;
                 console.log(this.state.selectedTracks);
+                console.log(track);
                 //here
                 this.selectTrack(track);
             }
