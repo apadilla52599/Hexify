@@ -91,7 +91,14 @@ class PlaylistEditor extends React.Component {
                 </Menu>
                 
                 
-                <div onClick={(event) => this.setState({target3: event.target})} 
+                <div onClick={(event) => 
+                {
+                    if(tracks.length>0){
+                        this.setState({target3: event.target});
+                    }else{
+                        this.props.randomizePlaylist();
+                    }
+                } } 
                     style={{cursor: "pointer", color: "white", fontSize: "3vh", 
                     position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
                         <i className="fas fa-dice"></i>
