@@ -80,7 +80,8 @@ class GraphWindow extends React.Component {
             selectedNode: null,
             privacyStatus: "public",
             lastModified: "",
-            topRecommendedArtists: []
+            topRecommendedArtists: [],
+            loading: false
         };
         this.loadedArtists = [];
         this.artistLookup = {};
@@ -421,7 +422,7 @@ class GraphWindow extends React.Component {
                             fetch('/auth/token').then(response => response.json()).then(data => {
                                 this.props.loginCallback(true);
                                 const player = new window.Spotify.Player({
-                                    name: 'Web Playback SDK Quick Start Player',
+                                    name: 'Hexify.us',
                                     getOAuthToken: cb => { cb(data.token); }
                                 });
                                 console.log(data.token)
@@ -974,7 +975,8 @@ class GraphWindow extends React.Component {
             this.setState({ selectedTracks: this.state.selectedTracks}, this.save);
     }
 
-    clearTracks = () => {
+    clearTracks = async  () => {
+        console.log(this.state.selectedTracks);
         if (this.state.player)
             this.state.player.pause();
         this.neverStarted = true;
@@ -1126,14 +1128,9 @@ class GraphWindow extends React.Component {
         return array;
     }
 
-    parseAlbums = async  (access_token,ids, tracks) =>{
+    parseAlbums = async  (ids, tracks) =>{
         console.log(ids)
-        var res = await fetch("https://api.spotify.com/v1/albums/?ids="+ ids.toString(), {
-        method: 'GET',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${access_token}`,
-        }});
+        var res = await fetch("/v1/albums/?ids="+ ids.toString());
         res = await res.json();
         console.log(res)
         for (var i = 0; i < res.albums.length; i++) {
@@ -1145,71 +1142,47 @@ class GraphWindow extends React.Component {
         return tracks;
     }  
 
-    getAllTracks = async () => {
-        fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/albums?market=US&include_groups=album,single&limit=50").then((response) => {
-            response.json().then(albums => {
-                var ids = albums.items.map(a => a.id);
-                console.log(ids.length);
-                this.state.player._options.getOAuthToken(async (access_token) => {
-                    var j = 0;
-                    var tracks = [];
-                    for(var j = 0; j < ids.length/20; j++){
-                        console.log(j)
-                        var tracks = await this.parseAlbums(access_token, ids.slice(j*20,(j+1)*20), tracks);
-                        console.log(tracks);
-                    }
-                    const seen = new Set();
+    getAllTracks = async (node) => {
+        const currentNode = {
+            ...node,
+        }
+        var response = await fetch("/v1/artists/" + currentNode.artist.id + "/albums?market=US&include_groups=album,single&limit=50");
+        var albums = await response.json();
+        var ids = albums.items.map(a => a.id);
+        var j = 0;
+        var tracks = [];
+        for(var j = 0; j < ids.length/20; j++){
+            console.log(j)
+            var tracks = await this.parseAlbums(ids.slice(j*20,(j+1)*20), tracks);
+            console.log(tracks);
+        }
+        const seen = new Set();
 
-                    const filteredArr = tracks.filter(el => {
-                    const duplicate = seen.has(el.name);
-                    seen.add(el.name);
-                    return !duplicate;
-                    })
+        const filteredArr = tracks.filter(el => {
+        const duplicate = seen.has(el.name);
+        seen.add(el.name);
+        return !duplicate;
+        })
 
-                    const selectedNode = {
-                        ...this.state.selectedNode,
-                    }
-                    if(selectedNode.artist.tracks === undefined){
-                        selectedNode.artist.tracks= filteredArr;
-                    }else{
-                        selectedNode.artist.tracks= selectedNode.artist.tracks.concat(filteredArr);
-                    }
-                    var flag = false;
-                    for(let i = 0; i < this.state.nodes.length - 1; i++){
-                        if(selectedNode.artist.id === this.state.nodes[i].artist.id){
-                            flag = true;
-                            selectedNode.artist = this.state.nodes[i].artist;
-                        }
-                    }
-                    if(flag === false){
-                        selectedNode.artist.selectedTracks = [];
-                    }
-                    this.setState({selectedNode: selectedNode});
-                });
-            });
-        });
-    }
-
-    getTopTracks = () => {
-        fetch("/v1/artists/" + this.state.selectedNode.artist.id + "/top-tracks?market=US").then((response) => {
-            response.json().then(d => {
-                const selectedNode = {
-                    ...this.state.selectedNode,
-                }
-                selectedNode.artist.tracks = d.tracks;
-                var flag = false;
-                for(let i = 0; i < this.state.nodes.length - 1; i++){
-                    if(selectedNode.artist.id === this.state.nodes[i].artist.id){
-                        flag = true;
-                        selectedNode.artist = this.state.nodes[i].artist;
-                    }
-                }
-                if(flag === false){
-                    selectedNode.artist.selectedTracks = [];
-                }
-                this.setState({selectedNode: selectedNode});
-            });
-        });
+        if(currentNode.artist.tracks === undefined){
+            currentNode.artist.tracks= filteredArr;
+        }else{
+            currentNode.artist.tracks= currentNode.artist.tracks.concat(filteredArr);
+        }
+        // var flag = false;
+        // for(let i = 0; i < this.state.nodes.length - 1; i++){
+        //     if(currentNode.artist.id === this.state.nodes[i].artist.id){
+        //         flag = true;
+        //         currentNode.artist = this.state.nodes[i].artist;
+        //     }
+        // }
+        // if(flag === false){
+        //     currentNode.artist.selectedTracks = [];
+        // }
+        if(this.state.selectedNode !== null){
+            this.setState({selectedNode: currentNode});
+        }
+        return currentNode;
     }
  
 
@@ -1222,7 +1195,6 @@ class GraphWindow extends React.Component {
             }
             var ind = [];
             for(var i = 0; i< count; i++){
-                console.log("debug");
                 console.log(artistTracks);
                 var x = Math.floor(Math.random()*artistTracks.length);
                 while(ind.includes(x)){
@@ -1239,11 +1211,37 @@ class GraphWindow extends React.Component {
             }
         }
     }
+    randomizePlaylist = async () => {
+        await this.clearTracks();
+        var nodesList = [];
+        console.log(this.state.nodes);
+        for (var node of this.state.nodes){
+            var currentNode;
+            if(node.artist.tracks === undefined){
+                if(this.state.loading === false){
+                    this.setState({loading:true})
+                }
+                currentNode = await this.getAllTracks(node);
+                console.log(currentNode);
+            }else{
+                currentNode = node;
+            }
+            nodesList = nodesList.concat(currentNode);
+        }
+        for (var node of nodesList){
+            var artist = node.artist;
+            var artistTracks = node.artist.tracks;
+            await this.selectRandomTracks(artist,artistTracks);
+        }
+        console.log(this.state.selectedTracks);
+        this.setState({nodes: nodesList, loading:false});    
+    }  
 
     render() {
         var index = 0;
         if (this.state.selectedNode !== null &&this.state.selectedNode.artist.tracks === undefined) {
-            this.getAllTracks();
+            this.getAllTracks(this.state.selectedNode);
+            //this.getAllTracks();
         }
         if (this.playerLoaded === false && this.state.player) {
             this.state.player.setVolume(.3);
@@ -1271,6 +1269,8 @@ class GraphWindow extends React.Component {
                             clearTracks={this.clearTracks}
                             playTrack={(track) => this.playTrack(track)}
                             exportPlaylist ={() => {if(this.state.player != null){this.exportPlaylist()}}}
+                            randomizePlaylist = {this.randomizePlaylist}
+                            loading = {this.state.loading}
                         />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}

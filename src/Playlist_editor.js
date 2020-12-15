@@ -78,7 +78,11 @@ class PlaylistEditor extends React.Component {
         var tracks = this.props.tracks.filter(tracks => tracks.name.toLowerCase().search(this.state.text.toLowerCase()) !== -1);
         return (
             <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
-                
+                <div onClick={() =>{this.props.randomizePlaylist()}} 
+                    style={{cursor: "pointer", color: "white", fontSize: "3vh", 
+                    position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
+                        <i className="fas fa-dice"></i>
+                </div>
                 <div style={{display: "flex", alignItems: "center", height: "7.5%"}}>
                         <p id = "purple_text" style={{fontFamily: "monospace", fontSize: "20",  display: "flex", justifyContent: "center", flexGrow: 1}}>Playlist Editor</p>
                 </div>
@@ -86,6 +90,7 @@ class PlaylistEditor extends React.Component {
                     <Input onChangeCapture={this.handleSearch} style={{height: "80%", width:"80%",color: "white",fontFamily: "monospace"}} placeholder= "Search Playlist"></Input>
                 </div>                
                 <div style ={{display: "flex", justifyContent: "center", height: "70%"}}>
+                {this.props.loading === false ? (
                         <List id="scroll" style = {{ width: "90%", height: "100%"}}>
                             {tracks.map((track) => {
                             return (
@@ -114,7 +119,17 @@ class PlaylistEditor extends React.Component {
                             </ListItem>
                             );
                             })}
-                        </List>
+                        </List>):(
+                            //<div id="loading" >
+                                <img id="loadGif" src="https://i.gyazo.com/b447a0e922d4ee55cfb0fad5f0f24faa.gif" alt="Please Wait, Playlist Loading..." 
+                                style = {{
+                                    width: "80%",
+                                    height: "60%",
+                                    marginTop: "10%",
+                                    backgroundColor: "white",
+                                }}/>
+                            //</div>
+                        )}
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", marginTop: "10%", paddingLeft: "2%", paddingRight: "2%"}}>
                     <Button onClick={(event) => this.setState({target: event.target})} variant="contained" color="primary" style={{width: "30%", height: "20", fontSize: "12"}}>
