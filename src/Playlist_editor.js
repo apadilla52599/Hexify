@@ -120,15 +120,20 @@ class PlaylistEditor extends React.Component {
                             );
                             })}
                         </List>):(
-                            //<div id="loading" >
-                                <img id="loadGif" src="https://i.gyazo.com/b447a0e922d4ee55cfb0fad5f0f24faa.gif" alt="Please Wait, Playlist Loading..." 
+                            <div id="loading" >
+                                <div style={{marginTop: "5%",display: "flex", alignItems: "center"}}>
+                                        <p id = "purple_text" style={{fontFamily: "monospace", fontSize: "15",  display: "flex", justifyContent: "center", flexGrow: 1}}>Hexify Is Loading Your Custom Playlist</p>
+                                </div>
+                                <img id="loadGif" src="https://i.gyazo.com/ef5e74e3865be354f2060c5e40e1b86e.gif" alt="Please Wait, Playlist Loading..." 
                                 style = {{
-                                    width: "80%",
+                                    width: "100%",
                                     height: "60%",
                                     marginTop: "10%",
-                                    backgroundColor: "white",
                                 }}/>
-                            //</div>
+                                <div style={{display: "flex", alignItems: "center", height: "5%"}}>
+                                        <p id = "purple_text" style={{fontFamily: "monospace", fontSize: "20",  display: "flex", justifyContent: "center", flexGrow: 1}}>Please Wait</p>
+                                </div>
+                            </div>
                         )}
                 </div>
                 <div style = {{display: "flex",justifyContent: "space-between", marginTop: "10%", paddingLeft: "2%", paddingRight: "2%"}}>

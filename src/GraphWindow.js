@@ -1009,14 +1009,21 @@ class GraphWindow extends React.Component {
         }
     }
 
-    populatePlaylist = (id, tracks, token, URL) => {
-        fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
-        method: 'POST',
-        body:JSON.stringify({ uris: tracks.map(track => track.uri)}),
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
-        }}).then(window.open(URL, '_blank'));
+    populatePlaylist = async (id, tracks, token, URL, index) => {
+        await fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+            method: 'POST',
+            body:JSON.stringify({ uris: tracks.slice(index*100,(index+1)*100).map(track => track.uri)}),
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }});
+
+        if(tracks.length > (100*(index+1))){
+            console.log("RECALLING");
+            await this.populatePlaylist(id, tracks, token, URL, index+1);
+        }else{
+            window.open(URL, '_blank');
+        }
     };
 
     exportPlaylist = () => {
@@ -1030,7 +1037,7 @@ class GraphWindow extends React.Component {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${access_token}`,
             }}).then(res =>{res.json().then(res =>{console.log(res);
-                this.populatePlaylist(res.id, this.state.selectedTracks, access_token, res.external_urls.spotify)});
+                this.populatePlaylist(res.id, this.state.selectedTracks, access_token, res.external_urls.spotify, 0)});
           });
         });
     };
@@ -1133,13 +1140,16 @@ class GraphWindow extends React.Component {
         var res = await fetch("/v1/albums/?ids="+ ids.toString());
         res = await res.json();
         console.log(res)
-        for (var i = 0; i < res.albums.length; i++) {
-            for (const track of res.albums[i].tracks.items) {
-                track['album'] = res.albums[i];
-            }
-            tracks = tracks.concat(res.albums[i].tracks.items);
-        };
-        return tracks;
+        if(res.albums !== undefined){
+            for (var i = 0; i < res.albums.length; i++) {
+                for (const track of res.albums[i].tracks.items) {
+                    track['album'] = res.albums[i];
+                }
+                tracks = tracks.concat(res.albums[i].tracks.items);
+            };
+            return tracks;
+        }
+        return [];
     }  
 
     getAllTracks = async (node) => {
