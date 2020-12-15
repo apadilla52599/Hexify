@@ -1174,21 +1174,34 @@ class GraphWindow extends React.Component {
         return !duplicate;
         })
 
-        if(currentNode.artist.tracks === undefined){
-            currentNode.artist.tracks= filteredArr;
-        }else{
-            currentNode.artist.tracks= currentNode.artist.tracks.concat(filteredArr);
+        // if(currentNode.artist.tracks === undefined){
+            
+        // }else{
+        //     currentNode.artist.tracks= currentNode.artist.tracks.concat(filteredArr);
+        // }
+        currentNode.artist.detail = "all";
+        currentNode.artist.tracks= filteredArr;
+        if(this.state.selectedNode !== null){
+            this.setState({selectedNode: currentNode});
         }
-        // var flag = false;
-        // for(let i = 0; i < this.state.nodes.length - 1; i++){
-        //     if(currentNode.artist.id === this.state.nodes[i].artist.id){
-        //         flag = true;
-        //         currentNode.artist = this.state.nodes[i].artist;
-        //     }
+        return currentNode;
+    }
+
+    getTopTracks = async (node) => {
+        const currentNode = {
+            ...node,
+        }
+        var response = await fetch("/v1/artists/" + node.artist.id + "/top-tracks?market=US");
+        var data = await response.json();
+        var tracks = data.tracks;
+
+        // if(currentNode.artist.tracks === undefined){
+        //     currentNode.artist.tracks= tracks;
+        // }else{
+        //     currentNode.artist.tracks= currentNode.artist.tracks.concat(tracks);
         // }
-        // if(flag === false){
-        //     currentNode.artist.selectedTracks = [];
-        // }
+        currentNode.artist.detail = "top";
+        currentNode.artist.tracks= tracks;
         if(this.state.selectedNode !== null){
             this.setState({selectedNode: currentNode});
         }
@@ -1231,7 +1244,9 @@ class GraphWindow extends React.Component {
                 if(this.state.loading === false){
                     this.setState({loading:true})
                 }
-                currentNode = await this.getAllTracks(node);
+                //opted to just get top tracks here...more efficient plus better generation
+                // currentNode = await this.getAllTracks(node);
+                currentNode = await this.getTopTracks(node);
                 console.log(currentNode);
             }else{
                 currentNode = node;
@@ -1249,7 +1264,7 @@ class GraphWindow extends React.Component {
 
     render() {
         var index = 0;
-        if (this.state.selectedNode !== null &&this.state.selectedNode.artist.tracks === undefined) {
+        if (this.state.selectedNode !== null &&(this.state.selectedNode.artist.tracks.length === undefined || this.state.selectedNode.artist.detail === "top")){
             this.getAllTracks(this.state.selectedNode);
             //this.getAllTracks();
         }

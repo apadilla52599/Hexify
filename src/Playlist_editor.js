@@ -75,10 +75,23 @@ class PlaylistEditor extends React.Component {
     render() {
         const menuOpen = this.state.target !== undefined;
         const clearOpen = this.state.target2 !== undefined;
+        const randomizeOpen = this.state.target3 !== undefined;
         var tracks = this.props.tracks.filter(tracks => tracks.name.toLowerCase().search(this.state.text.toLowerCase()) !== -1);
         return (
             <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
-                <div onClick={() =>{this.props.randomizePlaylist()}} 
+                <Menu
+                    id="randomizer-menu"
+                    open={randomizeOpen}
+                    keepMounted
+                    anchorEl={this.state.target3}
+                    onClose={() => this.setState({target3: undefined})}
+                >
+                    <MenuItem onClick={() => {this.props.randomizePlaylist();  this.setState({target3: undefined})}}>Randomize(Overwrites Current)</MenuItem>
+                    <MenuItem onClick={() => this.setState({target3: undefined})}>Cancel</MenuItem>
+                </Menu>
+                
+                
+                <div onClick={(event) => this.setState({target3: event.target})} 
                     style={{cursor: "pointer", color: "white", fontSize: "3vh", 
                     position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
                         <i className="fas fa-dice"></i>
