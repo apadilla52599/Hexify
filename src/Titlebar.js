@@ -99,7 +99,7 @@ class Titlebar extends React.Component {
                     </div>
                 { !browsing &&
                     <IconButton href="/browse" style = {{color: "white" }}>
-                        <PublicIcon style={{marginLeft: "24vw", width:"1.5rem", height:"1.5rem"}}/>
+                        <PublicIcon style={{marginLeft: "22vw", width:"1.5rem", height:"1.5rem"}}/>
                     </IconButton>
                 }
                 {this.props.signedIn() === false ? 
