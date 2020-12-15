@@ -1231,17 +1231,7 @@ class GraphWindow extends React.Component {
             });
         });
     }
-
-    randomizePlaylist = async () => {
-        this.clearTracks();
-        for (var node of this.state.nodes){
-            var artist = node.artist;
-            var artistTracks = node.artist.tracks;
-            console.log(artist);
-            console.log(artistTracks);
-            await this.selectRandomTracks(artist,artistTracks);
-        }    
-    }  
+ 
 
     selectRandomTracks =async (artist, artistTracks) => {
         
@@ -1320,7 +1310,6 @@ class GraphWindow extends React.Component {
                             clearTracks={this.clearTracks}
                             playTrack={(track) => this.playTrack(track)}
                             exportPlaylist ={() => {if(this.state.player != null){this.exportPlaylist()}}}
-                            randomizePlaylist = {this.randomizePlaylist}
                         />
                     ) : (
                         <ArtistEditor player={this.state.selectedTracks.length > 0 ? this.state.player : undefined}

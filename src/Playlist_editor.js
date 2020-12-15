@@ -71,11 +71,6 @@ class PlaylistEditor extends React.Component {
         const clearOpen = this.state.target2 !== undefined;
         return (
             <div id="playlist_editor" style={{ width: "calc(var(--playlist-column-width) - 2 * var(--playlist-column-margin))", height: this.props.player ? "max(25rem, calc(100% - 3 * var(--playlist-column-margin) - var(--playback-height)))" : "max(25rem, calc(100% - 2 * var(--playlist-column-margin)))" }}>
-                <div onClick={() =>{this.props.randomizePlaylist()}} 
-                    style={{cursor: "pointer", color: "white", fontSize: "3vh", 
-                    position: "absolute", marginLeft: "calc(.75*var(--playlist-column-width))", marginTop: "2vh"}}>
-                        <i className="fas fa-dice"></i>
-                </div>
                 
                 <div style={{display: "flex", alignItems: "center", height: "7.5%"}}>
                         <p id = "purple_text" style={{fontFamily: "monospace", fontSize: "20",  display: "flex", justifyContent: "center", flexGrow: 1}}>Playlist Editor</p>
