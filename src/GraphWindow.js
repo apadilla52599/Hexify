@@ -644,30 +644,32 @@ class GraphWindow extends React.Component {
             }
             if (e.key === "Escape") {
                 console.log("escaped");
-                this.walking = false;
-                clearInterval(this.transitionInterval);
-                selection.call(
-                    this.zoom
-                    //.extent([[0, 0], [1900, 1000]])
-                    .wheelDelta((event) => {
-                        if ((this.transform.k < 1 && event.deltaY > 0) || (this.transform.k > 8 && event.deltaY < 0)) {
-                            event.preventDefault();
-                            return 0;
-                        }
-                        else {
-                            if(Math.abs(event.deltaY) < 5){
-                                return -event.deltaY *  1 / 10;
-                            }else{
-                                return -event.deltaY *  1 / 500;
+                this.setState({selectedNode: null}, () => {
+                    this.walking = false;
+                    clearInterval(this.transitionInterval);
+                    selection.call(
+                        this.zoom
+                        //.extent([[0, 0], [1900, 1000]])
+                        .wheelDelta((event) => {
+                            if ((this.transform.k < 1 && event.deltaY > 0) || (this.transform.k > 8 && event.deltaY < 0)) {
+                                event.preventDefault();
+                                return 0;
                             }
-                        }
-                    })
-                    .clickDistance(4)
-                    .on("zoom", (d3event) => {
-                        this.transform = d3event.transform;
-                        this.draw();
-                    })
-                );
+                            else {
+                                if(Math.abs(event.deltaY) < 5){
+                                    return -event.deltaY *  1 / 10;
+                                }else{
+                                    return -event.deltaY *  1 / 500;
+                                }
+                            }
+                        })
+                        .clickDistance(4)
+                        .on("zoom", (d3event) => {
+                            this.transform = d3event.transform;
+                            this.draw();
+                        })
+                    );
+                });
             }
         });
 
@@ -1272,9 +1274,10 @@ class GraphWindow extends React.Component {
 
     playRandomSong = async node => {
         const selectedTracks = this.state.selectedTracks.filter(track => track.artist.id === node.artist.id);
-        if (node.artist === undefined)
+        if (node.artist.tracks === undefined)
             await this.getAllTracks();
-        console.log(node.artist);
+        console.log(node.artist.tracks !== undefined);
+        console.log(node.artist.tracks.length);
         if (selectedTracks.length > 0) {
             const randomTrack = selectedTracks[Math.floor(Math.random() * selectedTracks.length)];
             randomTrack.artist = node.artist;
@@ -1289,38 +1292,40 @@ class GraphWindow extends React.Component {
     }
 
     walkTheGraph = (node) => {
-        if (this.state.currentTrack === undefined || this.state.currentTrack.artist.id !== node.artist.id)
-            this.playRandomSong(node);
-        this.walking = true;
-        this.transitioning = true;
-        const coords = this.axialToCart(node.coords);
-        const n = 30;
-        var count = 0;
-        this.oldTransform = {...this.transform};
-        if (this.transitionInterval !== undefined)
-            clearInterval(this.transitionInterval);
-        this.zoom.on("zoom", null);
-        this.transitionInterval = setInterval(() => {
-            const i = count / n;
-            const k = this.oldTransform.k * (1 - i) + 8 * i;
-            const x = this.oldTransform.x * (1 - i) + (this.canvas.width / 2 - coords.x * k) * i;
-            const y = this.oldTransform.y * (1 - i) + (this.canvas.height / 2 - coords.y * k) * i;
-            if (count < n) {
-                count += 1;
-                this.transform.x = x;
-                this.transform.y = y;
-                this.transform.k = k;
-                this.draw();
-            }
-            else {
+        this.setState({selectedNode: node}, () => {
+            if (this.state.currentTrack === undefined || this.state.currentTrack.artist.id !== node.artist.id)
+                this.playRandomSong(node);
+            this.walking = true;
+            this.transitioning = true;
+            const coords = this.axialToCart(node.coords);
+            const n = 30;
+            var count = 0;
+            this.oldTransform = {...this.transform};
+            if (this.transitionInterval !== undefined)
                 clearInterval(this.transitionInterval);
-                this.transitioning = false;
-                this.transform.x = x;
-                this.transform.y = y;
-                this.transform.k = k;
-                this.draw();
-            }
-        }, 300 / n);
+            this.zoom.on("zoom", null);
+            this.transitionInterval = setInterval(() => {
+                const i = count / n;
+                const k = this.oldTransform.k * (1 - i) + 8 * i;
+                const x = this.oldTransform.x * (1 - i) + (this.canvas.width / 2 - coords.x * k) * i;
+                const y = this.oldTransform.y * (1 - i) + (this.canvas.height / 2 - coords.y * k) * i;
+                if (count < n) {
+                    count += 1;
+                    this.transform.x = x;
+                    this.transform.y = y;
+                    this.transform.k = k;
+                    this.draw();
+                }
+                else {
+                    clearInterval(this.transitionInterval);
+                    this.transitioning = false;
+                    this.transform.x = x;
+                    this.transform.y = y;
+                    this.transform.k = k;
+                    this.draw();
+                }
+            }, 300 / n);
+        });
     }
 
     render() {
