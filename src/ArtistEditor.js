@@ -89,6 +89,11 @@ class ArtistEditor extends React.Component{
                         <p style={{ color: "white" }} >Delete Node</p>
                     </Button>
                 </div>
+                <div style={{marginTop: "3",display: "flex", height: "48px", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
+                    <Button variant="contained" onClick={() => this.props.walkTheGraph(this.props.node)} color="default" style = {{backgroundColor: "var(--text-color-purple)", width: "90%", height: "2rem", fontSize: ".75rem"}}>
+                        <p style={{ color: "white" }} >WALK THE GRAPH</p>
+                    </Button>
+                </div>
             </div>
         );
     }
