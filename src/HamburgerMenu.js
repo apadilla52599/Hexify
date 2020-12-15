@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import MuiMenu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DeleteIcon from '@material-ui/icons/Delete';
-import img1 from "./DummyData/p1.JPG";
 import { Divider } from "@material-ui/core";
 import {withStyles} from "@material-ui/core/styles";
 import { request, gql } from 'graphql-request'
@@ -136,7 +135,7 @@ class HamburgerMenu extends React.Component {
                     {this.state.graphList.sort((a,b) => b.lastModified.localeCompare(a.lastModified)).map( (graph, index) => (
                         <ListItem className="ListItemHover" button={true} key={index} onClick={() => window.location.pathname = "/edit/" + graph.id}>
                         <ListItemAvatar>
-                            <Avatar sizes="large" src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".jpg"}></Avatar>
+                            <Avatar sizes="large" src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".png"}></Avatar>
                         </ListItemAvatar>
                         <ListItemText
                             primary={graph.name} style={{color: "white"}}
