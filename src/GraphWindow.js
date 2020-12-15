@@ -646,6 +646,7 @@ class GraphWindow extends React.Component {
             if (e.key === "Escape") {
                 console.log("escaped");
                 this.setState({selectedNode: null}, () => {
+                    this.adjacentRecommendedArtists = [];
                     this.walking = false;
                     clearInterval(this.transitionInterval);
                     selection.call(
