@@ -422,48 +422,34 @@ class GraphWindow extends React.Component {
     componentDidMount() {
         console.log("Graph Window mounted");
         window.onSpotifyWebPlaybackSDKReady = () => {
-            fetch('/v1/me').then(userResp => {
-                console.log(userResp);
-                if (userResp.ok) {
-                    userResp.json().then(userData => {
-                        if (userData.product === "premium") {
-                            fetch('/auth/token').then(response => response.json()).then(data => {
-                                this.props.loginCallback(true);
-                                const player = new window.Spotify.Player({
-                                    name: 'Web Playback SDK Quick Start Player',
-                                    getOAuthToken: cb => { cb(data.token); }
-                                });
-                                console.log(data.token)
-                                // Error handling
-                                player.addListener('initialization_error', ({ message }) => { console.error(message);});
-                                player.addListener('authentication_error', ({ message }) => {console.error(message);});
-                                player.addListener('account_error', ({ message }) => { console.error(message); });
-                                player.addListener('playback_error', ({ message }) => { console.error(message); });
+            fetch('/auth/token').then(response => response.json()).then(data => {
+                const player = new window.Spotify.Player({
+                    name: 'Web Playback SDK Quick Start Player',
+                    getOAuthToken: cb => { cb(data.token); }
+                });
+                console.log(data.token)
+                // Error handling
+                player.addListener('initialization_error', ({ message }) => { console.error(message);});
+                player.addListener('authentication_error', ({ message }) => {console.error(message);});
+                player.addListener('account_error', ({ message }) => { console.error(message); });
+                player.addListener('playback_error', ({ message }) => { console.error(message); });
 
-                                // Playback status updates
-                                //player.addListener('player_state_changed', state => { console.log(state); });
+                // Playback status updates
+                //player.addListener('player_state_changed', state => { console.log(state); });
 
-                                // Ready
-                                player.addListener('ready', ({ device_id }) => {
-                                    console.log('Ready with Device ID', device_id);
-                                    this.setState({ player: player});
-                                });
+                // Ready
+                player.addListener('ready', ({ device_id }) => {
+                    console.log('Ready with Device ID', device_id);
+                    this.setState({ player: player});
+                });
 
-                                // Not Ready
-                                player.addListener('not_ready', ({ device_id }) => {
-                                    console.log('Device ID has gone offline', device_id);
-                                });
+                // Not Ready
+                player.addListener('not_ready', ({ device_id }) => {
+                    console.log('Device ID has gone offline', device_id);
+                });
 
-                                // Connect to the player!
-                                player.connect();
-                            });
-                        }
-                    });
-                }
-                else {
-                    this.props.loginCallback(false);
-                    this.defaultSplash();      
-                }
+                // Connect to the player!
+                player.connect();
             });
         };
 
