@@ -13,7 +13,7 @@ const SpotifyStrategy = require('passport-spotify').Strategy;
 const https = require('https');
 
 mongoose.set("useUnifiedTopology", true);
-mongoose.connect("mongodb+srv://hexify_admin:DVX0kU3D8VlFKGwC@hexify.cxa7e.mongodb.net/test?retryWrites=true&w=majority", { promiseLibrary: require('bluebird'), useNewUrlParser: true })
+mongoose.connect("mongodb+srv://hexify_admin:DVX0kU3D8VlFKGwC@hexify.cxa7e.mongodb.net/Hexify?retryWrites=true&w=majority", { promiseLibrary: require('bluebird'), useNewUrlParser: true })
   .then(() =>  console.log('connection successful'))
   .catch((err) => console.error(err));
 
