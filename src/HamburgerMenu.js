@@ -5,7 +5,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import AddCircleIcon from '@material-ui/icons/AddCircle'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import MuiMenu from '@material-ui/core/Menu';
@@ -136,7 +135,7 @@ class HamburgerMenu extends React.Component {
                     {this.state.graphList.sort((a,b) => b.lastModified.localeCompare(a.lastModified)).map( (graph, index) => (
                         <ListItem className="ListItemHover" button={true} key={index} onClick={() => window.location.pathname = "/edit/" + graph.id}>
                         <ListItemAvatar>
-                            <Avatar sizes="large" src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".jpg"}></Avatar>
+                            <img alt="alt" style={{backgroundColor: "white", width: "40px", height: "40px"}} src={"https://hexifythumbnails.s3.amazonaws.com/" + graph.id + ".png"}></img>
                         </ListItemAvatar>
                         <ListItemText
                             primary={graph.name} style={{color: "white"}}
