@@ -112,17 +112,17 @@ class Browse extends React.Component {
                 <div id="browse_gallery" style={{width: "80%", float: 'right'}}>
                     <div id="ScrollPaper" style={{backgroundColor: "white", width: "100%"}}>
                          <div className="grid" style={{marginLeft: "35px", marginTop: "20px"}}>
-                            {this.state.graphs === undefined? 
+                         {this.state.graphs === undefined? 
                             <div></div> : 
                             this.state.graphs.map(graph => (
                             <div className="grid-item">
-                                <div className="hvrbox">
+                                <div className="imgHover">
                                     {graph.genres.slice(0,3).map((genre, index) => (
                                         <div className = "genre" style = {{direction: "rtl",cursor: "pointer",zIndex: "1",borderStyle: "solid",borderColor: "black", borderWidth: "3",
                                         position: "absolute",marginTop: (22*(index+1) + "px"), marginBottom: "0%", marginLeft: "85%", height: "20px",width: "20px",backgroundColor: this.getColor(genre.key),borderRadius: "50%", }}>
                                             <div className="genre-text" style = {{direction: "ltr", position: "absolute",zIndex: "2", color: "white"}}>
                                                 {genre.key}
-                                           </div>
+                                        </div>
                                         </div>
                                     ))}
                                     <img alt="graph thumbnail" 
@@ -131,8 +131,8 @@ class Browse extends React.Component {
                                     e.target.src="https://nsc.edu/wp-content/uploads/2020/09/blank-White-Square-image-for-Web-300x256-1.png"}} 
                                     onLoad={(e) => {e.target.onload = null; if (this.masonry) this.masonry.layout()}} 
                                     style={{width: "100%", borderRadius: "15px", borderStyle: "solid", borderColor: "var(--text-color-purple)", borderWidth: "thick"}}/>
-                                    <div onClick={() => window.location.pathname = "/edit/" + graph.id} className="hvrbox-layer_top">
-                                        <div className="hvrbox-text">
+                                    <div onClick={() => window.location.pathname = "/edit/" + graph.id} className="imgHover-layer_top">
+                                        <div className="imgHover-text">
                                             {graph.name}
                                         </div>
                                     </div>
