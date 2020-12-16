@@ -86,14 +86,13 @@ class Browse extends React.Component {
     }
     getColor(genre){
         var hash = 0;
-        for (var i = 0; i < genre.length; i++) {
-            hash = genre.charCodeAt(i) + ((hash << 5) - hash);
-            hash = hash & hash;
-        }
         var color = '#';
-        for (var i = 0; i < 3; i++) {
-            var value = (hash >> (i * 8)) & 255;
-            color += ('00' + value.toString(16)).substr(-2);
+        for (var i = 0; i < genre.length; i++) {
+            hash = genre.charCodeAt(i) + ((hash << 5) + hash);
+        }
+        while(color.length < 7) {
+            hash = hash >> 4;
+            color += ('0' + (hash & 15).toString(16)).substr(-1);
         }
         return color;
     }
