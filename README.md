@@ -10,19 +10,19 @@ Hexify uses Spotify Web API to recommend similar artists when an artist is selec
 To start out, drag an artist from the right side onto the canvas.
 Recommendations will appear in the hexagonal tiles that are adjacent to the selected artist. You can add a recommended artist by clicking on their image. 
 
-![recommendedPreview](previews\recommendedPreview.JPG)
+![recommendedPreview](https://github.com/apadilla52599/Hexify/blob/master/previews/recommendedPreview.JPG)
 
 While an artist is selected, you may add one of their songs to your playlist by clicking the + button on the left-hand side of the screen. Alternatively, you may click the on the dice to add random songs from the selected artist.
 
-![artistEditorPreview](previews\artistEditorPreview.JPG)
+![artistEditorPreview](https://github.com/apadilla52599/Hexify/blob/master/previews/artistEditorPreview.JPG)
 
 And thats all you need to create a work of art! After you've created your work of art, you can share it with a friend or export your playlist to listen to it on Spotify. 
 
-![snailPreview](previews\snailPreview.JPG)
+![snailPreview](https://github.com/apadilla52599/Hexify/blob/master/previews/snailPreview.JPG)
 
 Graphical Playlists that are public will be displayed on the Browse page.
 
-![browsePreview](previews\browsePreview.JPG)
+![browsePreview](https://github.com/apadilla52599/Hexify/blob/master/previews/browsePreview.JPG)
 
 ## Running Hexify Locally
 
