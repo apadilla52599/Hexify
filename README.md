@@ -1,23 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Welcome to the Hexify repository
 
-In the project directory, you can run:
+Check out <www.hexify.us> to get the whole experience!
 
-### `npm start`
+A Spotify Premium account is necessary to be able to access Hexify. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Hexify uses Spotify Web API to recommend similar artists when an artist is selected.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+To start out, drag an artist from the right side onto the canvas.
+Recommendations will appear in the hexagonal tiles that are adjacent to the selected artist. You can add a recommended artist by clicking on their image. 
 
-### `npm test`
+![recommendedPreview](previews\recommendedPreview.JPG)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+While an artist is selected, you may add one of their songs to your playlist by clicking the + button on the left-hand side of the screen. Alternatively, you may click the on the dice to add random songs from the selected artist.
 
-### `npm run build`
+![artistEditorPreview](previews\artistEditorPreview.JPG)
+
+And thats all you need to create a work of art! After you've created your work of art, you can share it with a friend or export your playlist to listen to it on Spotify. 
+
+![snailPreview](previews\snailPreview.JPG)
+
+Graphical Playlists that are public will be displayed on the Browse page.
+
+![browsePreview](previews\browsePreview.JPG)
+
+## Running Hexify Locally
+
+
+### Step 1: `npm run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -27,43 +37,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Step 2: `node server.js`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Starts the app on localhost:8080
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Step 3: go to `localhost:8080` on your web browser
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-test
+Now you can create a beautiful work of art and a playlist that matches it!
